@@ -6,14 +6,10 @@ export const metadata = {
   description: 'RS School React course 2025 Q1 final task',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-    <body className="light-theme">{children}</body>
+      <body className="light-theme">{children}</body>
     </html>
   );
 }
