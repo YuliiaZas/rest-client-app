@@ -12,9 +12,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "format:fix": "prettier --write .",
-    "prepare": "husky",
+    "prepare": "husky && chmod ug+x .husky/*",
     "test": "vitest",
-    "test-coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "next": "^15.1.7",
