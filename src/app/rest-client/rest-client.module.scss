@@ -1,0 +1,27 @@
+.wrapper {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.5rem;
+  height: 100vh;
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.btn {
+  padding: 1rem;
+  background-color: var(--primary-main);
+  border-radius: 0.3rem;
+}
+
+.input {
+  border: 1px solid gray;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border-radius: 0.3rem;
+}
