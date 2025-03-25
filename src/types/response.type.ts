@@ -1,4 +1,4 @@
 export interface IResponse {
   status: number;
-  json: unknown;
+  body: string;
 }

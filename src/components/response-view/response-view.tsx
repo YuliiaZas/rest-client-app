@@ -1,5 +1,5 @@
-import { IResponse } from '@/types/response.type';
-import styles from './response-view.module.scss';
+import { IResponse } from '@/types';
+import BodyEditor from '../body-editor/body-editor';
 
 type ResponseViewProps = {
   response: IResponse;
@@ -8,10 +8,14 @@ type ResponseViewProps = {
 export default function ResponseView({ response }: ResponseViewProps) {
   return (
     <>
-      <div className={styles.view}>
-        <p>Status: {response.status}</p>
-        <p>Body:</p>
-        <pre>{JSON.stringify(response.json, null, 2)}</pre>
+      <div>
+        <p>
+          <b>Status:</b> {response.status}
+        </p>
+        <p>
+          <b>Body:</b>
+        </p>
+        <BodyEditor body={response.body} setBody={() => null} readOnly={true} />
       </div>
     </>
   );
