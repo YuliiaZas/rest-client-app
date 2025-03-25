@@ -1,15 +1,24 @@
 'use client';
 
+import { IHeader } from '@/types';
 import { useState } from 'react';
 import BodyEditor from '../body-editor/body-editor';
+import Headers from '../headers/headers';
 import styles from './request-options.module.scss';
 
 type RequestOptions = {
   body: string;
   setBody: (body: string) => void;
+  headers: IHeader[];
+  setHeaders: (headers: IHeader[]) => void;
 };
 
-export default function RequestOptions({ body, setBody }: RequestOptions) {
+export default function RequestOptions({
+  body,
+  setBody,
+  headers,
+  setHeaders,
+}: RequestOptions) {
   const [activeTab, setActiveTab] = useState('body');
 
   return (
@@ -38,7 +47,7 @@ export default function RequestOptions({ body, setBody }: RequestOptions) {
         {activeTab === 'body' ? (
           <BodyEditor body={body} setBody={setBody} />
         ) : (
-          <div>Headers</div>
+          <Headers headers={headers} setHeaders={setHeaders} />
         )}
       </div>
     </div>

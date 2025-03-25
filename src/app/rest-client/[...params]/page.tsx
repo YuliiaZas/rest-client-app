@@ -4,10 +4,12 @@ import { fetchData } from '@/api';
 import MethodSelector from '@/components/method-selector/method-selector';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
-import { IResponse } from '@/types';
+import { IHeader, IResponse } from '@/types';
 import { decodeBase64, updateUrl } from '@/utils';
 import { isValidURL } from '@/utils/is-valid-url';
+import { useSearchParams } from 'next/navigation';
 import { ChangeEvent, FormEvent, use, useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import styles from './rest-client.module.scss';
 
 type RestClientProps = {
@@ -22,6 +24,25 @@ export default function RestClient({ params }: RestClientProps) {
   const [url, setUrl] = useState(decodedUrl);
   const decodedBody = decodeBase64(encodedBody ?? '');
   const [body, setBody] = useState(decodedBody);
+  const [headers, setHeaders] = useState<IHeader[]>([]);
+  const searchParams = useSearchParams();
+  const [headerParams, setHeaderParams] = useState('');
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    headers.forEach(({ key, value }) => {
+      params.append(key, value);
+    });
+
+    setHeaderParams(`?${params.toString()}`);
+  }, [headers]);
+
+  useEffect(() => {
+    const paramsArray = Array.from(searchParams.entries()).map(
+      ([key, value]) => ({ id: uuidv4(), key, value })
+    );
+    setHeaders(paramsArray);
+  }, []);
 
   useEffect(() => {
     const request = async () => {
@@ -50,20 +71,31 @@ export default function RestClient({ params }: RestClientProps) {
   const handleChangeUrl = (e: ChangeEvent<HTMLInputElement>) => {
     const newUrl = e.target.value;
 
-    updateUrl(method, newUrl, body);
+    updateUrl(method, newUrl, body, headerParams);
     setUrl(newUrl);
   };
 
   const handleChangeMethod = (e: ChangeEvent<HTMLSelectElement>) => {
     const newMethod = e.target.value;
 
-    updateUrl(newMethod, url, body);
+    updateUrl(newMethod, url, body, headerParams);
     setMethod(newMethod);
   };
 
   const handleChangeBody = (newBody: string) => {
-    updateUrl(method, url, newBody);
+    updateUrl(method, url, newBody, headerParams);
     setBody(newBody);
+  };
+
+  const handleChangeHeaders = (headers: IHeader[]) => {
+    const params = new URLSearchParams();
+    headers.forEach(({ key, value }) => {
+      params.append(key, value);
+    });
+    const searchParams = `?${params.toString()}`;
+
+    updateUrl(method, url, body, searchParams);
+    setHeaders(headers);
   };
 
   return (
@@ -84,7 +116,12 @@ export default function RestClient({ params }: RestClientProps) {
         <section className={styles.section}>
           <h2 className={styles.label}>Request</h2>
           <div>
-            <RequestOptions body={body} setBody={handleChangeBody} />
+            <RequestOptions
+              body={body}
+              setBody={handleChangeBody}
+              headers={headers}
+              setHeaders={handleChangeHeaders}
+            />
           </div>
         </section>
         <section className={styles.section}>
