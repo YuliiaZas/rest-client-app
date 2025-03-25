@@ -17,10 +17,10 @@ type RestClientProps = {
 export default function RestClient({ params }: RestClientProps) {
   const [response, setResponse] = useState<IResponse | null>(null);
   const [defaultMethod, encodedUrl, encodedBody] = use(params).params;
-  const [method, setMethod] = useState(defaultMethod);
-  const decodedUrl = decodeBase64(encodedUrl);
+  const [method, setMethod] = useState(defaultMethod ?? 'GET');
+  const decodedUrl = decodeBase64(encodedUrl ?? '');
   const [url, setUrl] = useState(decodedUrl);
-  const decodedBody = decodeBase64(encodedBody);
+  const decodedBody = decodeBase64(encodedBody ?? '');
   const [body, setBody] = useState(decodedBody);
 
   useEffect(() => {
