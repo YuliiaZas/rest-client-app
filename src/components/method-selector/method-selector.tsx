@@ -1,17 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { ChangeEvent } from 'react';
 import styles from './method-selector.module.scss';
 
 const httpMethods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
-export default function MethodSelector() {
-  const [selected, setSelected] = useState('');
+type MethodSelectorProps = {
+  value: string;
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+};
 
+export default function MethodSelector({
+  value,
+  onChange,
+}: MethodSelectorProps) {
   return (
     <select
-      value={selected}
-      onChange={(e) => setSelected(e.target.value)}
+      value={value}
+      onChange={onChange}
       className={styles.select}
       name="method"
     >
