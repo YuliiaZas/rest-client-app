@@ -1,8 +1,8 @@
 'use client';
 
-import styles from './Select.module.scss';
+import styles from './select.module.scss';
 import { useState } from 'react';
-import { Icon, PhosphorIcons } from '@/components/Icons';
+import { Icon, PhosphorIcons } from '@/components/icons';
 import clsx from 'clsx';
 
 type SelectButtonProps = {

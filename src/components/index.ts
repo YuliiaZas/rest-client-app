@@ -1,4 +1,4 @@
-export { LocaleSwitcher } from './LocaleSwitcher';
-export { Translated } from './Translated';
-export { Select } from './Select';
-export { Icon } from './Icons';
+export { LocaleSwitcher } from './locale-switcher';
+export { Translated } from './translated';
+export { Select } from './select';
+export { Icon } from './icons';

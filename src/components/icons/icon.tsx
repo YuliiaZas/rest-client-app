@@ -1,6 +1,6 @@
 import { PhosphorIcons, phosphorIcons } from './phosphorIcons';
 import clsx from 'clsx';
-import style from './Icon.module.scss';
+import style from './icon.module.scss';
 
 export type IconProps = {
   iconName: PhosphorIcons;
