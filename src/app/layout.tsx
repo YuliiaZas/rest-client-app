@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 import '../styles/global.scss';
+import { LocaleSwitcher } from '@/components';
 
 export const metadata = {
   title: 'REST client app',
@@ -17,7 +18,10 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className="light-theme">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <LocaleSwitcher />
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );

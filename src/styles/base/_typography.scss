@@ -10,11 +10,11 @@
 $title-font-sizes: 3.5rem, 3rem, 2.5rem, 2rem, 1.5rem;
 $p-font-sizes: 1.25rem, 1.125rem, 1rem, 0.8rem, 0.7rem;
 $font-weights: (
-  normal: 400,
-  medium: 500,
-  semibold: 600,
-  bold: 700,
-  extrabold: 800,
+        normal: 400,
+        medium: 500,
+        semibold: 600,
+        bold: 700,
+        extrabold: 800,
 );
 
 @mixin title-styles($index) {

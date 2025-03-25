@@ -3,23 +3,23 @@
 import { useLocale } from 'next-intl';
 import { Locale, locales } from '@/i18n';
 import { setUserLocale } from '@/services/locale';
+import { Select } from '@/components';
 
 export function LocaleSwitcher() {
   const locale = useLocale();
 
-  async function handleLocaleChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    const { value } = e.target;
+  async function onLocaleChange(value: string) {
     const locale = value as Locale;
     await setUserLocale(locale);
   }
 
   return (
-    <select defaultValue={locale} onChange={handleLocaleChange}>
-      {locales.map((l, i) => (
-        <option key={i} value={l}>
-          {l.toUpperCase()}
-        </option>
-      ))}
-    </select>
+    <Select
+      defaultValue={locale}
+      action={onLocaleChange}
+      options={locales.map((el) => ({ label: el.toUpperCase(), value: el }))}
+      icon="translate"
+      disabled={true}
+    />
   );
 }
