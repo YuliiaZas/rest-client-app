@@ -1,0 +1,42 @@
+.table {
+  width: 100%;
+}
+
+.header {
+  width: 100%;
+  font-size: 1.5rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 0.5rem;
+  gap: 0.5rem;
+}
+
+.header,
+.row {
+  .data {
+    width: 40%;
+    display: grid;
+    place-items: center;
+  }
+
+  .actions {
+    width: 10%;
+  }
+}
+
+.btn {
+  padding: 1rem;
+  background-color: var(--primary-main);
+  border-radius: 0.3rem;
+  width: 100%;
+}
+
+.input {
+  border: 1px solid var(--lines-main);
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border-radius: 0.3rem;
+}
