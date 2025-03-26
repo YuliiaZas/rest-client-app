@@ -1,9 +1,8 @@
 'use client';
 
+import { httpMethods } from '@/data';
 import { ChangeEvent } from 'react';
 import styles from './method-selector.module.scss';
-
-const httpMethods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
 type MethodSelectorProps = {
   value: string;

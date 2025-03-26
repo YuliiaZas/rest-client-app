@@ -1,7 +1,8 @@
+import { Method } from '@/data';
 import { IHeader, IRequest, IResponse } from '@/types';
 
 export const fetchData = async (
-  method: string,
+  method: Method,
   url: string,
   body: string,
   headers: IHeader[] = []

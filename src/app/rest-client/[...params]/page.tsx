@@ -4,6 +4,7 @@ import { fetchData } from '@/api';
 import MethodSelector from '@/components/method-selector/method-selector';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
+import { Method } from '@/data';
 import { IHeader, IResponse } from '@/types';
 import { decodeBase64, updateUrl } from '@/utils';
 import { isValidURL } from '@/utils/is-valid-url';
@@ -19,7 +20,9 @@ type RestClientProps = {
 export default function RestClient({ params }: RestClientProps) {
   const [response, setResponse] = useState<IResponse | null>(null);
   const [defaultMethod, encodedUrl, encodedBody] = use(params).params;
-  const [method, setMethod] = useState(defaultMethod ?? 'GET');
+  const [method, setMethod] = useState<Method>(
+    (defaultMethod as Method) ?? 'GET'
+  );
   const decodedUrl = decodeBase64(encodedUrl ?? '');
   const [url, setUrl] = useState(decodedUrl);
   const decodedBody = decodeBase64(encodedBody ?? '');
@@ -69,7 +72,7 @@ export default function RestClient({ params }: RestClientProps) {
   };
 
   const handleChangeMethod = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newMethod = e.target.value;
+    const newMethod = e.target.value as Method;
 
     updateUrl(newMethod, url, body, headerParams);
     setMethod(newMethod);
