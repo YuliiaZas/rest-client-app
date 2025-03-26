@@ -1,9 +1,9 @@
-export type ISupportedLanguages =
-  | 'curl'
-  | 'fetch'
-  | 'xhr'
-  | 'nodejs'
-  | 'python'
-  | 'java'
-  | 'csharp'
-  | 'go';
+import { SupportedLanguages } from '@/data/supported-languages';
+
+export interface IRequestParams {
+  method: string;
+  url: string;
+  headers?: Record<string, string>;
+  body?: Record<string, unknown> | string;
+  language: SupportedLanguages;
+}

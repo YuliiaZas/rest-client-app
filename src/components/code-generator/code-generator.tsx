@@ -1,19 +1,12 @@
 import { Method } from '@/data';
-import { ISupportedLanguages } from '@/types/code-generator';
+import {
+  SupportedLanguages,
+  supportedLanguagesOptions,
+} from '@/data/supported-languages';
+import { generateCodeSnippet } from '@/utils/code-generator';
 import { useState } from 'react';
 import { CopyBlock, dracula } from 'react-code-blocks';
 import styles from './code-generator.module.scss';
-
-const SUPPORTED_LANGUAGES: ISupportedLanguages[] = [
-  'curl',
-  'fetch',
-  'xhr',
-  'nodejs',
-  'python',
-  'java',
-  'csharp',
-  'go',
-];
 
 type CodeGeneratorProps = {
   method: Method;
@@ -21,7 +14,7 @@ type CodeGeneratorProps = {
 };
 
 export default function CodeGenerator({ method, url }: CodeGeneratorProps) {
-  const [language, setLanguage] = useState<ISupportedLanguages>('curl');
+  const [language, setLanguage] = useState<SupportedLanguages>('curl');
   const [code, setCode] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -29,22 +22,17 @@ export default function CodeGenerator({ method, url }: CodeGeneratorProps) {
     try {
       setLoading(true);
 
-      const response = await fetch('/api/generate-code', {
-        method: 'POST',
+      const snippet = await generateCodeSnippet({
+        method,
+        url,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          method,
-          url,
-          headers: { 'Content-Type': 'application/json' },
-          body: { key: 'value' },
-          language,
-        }),
+        body: { key: 'value' },
+        language,
       });
 
-      const data = await response.json();
-      setCode(data.snippet || 'Error generating code');
+      setCode(snippet || 'Error generating code');
     } catch (err) {
-      console.log(err);
+      setCode((err as Error).toString());
     } finally {
       setLoading(false);
     }
@@ -54,17 +42,17 @@ export default function CodeGenerator({ method, url }: CodeGeneratorProps) {
     <div>
       <div className={styles.controls}>
         <select
-          onChange={(e) => setLanguage(e.target.value as ISupportedLanguages)}
+          onChange={(e) => setLanguage(e.target.value as SupportedLanguages)}
           value={language}
           className="select"
         >
-          {SUPPORTED_LANGUAGES.map((lang) => (
+          {supportedLanguagesOptions.map((lang) => (
             <option key={lang} value={lang}>
               {lang.toUpperCase()}
             </option>
           ))}
         </select>
-        <button onClick={generateSnippet} className="btn">
+        <button onClick={generateSnippet} className="btn" disabled={loading}>
           {loading ? 'Generating...' : 'Generate'}
         </button>
       </div>
