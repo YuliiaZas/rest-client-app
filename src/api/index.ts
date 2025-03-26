@@ -24,14 +24,21 @@ export const fetchData = async (
     }
 
     const res = await fetch(url, requestOptions);
-    const json = await res.json();
 
-    return { status: res.status, body: JSON.stringify(json) };
-  } catch (err) {
-    console.log(err);
+    let jsonString = '';
+
+    if (method !== 'HEAD' && method !== 'OPTIONS') {
+      const json = await res.json();
+      jsonString = JSON.stringify(json);
+    }
+
+    return { status: res.status, body: jsonString };
+  } catch (error: unknown) {
     return {
       status: 500,
-      body: JSON.stringify({ error: 'An error occurred' }),
+      body: JSON.stringify({
+        error: error instanceof Error ? error.message : String(error),
+      }),
     };
   }
 };
