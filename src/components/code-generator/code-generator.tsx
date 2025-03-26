@@ -1,8 +1,12 @@
+'use client';
+
 import { Method } from '@/data';
 import {
   SupportedLanguages,
   supportedLanguagesOptions,
 } from '@/data/supported-languages';
+import { IHeader } from '@/types';
+import { formatHeaders } from '@/utils';
 import { generateCodeSnippet } from '@/utils/code-generator';
 import { useState } from 'react';
 import { CopyBlock, dracula } from 'react-code-blocks';
@@ -11,9 +15,16 @@ import styles from './code-generator.module.scss';
 type CodeGeneratorProps = {
   method: Method;
   url: string;
+  body: string;
+  headers: IHeader[];
 };
 
-export default function CodeGenerator({ method, url }: CodeGeneratorProps) {
+export default function CodeGenerator({
+  method,
+  url,
+  body,
+  headers,
+}: CodeGeneratorProps) {
   const [language, setLanguage] = useState<SupportedLanguages>('curl');
   const [code, setCode] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,8 +36,8 @@ export default function CodeGenerator({ method, url }: CodeGeneratorProps) {
       const snippet = await generateCodeSnippet({
         method,
         url,
-        headers: { 'Content-Type': 'application/json' },
-        body: { key: 'value' },
+        headers: formatHeaders(headers, { 'Content-Type': 'application/json' }),
+        body: JSON.parse(body ?? '{}'),
         language,
       });
 

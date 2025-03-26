@@ -63,7 +63,12 @@ export default function RequestOptions({
         ) : activeTab === 'headers' ? (
           <Headers headers={headers} setHeaders={setHeaders} />
         ) : (
-          <CodeGenerator url={url} method={method} />
+          <CodeGenerator
+            url={url}
+            method={method}
+            body={body}
+            headers={headers}
+          />
         )}
       </div>
     </div>
