@@ -9,7 +9,7 @@ import { IHeader } from '@/types';
 import { formatHeaders } from '@/utils';
 import { generateCodeSnippet } from '@/utils/code-generator';
 import { useState } from 'react';
-import { CopyBlock, dracula } from 'react-code-blocks';
+import { CodeBlock, dracula } from 'react-code-blocks';
 import styles from './code-generator.module.scss';
 
 type CodeGeneratorProps = {
@@ -68,11 +68,14 @@ export default function CodeGenerator({
         </button>
       </div>
 
-      {code && (
-        <div className={styles.codeWrapper}>
-          <CopyBlock text={code} language={language} theme={dracula} />
-        </div>
-      )}
+      <div className={styles.codeWrapper}>
+        <CodeBlock
+          text={code}
+          language={language}
+          theme={dracula}
+          showLineNumbers={false}
+        />
+      </div>
     </div>
   );
 }
