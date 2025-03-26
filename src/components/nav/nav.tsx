@@ -1,6 +1,6 @@
 import styles from './nav.module.scss';
 import Link from 'next/link';
-import { Icon } from '@/components';
+import { Icon, Translated } from '@/components';
 
 interface NavProps {
   isAuthenticated?: boolean;
@@ -14,10 +14,14 @@ export function Nav({ isAuthenticated }: NavProps) {
           <>
             <Icon iconName="key" size="1rem" />
             <li>
-              <Link href="/auth/login">Log In</Link>
+              <Link href="/auth/login">
+                <Translated scope="login" text="login" />
+              </Link>
             </li>
             <li>
-              <Link href="/auth/signup">Sign Up</Link>
+              <Link href="/auth/signup">
+                <Translated scope="signup" text="signup" />
+              </Link>
             </li>
           </>
         )}
