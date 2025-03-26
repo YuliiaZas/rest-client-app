@@ -6,7 +6,7 @@ import {
   supportedLanguagesOptions,
 } from '@/data/supported-languages';
 import { IHeader } from '@/types';
-import { formatHeaders } from '@/utils';
+import { formatHeaders, isValidURL } from '@/utils';
 import { generateCodeSnippet } from '@/utils/code-generator';
 import { useState } from 'react';
 import { CodeBlock, dracula } from 'react-code-blocks';
@@ -33,11 +33,16 @@ export default function CodeGenerator({
     try {
       setLoading(true);
 
+      if (!isValidURL(url)) {
+        setCode('URL is invalid');
+        return;
+      }
+
       const snippet = await generateCodeSnippet({
         method,
         url,
         headers: formatHeaders(headers, { 'Content-Type': 'application/json' }),
-        body: JSON.parse(body ?? '{}'),
+        body: body ? JSON.parse(body) : null,
         language,
       });
 
