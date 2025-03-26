@@ -6,7 +6,7 @@ import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
 import { Method } from '@/data';
 import { IHeader, IResponse } from '@/types';
-import { decodeBase64, updateUrl } from '@/utils';
+import { decodeBase64, getSearchParams, updateUrl } from '@/utils';
 import { isValidURL } from '@/utils/is-valid-url';
 import { useSearchParams } from 'next/navigation';
 import { ChangeEvent, FormEvent, use, useEffect, useState } from 'react';
@@ -35,12 +35,10 @@ export default function RestClient({ params }: RestClientProps) {
   const [headerParams, setHeaderParams] = useState('');
 
   useEffect(() => {
-    const params = new URLSearchParams();
-    headers.forEach(({ key, value }) => {
-      params.append(key, value);
-    });
-
-    setHeaderParams(`?${params.toString()}`);
+    if (headers.length) {
+      const searchParams = getSearchParams(headers);
+      setHeaderParams(searchParams);
+    }
   }, [headers]);
 
   useEffect(() => {
@@ -84,14 +82,11 @@ export default function RestClient({ params }: RestClientProps) {
   };
 
   const handleChangeHeaders = (headers: IHeader[]) => {
-    const params = new URLSearchParams();
-    headers.forEach(({ key, value }) => {
-      params.append(key, value);
-    });
-    const searchParams = `?${params.toString()}`;
+    const searchParams = getSearchParams(headers);
 
     updateUrl(method, url, body, searchParams);
     setHeaders(headers);
+    setHeaderParams(searchParams);
   };
 
   return (

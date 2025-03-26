@@ -6,14 +6,23 @@ export const updateUrl = (
   body: string,
   searchParams?: string
 ) => {
-  const base64Url = encodeBase64(url);
-  const base64Body = encodeBase64(body);
+  let customUrl = `/rest-client/${method}`;
+
+  if (url) {
+    const base64Url = encodeBase64(url);
+    customUrl += `/${base64Url}`;
+  }
+
+  if (body) {
+    const base64Body = encodeBase64(body);
+    customUrl += `/${base64Body}`;
+  }
+
+  if (searchParams) {
+    customUrl += `?${searchParams}`;
+  }
 
   if (window !== undefined) {
-    window.history.pushState(
-      {},
-      '',
-      `/rest-client/${method}/${base64Url}/${base64Body}${searchParams}`
-    );
+    window.history.pushState({}, '', customUrl);
   }
 };
