@@ -38,15 +38,13 @@ export default function RestClient({ params }: RestClientProps) {
   }, [headers]);
 
   useEffect(() => {
-    const paramsArray = Array.from(searchParams.entries()).map(
+    const headersArray = Array.from(searchParams.entries()).map(
       ([key, value]) => ({ id: uuidv4(), key, value })
     );
-    setHeaders(paramsArray);
-  }, []);
+    setHeaders(headersArray);
 
-  useEffect(() => {
     const request = async () => {
-      const res = await fetchData(method, url, body);
+      const res = await fetchData(method, url, body, headersArray);
       if (res) {
         setResponse({ status: res.status, body: JSON.stringify(res.json) });
       }
@@ -61,7 +59,7 @@ export default function RestClient({ params }: RestClientProps) {
     const isValid = isValidURL(url);
 
     if (isValid) {
-      const res = await fetchData(method, url, body);
+      const res = await fetchData(method, url, body, headers);
       if (res) {
         setResponse({ status: res.status, body: JSON.stringify(res.json) });
       }
