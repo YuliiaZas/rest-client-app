@@ -101,13 +101,15 @@ export default function RestClient({ params }: RestClientProps) {
               value={url}
               onChange={handleChangeUrl}
             />
-            <button className={styles.btn}>Go!</button>
+            <button className="btn">Go!</button>
           </div>
         </form>
         <section className={styles.section}>
           <h2 className={styles.label}>Request</h2>
           <div>
             <RequestOptions
+              url={url}
+              method={method}
               body={body}
               setBody={handleChangeBody}
               headers={headers}
@@ -115,7 +117,7 @@ export default function RestClient({ params }: RestClientProps) {
             />
           </div>
         </section>
-        <section className={styles.section}>
+        <section>
           <h2 className={styles.label}>Response</h2>
           {response ? (
             <ResponseView response={response} />

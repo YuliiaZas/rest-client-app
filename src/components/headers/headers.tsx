@@ -47,7 +47,7 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
               <td className={styles.actions}>
                 <button
                   type="button"
-                  className={styles.btn}
+                  className={'btn ' + styles.actionBtn}
                   onClick={() => deleteHeader(header.id)}
                 >
                   Delete
@@ -77,7 +77,11 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
               />
             </td>
             <td className={styles.actions}>
-              <button onClick={addHeader} type="button" className={styles.btn}>
+              <button
+                onClick={addHeader}
+                type="button"
+                className={'btn ' + styles.actionBtn}
+              >
                 Add
               </button>
             </td>

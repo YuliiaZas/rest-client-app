@@ -3,7 +3,6 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 100vh;
 }
 
 .container {
@@ -23,12 +22,6 @@
 .controls {
   display: flex;
   gap: 0.5rem;
-}
-
-.btn {
-  padding: 1rem;
-  background-color: var(--primary-main);
-  border-radius: 0.3rem;
 }
 
 .input {
