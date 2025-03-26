@@ -24,8 +24,11 @@ export default function RestClient({ params }: RestClientProps) {
   const [url, setUrl] = useState(decodedUrl);
   const decodedBody = decodeBase64(encodedBody ?? '');
   const [body, setBody] = useState(decodedBody);
-  const [headers, setHeaders] = useState<IHeader[]>([]);
   const searchParams = useSearchParams();
+  const headersArray = Array.from(searchParams.entries()).map(
+    ([key, value]) => ({ id: uuidv4(), key, value })
+  );
+  const [headers, setHeaders] = useState<IHeader[]>(headersArray);
   const [headerParams, setHeaderParams] = useState('');
 
   useEffect(() => {
@@ -38,32 +41,24 @@ export default function RestClient({ params }: RestClientProps) {
   }, [headers]);
 
   useEffect(() => {
-    const headersArray = Array.from(searchParams.entries()).map(
-      ([key, value]) => ({ id: uuidv4(), key, value })
-    );
-    setHeaders(headersArray);
+    handleRequest();
+  }, []);
 
-    const request = async () => {
+  const handleRequest = async () => {
+    const isValid = isValidURL(url);
+
+    if (isValid) {
       const res = await fetchData(method, url, body, headersArray);
       if (res) {
-        setResponse({ status: res.status, body: JSON.stringify(res.json) });
+        setResponse({ status: res.status, body: res.body });
       }
-    };
-
-    request();
-  }, []);
+    }
+  };
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    const isValid = isValidURL(url);
-
-    if (isValid) {
-      const res = await fetchData(method, url, body, headers);
-      if (res) {
-        setResponse({ status: res.status, body: JSON.stringify(res.json) });
-      }
-    }
+    handleRequest();
   };
 
   const handleChangeUrl = (e: ChangeEvent<HTMLInputElement>) => {

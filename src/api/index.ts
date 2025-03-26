@@ -1,11 +1,11 @@
-import { IHeader, IRequest } from '@/types';
+import { IHeader, IRequest, IResponse } from '@/types';
 
 export const fetchData = async (
   method: string,
   url: string,
   body: string,
   headers: IHeader[] = []
-) => {
+): Promise<IResponse> => {
   try {
     const requestOptions: IRequest = {
       method: method,
@@ -25,8 +25,12 @@ export const fetchData = async (
     const res = await fetch(url, requestOptions);
     const json = await res.json();
 
-    return { status: res.status, json };
+    return { status: res.status, body: JSON.stringify(json) };
   } catch (err) {
     console.log(err);
+    return {
+      status: 500,
+      body: JSON.stringify({ error: 'An error occurred' }),
+    };
   }
 };
