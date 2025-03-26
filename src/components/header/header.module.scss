@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: var(--background-dark);
+  color: var(--text-main);
+  font-size: 0.8rem;
+  position: sticky;
+  top: 0.5rem;
+  margin: 3rem 1rem 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}

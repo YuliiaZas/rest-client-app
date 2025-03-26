@@ -1,2 +1,6 @@
 @forward 'base/base';
 @forward 'utils/utils';
+
+body {
+  color: var(--text-main);
+}
