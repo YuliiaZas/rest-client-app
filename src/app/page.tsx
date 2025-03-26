@@ -1,11 +1,15 @@
-import Link from 'next/link';
+import { Translated } from '@/components';
 import styles from './page.module.scss';
 
-export default async function RootPage() {
+export default function RootPage() {
   return (
     <div className={styles.test}>
-      <h1>Empty app</h1>
-      <Link href="/rest-client/GET">REST Client</Link>
+      <h1>
+        <Translated scope="root" text="title" />
+      </h1>
+      <p>
+        <Translated scope="root" text="description" />
+      </p>
     </div>
   );
 }
