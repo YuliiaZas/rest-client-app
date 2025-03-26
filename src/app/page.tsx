@@ -1,5 +1,5 @@
-import styles from './page.module.scss';
 import { Translated } from '@/components';
+import styles from './page.module.scss';
 
 export default function RootPage() {
   return (
