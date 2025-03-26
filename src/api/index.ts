@@ -19,7 +19,8 @@ export const fetchData = async (
       ),
     };
 
-    if (body && method !== 'GET') {
+    const isBodyAllowed = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method);
+    if (body && isBodyAllowed) {
       requestOptions.body = body;
     }
 
