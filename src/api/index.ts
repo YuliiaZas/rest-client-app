@@ -11,14 +11,11 @@ export const fetchData = async (
     const requestOptions: IRequest = {
       method: method,
       headers: headers.reduce(
-        (acc, { key, value }) => {
+        (acc: Record<string, string>, { key, value }) => {
           acc[key] = value;
           return acc;
         },
-        { 'Content-type': 'application/json; charset=UTF-8' } as Record<
-          string,
-          string
-        >
+        { 'Content-type': 'application/json; charset=UTF-8' }
       ),
     };
 

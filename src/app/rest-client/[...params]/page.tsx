@@ -9,7 +9,14 @@ import { IHeader, IResponse } from '@/types';
 import { decodeBase64, getSearchParams, updateUrl } from '@/utils';
 import { isValidURL } from '@/utils/is-valid-url';
 import { useSearchParams } from 'next/navigation';
-import { ChangeEvent, FormEvent, use, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  use,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './rest-client.module.scss';
 
@@ -23,13 +30,25 @@ export default function RestClient({ params }: RestClientProps) {
   const [method, setMethod] = useState<Method>(
     (defaultMethod as Method) ?? 'GET'
   );
-  const decodedUrl = decodeBase64(encodedUrl ?? '');
+  const decodedUrl = useMemo(
+    () => decodeBase64(encodedUrl ?? ''),
+    [encodedUrl]
+  );
   const [url, setUrl] = useState(decodedUrl);
-  const decodedBody = decodeBase64(encodedBody ?? '');
+  const decodedBody = useMemo(
+    () => decodeBase64(encodedBody ?? ''),
+    [encodedUrl]
+  );
   const [body, setBody] = useState(decodedBody);
   const searchParams = useSearchParams();
-  const headersArray = Array.from(searchParams.entries()).map(
-    ([key, value]) => ({ id: uuidv4(), key, value })
+  const headersArray = useMemo(
+    () =>
+      Array.from(searchParams.entries()).map(([key, value]) => ({
+        id: uuidv4(),
+        key,
+        value,
+      })),
+    [searchParams]
   );
   const [headers, setHeaders] = useState<IHeader[]>(headersArray);
   const [headerParams, setHeaderParams] = useState('');
