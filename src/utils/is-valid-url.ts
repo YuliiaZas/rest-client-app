@@ -1,4 +1,6 @@
+import { string } from 'yup';
+
 export function isValidURL(url: string) {
-  const pattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w-./?%&=]*)?$/i;
-  return pattern.test(url);
+  const schema = string().url();
+  return schema.isValidSync(url);
 }
