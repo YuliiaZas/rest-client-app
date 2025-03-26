@@ -123,7 +123,7 @@ export default function RestClient({ params }: RestClientProps) {
             <button className="btn">Go!</button>
           </div>
         </form>
-        <section className={styles.section}>
+        <section>
           <h2 className={styles.label}>Request</h2>
           <div>
             <RequestOptions
