@@ -15,7 +15,10 @@ export const fetchData = async (
           acc[key] = value;
           return acc;
         },
-        {} as Record<string, string>
+        { 'Content-type': 'application/json; charset=UTF-8' } as Record<
+          string,
+          string
+        >
       ),
     };
 
