@@ -9,3 +9,4 @@ export { Nav } from './nav';
 export { Card } from './card';
 export { Modal } from './modal';
 export { ThemeSwitcher } from './theme-switcher';
+export { Spinner } from './spinner';
