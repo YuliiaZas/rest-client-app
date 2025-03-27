@@ -21,7 +21,7 @@
     line-height: 1.2rem;
     padding: 0.2rem 3rem 0.2rem 0.5rem;
     cursor: pointer;
-    color: currentColor;
+    color: var(--text-main);
   }
 
   & select:hover,

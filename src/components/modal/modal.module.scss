@@ -1,0 +1,45 @@
+.modal {
+  &__wrapper {
+    position: fixed;
+    background: var(--background-dimmed);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__frame {
+    position: relative;
+    width: 30rem;
+    height: auto;
+    min-height: 20rem;
+    border-radius: 0.5rem;
+    background: var(--background-main);
+    padding: 1rem 2rem;
+    box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-dark);
+  }
+
+  &__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-main);
+
+    &:hover {
+      scale: 1.1;
+    }
+  }
+
+  &__content {
+    margin-top: 1rem;
+
+    & h5 {
+      margin-bottom: 1rem;
+    }
+  }
+}

@@ -1,6 +1,8 @@
 {
-  "root": {
-    "title": "REST client app",
-    "description": "RS School React course 2025 Q1 final task"
+  "login": {
+    "login": "Log In"
+  },
+  "signup": {
+    "signup": "Sign Up"
   }
 }
