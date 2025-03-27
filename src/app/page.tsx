@@ -1,6 +1,5 @@
-import { Login } from '@/components/login/login';
+import { Login, Translated } from '@/components';
 import styles from './page.module.scss';
-import { Translated } from '@/components';
 
 export default function RootPage() {
   return (

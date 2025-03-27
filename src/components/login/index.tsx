@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Input } from '@/components/input/input';
+import { Input } from '@/components';
 import { FORM_FIELD, LoginForm } from './login.entities';
 import { characterSet, formSchema } from './login.consts';
 
