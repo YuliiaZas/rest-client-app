@@ -7,7 +7,7 @@ export function Footer() {
       <ul>
         <li>
           <a
-            href="https://github.com/users/YuliiaZas/projects/1"
+            href="https://github.com/YuliiaZas/rest-client-app"
             target="_blank"
             rel="noreferrer"
           >
@@ -17,7 +17,7 @@ export function Footer() {
         <li>2025</li>
         <li>
           <a
-            href="https://github.com/rolling-scopes-school/tasks/blob/master/react/assets/rss-logo.svg"
+            href="https://rs.school/courses/reactjs"
             target="_blank"
             rel="noreferrer"
           >
