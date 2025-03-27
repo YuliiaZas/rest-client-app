@@ -55,14 +55,3 @@
     padding-right: var(--input-placeholder-padding);
   }
 }
-
-.input__error {
-  min-height: 2em;
-  padding-block: 0.25rem;
-  font-size: small;
-  color: var(--error-main)
-}
-
-.input__error_empty {
-  visibility: hidden;
-}

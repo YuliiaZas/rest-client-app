@@ -1,7 +1,8 @@
 'use client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Path, UseFormRegister, UseFormTrigger } from 'react-hook-form';
-import { Icon, PhosphorIcons } from '@/components/icons';
+import { ErrorMessage, Icon } from '@/components';
+import { PhosphorIcons } from '@/components/icons';
 import styles from './input.module.scss';
 
 type FormFieldProps<T extends Record<string, string> = Record<string, string>> =
@@ -84,13 +85,7 @@ export const Input = <T extends Record<string, string>>({
           </div>
         )}
       </div>
-      {withValidation && (
-        <div
-          className={`${styles.input__error} ${errorMessage ? '' : styles.input__error_empty}`}
-        >
-          {errorMessage}
-        </div>
-      )}
+      {withValidation && <ErrorMessage errorMessage={errorMessage} />}
     </div>
   );
 };

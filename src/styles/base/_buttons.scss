@@ -1,0 +1,42 @@
+@use '../utils/mixins' as *;
+
+@mixin button-styles($type) {
+  padding: 0.5rem 1rem;
+  background-color: var(--#{$type}-main);
+  color: var(--#{$type}-contrast-text);
+  @include border-default(var(--#{$type}-main));
+
+  &:hover,
+  &:active {
+    background-color: var(--#{$type}-dark);
+    border-color: var(--#{$type}-dark);
+  }
+
+  &:disabled {
+    background-color: var(--#{$type}-light);
+    border-color: var(--#{$type}-light);
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: 2px solid var(--#{$type}-dark);
+    outline-offset: 2px;
+  }
+}
+
+.button_primary {
+  @include button-styles('primary');
+}
+
+.button_secondary {
+  @include button-styles('secondary');
+}
+
+.button_transparent {
+  --var-transparent-main: transparent;
+  --var-transparent-contrast-text: var(--text-main);
+  --var-transparent-dark: var(--background-dark);
+  --var-transparent-light: var(--background-disabled);
+
+  @include button-styles('transparent');
+}
