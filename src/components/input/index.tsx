@@ -1,4 +1,5 @@
 'use client';
+import clsx from 'clsx';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Path, UseFormRegister, UseFormTrigger } from 'react-hook-form';
 import { ErrorMessage, Icon } from '@/components';
@@ -75,7 +76,10 @@ export const Input = <T extends Record<string, string>>({
         />
         {currentIcon && (
           <div
-            className={`${styles.input__icon} ${styles[`input__icon_${iconPosition}`]}`}
+            className={clsx(
+              styles.input__icon,
+              styles[`input__icon_${iconPosition}`]
+            )}
           >
             <Icon
               iconName={currentIcon}

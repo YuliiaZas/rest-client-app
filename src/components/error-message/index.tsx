@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import styles from './error-message.module.scss';
 
 interface ErrorMessageProps {
@@ -7,7 +8,7 @@ interface ErrorMessageProps {
 export const ErrorMessage = ({ errorMessage = '' }: ErrorMessageProps) => {
   return (
     <div
-      className={`${styles['error-message']} ${errorMessage ? '' : 'hidden'}`}
+      className={clsx(styles['error-message'], errorMessage ? '' : 'hidden')}
     >
       {errorMessage}
     </div>
