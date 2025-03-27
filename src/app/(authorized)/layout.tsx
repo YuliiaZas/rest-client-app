@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Aside, Footer, Header } from '@/components';
+import { Aside, Footer, Header, Icon } from '@/components';
 import styles from './layout.module.scss';
 
 type ClientLayoutProps = {
@@ -10,7 +10,9 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   return (
     <div className={styles.client}>
       <Aside type="client">
-        <h2>A</h2>
+        <Icon iconName="user" size="3rem" />
+        <Icon iconName="stack" size="3rem" />
+        <Icon iconName="history" size="3rem" />
       </Aside>
       <div className={styles.content}>
         <Header isAuthenticated={true} />
