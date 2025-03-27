@@ -1,8 +1,20 @@
 {
-  "login": {
-    "login": "Log In"
+  "root": {
+    "title": "REST client app",
+    "description": "RS School React course 2025 Q1 final task"
   },
-  "signup": {
-    "signup": "Sign Up"
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "passwordRepeat": "Repeat password",
+    "required": "{field} is required",
+    "emailInvalid": "Invalid email",
+    "passwordLength": "Password must be at least {length} characters long",
+    "passwordWeak": "Password must contain at least one number, one uppercase letter, one lowercase letter, and one special character from set {set}",
+    "passwordMismatch": "Passwords do not match",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "signUp": "Sign Up",
+    "loginError": "Invalid email or password"
   }
 }

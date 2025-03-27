@@ -15,12 +15,12 @@ export function Nav({ isAuthenticated }: NavProps) {
             <Icon iconName="key" size="1rem" />
             <li>
               <Link href="/auth/login">
-                <Translated scope="login" text="login" />
+                <Translated scope="login" text="signIn" />
               </Link>
             </li>
             <li>
               <Link href="/auth/signup">
-                <Translated scope="signup" text="signup" />
+                <Translated scope="login" text="signUp" />
               </Link>
             </li>
           </>

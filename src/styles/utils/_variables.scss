@@ -1,2 +1,10 @@
 @forward 'light-theme';
 @forward 'dark-theme';
+
+:root {
+  --input-height-default: 2rem;
+  --input-width-default: 20rem;
+  --input-padding-inline-default: 0.75rem;
+  --border-radius: 0.25rem;
+  --min-tap-size: 2.75rem;
+}
