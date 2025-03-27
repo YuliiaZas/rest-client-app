@@ -6,21 +6,21 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, ErrorMessage, Input } from '@/components';
 import {
   FORM_FIELD,
-  LoginForm,
+  ILoginForm,
   SignUpForm,
   SignInForm,
-} from './login.entities';
+} from './login-form.entities';
 import {
   characterSet,
   signInFormSchema,
   signUpFormSchema,
-} from './login.consts';
+} from './login-form.consts';
 
 interface LoginProps {
   isSignUp?: boolean;
 }
 
-export const Login = ({ isSignUp = false }: LoginProps) => {
+export const LoginForm = ({ isSignUp = false }: LoginProps) => {
   const t = useTranslations('login');
   const [loginError, setLoginError] = useState<string>('');
 
@@ -42,17 +42,17 @@ export const Login = ({ isSignUp = false }: LoginProps) => {
     handleSubmit,
     formState: { errors, isValid },
     trigger,
-  } = useForm<LoginForm>({
+  } = useForm<ILoginForm>({
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmit = (data: LoginForm) => {
+  const onSubmit = (data: ILoginForm) => {
     console.log(data);
     setLoginError('loginError');
   };
 
   const getErrorMessages = useCallback(
-    (field: keyof LoginForm) => {
+    (field: keyof ILoginForm) => {
       if (errors[field]?.message) {
         const isErrorRequired = errors[field].type === 'required';
         const key = isErrorRequired ? 'required' : errors[field].message;
@@ -70,9 +70,9 @@ export const Login = ({ isSignUp = false }: LoginProps) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {fields.map((field) => {
-        const fieldName = field as keyof LoginForm;
+        const fieldName = field as keyof ILoginForm;
         return (
-          <Input<LoginForm>
+          <Input<ILoginForm>
             id={fieldName}
             placeholder={t(fieldName)}
             type={fieldName === FORM_FIELD.USERNAME ? 'text' : 'password'}

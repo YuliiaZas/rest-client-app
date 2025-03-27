@@ -1,4 +1,4 @@
-import { Login, Translated } from '@/components';
+import { LoginForm, Translated } from '@/components';
 import styles from './page.module.scss';
 
 export default function RootPage() {
@@ -10,7 +10,7 @@ export default function RootPage() {
       <p>
         <Translated scope="root" text="description" />
       </p>
-      <Login />
+      <LoginForm />
     </div>
   );
 }

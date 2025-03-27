@@ -1,5 +1,5 @@
 import { object, ObjectSchema, ref, string } from 'yup';
-import { FORM_FIELD, SignInForm, SignUpForm } from './login.entities';
+import { FORM_FIELD, SignInForm, SignUpForm } from './login-form.entities';
 
 export const characterSet = '!@#$%^&*(),.?:{}|<>/~';
 

@@ -13,4 +13,4 @@ export type SignUpForm = SignInForm & {
   [FORM_FIELD.PASSWORD_REPEAT]: string;
 };
 
-export type LoginForm = SignInForm | SignUpForm;
+export type ILoginForm = SignInForm | SignUpForm;
