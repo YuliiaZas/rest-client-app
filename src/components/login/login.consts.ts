@@ -1,9 +1,9 @@
 import { object, ObjectSchema, ref, string } from 'yup';
-import { FORM_FIELD, LoginForm } from './login.entities';
+import { FORM_FIELD, SignInForm, SignUpForm } from './login.entities';
 
 export const characterSet = '!@#$%^&*(),.?:{}|<>/~';
 
-export const formSchema: ObjectSchema<LoginForm> = object({
+export const signInFormSchema: ObjectSchema<SignInForm> = object({
   [FORM_FIELD.USERNAME]: string()
     .required()
     .matches(/^[A-Z]/, 'usernameUppercaseStart'),
@@ -15,7 +15,13 @@ export const formSchema: ObjectSchema<LoginForm> = object({
       ),
       'passwordWeak'
     ),
-  [FORM_FIELD.PASSWORD_REPEAT]: string()
-    .required()
-    .oneOf([ref(FORM_FIELD.PASSWORD), ''], 'passwordMismatch'),
 });
+
+export const signUpFormSchema: ObjectSchema<SignUpForm> =
+  signInFormSchema.concat(
+    object({
+      [FORM_FIELD.PASSWORD_REPEAT]: string()
+        .required()
+        .oneOf([ref(FORM_FIELD.PASSWORD), ''], 'passwordMismatch'),
+    })
+  );

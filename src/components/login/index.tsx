@@ -1,16 +1,41 @@
 'use client';
 import { useTranslations } from 'next-intl';
-import { useCallback } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Input } from '@/components';
-import { FORM_FIELD, LoginForm } from './login.entities';
-import { characterSet, formSchema } from './login.consts';
+import { Button, ErrorMessage, Input } from '@/components';
+import {
+  FORM_FIELD,
+  LoginForm,
+  SignUpForm,
+  SignInForm,
+} from './login.entities';
+import {
+  characterSet,
+  signInFormSchema,
+  signUpFormSchema,
+} from './login.consts';
 
-export const Login = () => {
+interface LoginProps {
+  isSignUp?: boolean;
+}
+
+export const Login = ({ isSignUp = false }: LoginProps) => {
   const t = useTranslations('login');
+  const [loginError, setLoginError] = useState<string>('');
 
-  const fields = Object.values(FORM_FIELD);
+  const fields = useMemo(
+    () =>
+      isSignUp
+        ? (Object.values(FORM_FIELD) as Array<keyof SignUpForm>)
+        : (Object.values(FORM_FIELD).slice(0, -1) as Array<keyof SignInForm>),
+    [isSignUp]
+  );
+
+  const formSchema = useMemo(
+    () => (isSignUp ? signUpFormSchema : signInFormSchema),
+    [isSignUp]
+  );
 
   const {
     register,
@@ -23,6 +48,7 @@ export const Login = () => {
 
   const onSubmit = (data: LoginForm) => {
     console.log(data);
+    setLoginError('loginError');
   };
 
   const getErrorMessages = useCallback(
@@ -59,7 +85,11 @@ export const Login = () => {
         );
       })}
       <div>
-        <button disabled={!isValid}>Save</button>
+        <Button
+          text={t(isSignUp ? 'signUp' : 'signIn')}
+          isDisabled={!isValid}
+        />
+        {loginError && <ErrorMessage errorMessage={t(loginError)} />}
       </div>
     </form>
   );
