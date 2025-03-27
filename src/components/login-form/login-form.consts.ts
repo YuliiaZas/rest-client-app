@@ -2,19 +2,20 @@ import { object, ObjectSchema, ref, string } from 'yup';
 import { FORM_FIELD, SignInForm, SignUpForm } from './login-form.entities';
 
 export const characterSet = '!@#$%^&*(),.?:{}|<>/~';
+export const passwordLength = 8;
 
 export const signInFormSchema: ObjectSchema<SignInForm> = object({
-  [FORM_FIELD.USERNAME]: string()
-    .required()
-    .matches(/^[A-Z]/, 'usernameUppercaseStart'),
+  [FORM_FIELD.EMAIL]: string().trim().required().email('emailInvalid'),
   [FORM_FIELD.PASSWORD]: string()
     .required()
     .matches(
       new RegExp(
-        `^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[${characterSet}]).*$`
+        `^(?=.*[0-9])(?=.*\\p{Lu})(?=.*\\p{Ll})(?=.*[${characterSet}]).*$`,
+        'u'
       ),
       'passwordWeak'
-    ),
+    )
+    .min(passwordLength, 'passwordLength'),
 });
 
 export const signUpFormSchema: ObjectSchema<SignUpForm> =

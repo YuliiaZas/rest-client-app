@@ -1,11 +1,11 @@
 export enum FORM_FIELD {
-  USERNAME = 'username',
+  EMAIL = 'email',
   PASSWORD = 'password',
   PASSWORD_REPEAT = 'passwordRepeat',
 }
 
 export type SignInForm = {
-  [FORM_FIELD.USERNAME]: string;
+  [FORM_FIELD.EMAIL]: string;
   [FORM_FIELD.PASSWORD]: string;
 };
 

@@ -12,6 +12,7 @@ import {
 } from './login-form.entities';
 import {
   characterSet,
+  passwordLength,
   signInFormSchema,
   signUpFormSchema,
 } from './login-form.consts';
@@ -51,6 +52,11 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
     setLoginError('loginError');
   };
 
+  const passwordParams = {
+    set: characterSet,
+    length: passwordLength,
+  };
+
   const getErrorMessages = useCallback(
     (field: keyof ILoginForm) => {
       if (errors[field]?.message) {
@@ -58,7 +64,7 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
         const key = isErrorRequired ? 'required' : errors[field].message;
         const parameters = {
           ...(isErrorRequired && { field: t(field) }),
-          ...(field === FORM_FIELD.PASSWORD && { value: characterSet }),
+          ...(field === FORM_FIELD.PASSWORD && passwordParams),
         };
         return t(key, parameters);
       }
@@ -75,7 +81,7 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
           <Input<ILoginForm>
             id={fieldName}
             placeholder={t(fieldName)}
-            type={fieldName === FORM_FIELD.USERNAME ? 'text' : 'password'}
+            type={fieldName === FORM_FIELD.EMAIL ? 'text' : 'password'}
             withValidation={true}
             register={register}
             error={getErrorMessages(fieldName)}
