@@ -16,11 +16,11 @@ import {
   signUpFormSchema,
 } from './login-form.consts';
 
-interface LoginProps {
+interface LoginFormProps {
   isSignUp?: boolean;
 }
 
-export const LoginForm = ({ isSignUp = false }: LoginProps) => {
+export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
   const t = useTranslations('login');
   const [loginError, setLoginError] = useState<string>('');
 
