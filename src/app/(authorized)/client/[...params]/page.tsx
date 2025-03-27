@@ -19,6 +19,7 @@ import {
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './rest-client.module.scss';
+import { Main } from '@/views';
 
 type RestClientProps = {
   params: Promise<{ params: string[] }>;
@@ -109,40 +110,42 @@ export default function RestClient({ params }: RestClientProps) {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.controls}>
-            <MethodSelector value={method} onChange={handleChangeMethod} />
-            <input
-              className={styles.input}
-              name="url"
-              value={url}
-              onChange={handleChangeUrl}
-            />
-            <button className={styles.btn}>Go!</button>
-          </div>
-        </form>
-        <section className={styles.section}>
-          <h2 className={styles.label}>Request</h2>
-          <div>
-            <RequestOptions
-              body={body}
-              setBody={handleChangeBody}
-              headers={headers}
-              setHeaders={handleChangeHeaders}
-            />
-          </div>
-        </section>
-        <section className={styles.section}>
-          <h2 className={styles.label}>Response</h2>
-          {response ? (
-            <ResponseView response={response} />
-          ) : (
-            <p>No response yet</p>
-          )}
-        </section>
+    <Main>
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.controls}>
+              <MethodSelector value={method} onChange={handleChangeMethod} />
+              <input
+                className={styles.input}
+                name="url"
+                value={url}
+                onChange={handleChangeUrl}
+              />
+              <button className={styles.btn}>Go!</button>
+            </div>
+          </form>
+          <section className={styles.section}>
+            <h2 className={styles.label}>Request</h2>
+            <div>
+              <RequestOptions
+                body={body}
+                setBody={handleChangeBody}
+                headers={headers}
+                setHeaders={handleChangeHeaders}
+              />
+            </div>
+          </section>
+          <section className={styles.section}>
+            <h2 className={styles.label}>Response</h2>
+            {response ? (
+              <ResponseView response={response} />
+            ) : (
+              <p>No response yet</p>
+            )}
+          </section>
+        </div>
       </div>
-    </div>
+    </Main>
   );
 }
