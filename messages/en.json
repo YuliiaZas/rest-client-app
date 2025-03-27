@@ -2,5 +2,18 @@
   "root": {
     "title": "REST client app",
     "description": "RS School React course 2025 Q1 final task"
+  },
+  "login": {
+    "username": "Username",
+    "password": "Password",
+    "passwordRepeat": "Repeat password",
+    "required": "{field} is required",
+    "usernameUppercaseStart": "Username should start with a uppercase letter",
+    "passwordWeak": "Password must contain at least one number, one uppercase letter, one lowercase letter, and one special character from set {value}",
+    "passwordMismatch": "Passwords do not match",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "signUp": "Sign Up",
+    "loginError": "Invalid username or password"
   }
 }

@@ -1,0 +1,5 @@
+
+@mixin border-default {
+  border: 2px solid var(--lines-main);
+  border-radius: var(--border-radius);
+}
