@@ -38,7 +38,7 @@
   width: max-content;
   @include shadow();
   @include border-default();
-  z-index: 10;
+  z-index: var(--z-index-dropdown);
 }
 
 .dropdow__item {
