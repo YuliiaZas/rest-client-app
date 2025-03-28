@@ -1,7 +1,5 @@
 @use '@/styles/utils/mixins' as *;
 
-$indent: 0 0.5rem;
-
 .input__wrapper {
   position: relative;
   width: 100%;
@@ -16,7 +14,6 @@ $indent: 0 0.5rem;
   z-index: 1;
   border: none;
   outline: none;
-  padding: $indent;
   background: transparent;
 }
 /* For showing through placeholder */
@@ -29,11 +26,15 @@ $indent: 0 0.5rem;
   inset: 0;
   display: flex;
   align-items: center;
-  margin: $indent;
   white-space: pre;
   overflow-x: auto;
   user-select: none;
   scrollbar-width: none;
+}
+
+.input__field,
+.input__view {
+  padding: 0 0.5rem;
 }
 
 .input__view::-webkit-scrollbar {

@@ -6,7 +6,12 @@ import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
 import { Method } from '@/data';
 import { IHeader, IResponse } from '@/types';
-import { decodeBase64, getSearchParams, updateUrl } from '@/utils';
+import {
+  decodeBase64,
+  getSearchParams,
+  getUrlWithVariableValues,
+  updateUrl,
+} from '@/utils';
 import { isValidURL } from '@/utils/is-valid-url';
 import { useSearchParams } from 'next/navigation';
 import {
@@ -60,7 +65,7 @@ export default function RestClient({ params }: RestClientProps) {
   // const [variables, setVariables] = useLocalStorage<Variables>({
   const [variables] = useLocalStorage<Variables>({
     key: 'variables',
-    defaultValue: { test: 'test' },
+    defaultValue: { test: 'test value' },
   });
 
   useEffect(() => {
@@ -75,10 +80,16 @@ export default function RestClient({ params }: RestClientProps) {
   }, []);
 
   const handleRequest = async () => {
-    const isValid = isValidURL(url);
+    const urlWithVariableValues = getUrlWithVariableValues(url, variables);
+    const isValid = isValidURL(urlWithVariableValues);
 
     if (isValid) {
-      const res = await fetchData(method, url, body, headersArray);
+      const res = await fetchData(
+        method,
+        urlWithVariableValues,
+        body,
+        headersArray
+      );
       if (res) {
         setResponse({ status: res.status, body: res.body });
       }
@@ -127,7 +138,7 @@ export default function RestClient({ params }: RestClientProps) {
               <InputWithVariables
                 value={url}
                 variables={variables}
-                onChange={handleChangeUrl}
+                onValueChange={handleChangeUrl}
               />
               <button className={styles.btn}>Go!</button>
             </div>

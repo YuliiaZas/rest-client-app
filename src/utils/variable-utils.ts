@@ -12,3 +12,10 @@ export const isVariableUndefined = (part: string, variables: Variables) => {
   console.log(key, key && variables[key]);
   return key && !variables[key];
 };
+
+export const getUrlWithVariableValues = (url: string, variables: Variables) => {
+  return url.replace(variableRegExp, (part) => {
+    const key = getVariableKey(part);
+    return key && variables[key] ? variables[key] : part;
+  });
+};

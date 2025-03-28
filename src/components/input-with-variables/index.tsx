@@ -10,20 +10,18 @@ type InputWithVariablesProps = {
   value: string;
   variables?: Variables;
   placeholder?: string;
-  onChange: (value: string) => void;
+  onValueChange: (value: string) => void;
 };
 
 export const InputWithVariables = ({
   value,
   variables = {},
-  placeholder,
-  onChange,
+  placeholder = 'Type the URL here',
+  onValueChange,
 }: InputWithVariablesProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  const [currentValue, setCurrentValue] = useState(
-    value || 'This is a {{ undefined variable }} {{ test }}'
-  );
+  const [currentValue, setCurrentValue] = useState(value);
 
   const [hoveredPartIndex, setHoveredPartIndex] = useState<number | null>(null);
 
@@ -38,9 +36,9 @@ export const InputWithVariables = ({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       setCurrentValue(value);
-      onChange(value);
+      onValueChange(value);
     },
-    [onChange]
+    [onValueChange]
   );
 
   const onMouseMoveHandler = useCallback(
