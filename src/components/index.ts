@@ -14,3 +14,4 @@ export { Input } from './input';
 export { Button } from './button';
 export { LoginForm } from './login-form';
 export { ErrorMessage } from './error-message';
+export { InputWithVariables } from './input-with-variables';

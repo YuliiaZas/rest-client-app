@@ -20,6 +20,9 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import styles from './rest-client.module.scss';
 import { Main } from '@/views';
+import { InputWithVariables } from '@/components';
+import { useLocalStorage } from '@/hooks';
+import { Variables } from '@/entites';
 
 type RestClientProps = {
   params: Promise<{ params: string[] }>;
@@ -54,6 +57,12 @@ export default function RestClient({ params }: RestClientProps) {
   const [headers, setHeaders] = useState<IHeader[]>(headersArray);
   const [headerParams, setHeaderParams] = useState('');
 
+  // const [variables, setVariables] = useLocalStorage<Variables>({
+  const [variables] = useLocalStorage<Variables>({
+    key: 'variables',
+    defaultValue: { test: 'test' },
+  });
+
   useEffect(() => {
     if (headers.length) {
       const searchParams = getSearchParams(headers);
@@ -82,9 +91,8 @@ export default function RestClient({ params }: RestClientProps) {
     handleRequest();
   };
 
-  const handleChangeUrl = (e: ChangeEvent<HTMLInputElement>) => {
-    const newUrl = e.target.value;
-
+  const handleChangeUrl = (newUrl: string) => {
+    console.log('newUrl', newUrl);
     updateUrl(method, newUrl, body, headerParams);
     setUrl(newUrl);
   };
@@ -116,10 +124,9 @@ export default function RestClient({ params }: RestClientProps) {
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.controls}>
               <MethodSelector value={method} onChange={handleChangeMethod} />
-              <input
-                className={styles.input}
-                name="url"
+              <InputWithVariables
                 value={url}
+                variables={variables}
                 onChange={handleChangeUrl}
               />
               <button className={styles.btn}>Go!</button>
