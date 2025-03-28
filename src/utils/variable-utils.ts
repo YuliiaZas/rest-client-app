@@ -7,10 +7,10 @@ export const getVariableKey = (part: string) => {
   return match ? match[1] : null;
 };
 
-export const isVariableUndefined = (part: string, variables: Variables) => {
+export const isVariableDefined = (part: string, variables: Variables) => {
   const key = getVariableKey(part);
   console.log(key, key && variables[key]);
-  return key && !variables[key];
+  return key && variables[key];
 };
 
 export const getUrlWithVariableValues = (url: string, variables: Variables) => {

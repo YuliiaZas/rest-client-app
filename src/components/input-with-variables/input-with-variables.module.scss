@@ -4,7 +4,6 @@
   position: relative;
   width: 100%;
   height: 100%;
-  @include border-default();
 }
 
 .input__field {
@@ -15,7 +14,21 @@
   border: none;
   outline: none;
   background: transparent;
+
+  &_primary {
+    @include border-default();
+  }
+  
+  &_secondary {
+    @include border-secondary();
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-main);
+  }
 }
+
 /* For showing through placeholder */
 .input__field:not([value=""]) {
   -webkit-text-fill-color: transparent;
@@ -42,18 +55,21 @@
 }
 
 .input__variable {
-  color: var(--success-dark);
   outline: 1px dotted;
   border-radius: 0.1rem;
 
-  &_undefined {
-    color: var(--error-dark);
+  &_defined {
+    color: var(--success-dark);
+
+    &.input__variable_hovered {
+      background-color: var(--success-light);
+    }
   }
 
-  &_hovered {
-    background-color: var(--success-light);
+  &_undefined {
+    color: var(--error-dark);
 
-    &.input__variable_undefined {
+    &.input__variable_hovered {
       background-color: var(--error-light);
     }
   }

@@ -138,6 +138,7 @@ export default function RestClient({ params }: RestClientProps) {
               <InputWithVariables
                 value={url}
                 variables={variables}
+                type={'primary'}
                 onValueChange={handleChangeUrl}
               />
               <button className={styles.btn}>Go!</button>

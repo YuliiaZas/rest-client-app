@@ -3,13 +3,14 @@
 import { useCallback, useRef, useState } from 'react';
 import styles from './input-with-variables.module.scss';
 import clsx from 'clsx';
-import { isVariableUndefined, variableRegExp } from '@/utils';
+import { isVariableDefined, variableRegExp } from '@/utils';
 import { Variables } from '@/entites';
 
 type InputWithVariablesProps = {
   value: string;
   variables?: Variables;
   placeholder?: string;
+  type?: 'primary' | 'secondary';
   onValueChange: (value: string) => void;
 };
 
@@ -17,6 +18,7 @@ export const InputWithVariables = ({
   value,
   variables = {},
   placeholder = 'Type the URL here',
+  type = 'secondary',
   onValueChange,
 }: InputWithVariablesProps) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -68,7 +70,7 @@ export const InputWithVariables = ({
   return (
     <div className={styles.input__wrapper}>
       <input
-        className={styles.input__field}
+        className={clsx(styles.input__field, styles[`input__field_${type}`])}
         placeholder={placeholder}
         value={currentValue}
         onChange={onChangeHandler}
@@ -85,8 +87,9 @@ export const InputWithVariables = ({
               key={i}
               className={clsx(
                 styles.input__variable,
-                isVariableUndefined(part, variables) &&
-                  styles.input__variable_undefined,
+                styles[
+                  `input__variable_${isVariableDefined(part, variables) ? 'defined' : 'undefined'}`
+                ],
                 hoveredPartIndex === i && styles.input__variable_hovered
               )}
             >

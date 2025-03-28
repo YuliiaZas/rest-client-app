@@ -1,5 +1,9 @@
 
-@mixin border-default($border-color: var(--lines-main)) {
-  border: 2px solid $border-color;
+@mixin border-default($border-color: var(--lines-main), $border-width: 2px) {
+  border: $border-width solid $border-color;
   border-radius: var(--border-radius);
+}
+
+@mixin border-secondary($border-color: var(--lines-main)) {
+  @include border-default($border-color, 1px);
 }
