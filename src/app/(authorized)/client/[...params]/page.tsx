@@ -6,20 +6,21 @@ import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
 import { Method } from '@/data';
 import { IHeader, IResponse } from '@/types';
-import { decodeBase64, getSearchParams, updateUrl } from '@/utils';
+import {
+  decodeBase64,
+  getSearchParams,
+  getUrlWithVariableValues,
+  updateUrl,
+} from '@/utils';
 import { isValidURL } from '@/utils/is-valid-url';
 import { useSearchParams } from 'next/navigation';
-import {
-  ChangeEvent,
-  FormEvent,
-  use,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { FormEvent, use, useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './rest-client.module.scss';
 import { Main } from '@/views';
+import { InputWithVariables } from '@/components';
+import { useLocalStorage } from '@/hooks';
+import { Variables } from '@/entites';
 
 type RestClientProps = {
   params: Promise<{ params: string[] }>;
@@ -54,6 +55,12 @@ export default function RestClient({ params }: RestClientProps) {
   const [headers, setHeaders] = useState<IHeader[]>(headersArray);
   const [headerParams, setHeaderParams] = useState('');
 
+  // const [variables, setVariables] = useLocalStorage<Variables>({
+  const [variables] = useLocalStorage<Variables>({
+    key: 'variables',
+    defaultValue: { test: 'test value' },
+  });
+
   useEffect(() => {
     if (headers.length) {
       const searchParams = getSearchParams(headers);
@@ -66,10 +73,16 @@ export default function RestClient({ params }: RestClientProps) {
   }, []);
 
   const handleRequest = async () => {
-    const isValid = isValidURL(url);
+    const urlWithVariableValues = getUrlWithVariableValues(url, variables);
+    const isValid = isValidURL(urlWithVariableValues);
 
     if (isValid) {
-      const res = await fetchData(method, url, body, headersArray);
+      const res = await fetchData(
+        method,
+        urlWithVariableValues,
+        body,
+        headersArray
+      );
       if (res) {
         setResponse({ status: res.status, body: res.body });
       }
@@ -82,9 +95,8 @@ export default function RestClient({ params }: RestClientProps) {
     handleRequest();
   };
 
-  const handleChangeUrl = (e: ChangeEvent<HTMLInputElement>) => {
-    const newUrl = e.target.value;
-
+  const handleChangeUrl = (newUrl: string) => {
+    console.log('newUrl', newUrl);
     updateUrl(method, newUrl, body, headerParams);
     setUrl(newUrl);
   };
@@ -116,11 +128,11 @@ export default function RestClient({ params }: RestClientProps) {
               <div className={styles.method}>
                 <MethodSelector value={method} onChange={handleChangeMethod} />
               </div>
-              <input
-                className={styles.input}
-                name="url"
+              <InputWithVariables
                 value={url}
-                onChange={handleChangeUrl}
+                variables={variables}
+                type={'primary'}
+                onValueChange={handleChangeUrl}
               />
               <button className={styles.btn}>Go!</button>
             </div>
