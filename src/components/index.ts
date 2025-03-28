@@ -1,7 +1,5 @@
 export { LocaleSwitcher } from './locale-switcher';
 export { Translated } from './translated';
-export { Select } from './select';
-export { Icon } from './icons';
 export { Aside } from './aside';
 export { Header } from './header';
 export { Footer } from './footer';
@@ -10,7 +8,10 @@ export { Card } from './card';
 export { Modal } from './modal';
 export { ThemeSwitcher } from './theme-switcher';
 export { Spinner } from './spinner';
+export { Select } from './select';
+export { Icon } from './icons';
 export { Input } from './input';
+export { Dropdown } from './dropdown';
 export { Button } from './button';
 export { LoginForm } from './login-form';
 export { ErrorMessage } from './error-message';

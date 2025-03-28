@@ -1,6 +1,8 @@
 import Editor from '@monaco-editor/react';
 import { useEffect, useState } from 'react';
 import styles from './body-editor.module.scss';
+import { DropdownItem } from '@/entites';
+import { Dropdown } from '../dropdown';
 
 type RequestOptions = {
   body: string;
@@ -8,13 +10,19 @@ type RequestOptions = {
   readOnly?: boolean;
 };
 
+type Language = 'json' | 'plaintext';
+
 export default function BodyEditor({
   body,
   setBody,
   readOnly,
 }: RequestOptions) {
   const [formattedJson, setFormattedJson] = useState(body);
-  const [language, setLanguage] = useState('json');
+  const [language, setLanguage] = useState<Language>('json');
+  const languageOptions: DropdownItem[] = [
+    { value: 'json', label: 'JSON' },
+    { value: 'plaintext', label: 'String' },
+  ];
 
   useEffect(() => {
     if (readOnly) {
@@ -26,14 +34,14 @@ export default function BodyEditor({
   return (
     <>
       {!readOnly && (
-        <select
-          onChange={(e) => setLanguage(e.target.value)}
-          value={language}
-          className={styles.selector}
-        >
-          <option value="json">JSON</option>
-          <option value="plaintext">String</option>
-        </select>
+        <div className={styles.editor__selector}>
+          <Dropdown
+            items={languageOptions}
+            selectedItem={language}
+            selectOption={(value) => setLanguage(value as Language)}
+            buttonTransparent={true}
+          />
+        </div>
       )}
       <Editor
         height="30vh"

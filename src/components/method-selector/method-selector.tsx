@@ -1,12 +1,12 @@
 'use client';
 
 import { httpMethods } from '@/data';
-import { ChangeEvent } from 'react';
+import { Dropdown } from '../dropdown';
 import styles from './method-selector.module.scss';
 
 type MethodSelectorProps = {
   value: string;
-  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  onChange: (e: string) => void;
 };
 
 export default function MethodSelector({
@@ -14,17 +14,14 @@ export default function MethodSelector({
   onChange,
 }: MethodSelectorProps) {
   return (
-    <select
-      value={value}
-      onChange={onChange}
-      className={styles.select}
-      name="method"
-    >
-      {httpMethods.map((method) => (
-        <option key={method} value={method}>
-          {method}
-        </option>
-      ))}
-    </select>
+    <Dropdown
+      items={httpMethods.map((method) => ({
+        value: method,
+        itemClass: method.toLowerCase(),
+      }))}
+      selectedItem={value}
+      selectOption={onChange}
+      dropdownClass={styles.select}
+    />
   );
 }

@@ -89,11 +89,9 @@ export default function RestClient({ params }: RestClientProps) {
     setUrl(newUrl);
   };
 
-  const handleChangeMethod = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newMethod = e.target.value as Method;
-
-    updateUrl(newMethod, url, body, headerParams);
-    setMethod(newMethod);
+  const handleChangeMethod = (newMethod: string) => {
+    updateUrl(newMethod as Method, url, body, headerParams);
+    setMethod(newMethod as Method);
   };
 
   const handleChangeBody = (newBody: string) => {
@@ -115,7 +113,9 @@ export default function RestClient({ params }: RestClientProps) {
         <div className={styles.container}>
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.controls}>
-              <MethodSelector value={method} onChange={handleChangeMethod} />
+              <div className={styles.method}>
+                <MethodSelector value={method} onChange={handleChangeMethod} />
+              </div>
               <input
                 className={styles.input}
                 name="url"
