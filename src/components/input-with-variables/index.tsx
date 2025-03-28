@@ -19,10 +19,13 @@ export const InputWithVariables = ({
   placeholder,
   onChange,
 }: InputWithVariablesProps) => {
+  const ref = useRef<HTMLDivElement>(null);
+
   const [currentValue, setCurrentValue] = useState(
     value || 'This is a {{ undefined variable }} {{ test }}'
   );
-  const ref = useRef<HTMLDivElement>(null);
+
+  const [hoveredPartIndex, setHoveredPartIndex] = useState<number | null>(null);
 
   const syncScroll = useCallback((e: React.UIEvent<HTMLInputElement>) => {
     if (!ref.current) return;
@@ -40,6 +43,30 @@ export const InputWithVariables = ({
     [onChange]
   );
 
+  const onMouseMoveHandler = useCallback(
+    (e: React.MouseEvent<HTMLInputElement>) => {
+      if (!ref.current) return;
+
+      const rect = ref.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const spans = Array.from(ref.current.querySelectorAll('span'));
+      const hoveredSpanIndex = spans.findIndex((span) => {
+        const spanRect = span.getBoundingClientRect();
+        return (
+          x >= spanRect.left - rect.left &&
+          x <= spanRect.right - rect.left &&
+          y >= spanRect.top - rect.top &&
+          y <= spanRect.bottom - rect.top
+        );
+      });
+
+      setHoveredPartIndex(hoveredSpanIndex !== -1 ? hoveredSpanIndex : null);
+    },
+    []
+  );
+
   return (
     <div className={styles.input__wrapper}>
       <input
@@ -48,6 +75,7 @@ export const InputWithVariables = ({
         value={currentValue}
         onChange={onChangeHandler}
         onScroll={syncScroll}
+        onMouseMove={onMouseMoveHandler}
       />
       <div ref={ref} className={styles.input__view}>
         {currentValue.split(variableRegExp).map((part, i) => {
@@ -60,7 +88,8 @@ export const InputWithVariables = ({
               className={clsx(
                 styles.input__variable,
                 isVariableUndefined(part, variables) &&
-                  styles.input__variable_undefined
+                  styles.input__variable_undefined,
+                hoveredPartIndex === i && styles.input__variable_hovered
               )}
             >
               {part}

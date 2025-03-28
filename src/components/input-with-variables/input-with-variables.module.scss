@@ -43,16 +43,17 @@ $indent: 0 0.5rem;
 .input__variable {
   color: var(--success-dark);
   outline: 1px dotted;
+  border-radius: 0.1rem;
 
-  &:hover {
-    background-color: var(--success-light);
+  &_undefined {
+    color: var(--error-dark);
   }
-}
 
-.input__variable_undefined{
-  color: var(--error-dark);
+  &_hovered {
+    background-color: var(--success-light);
 
-  &:hover {
-    background-color: var(--error-light);
+    &.input__variable_undefined {
+      background-color: var(--error-light);
+    }
   }
 }
