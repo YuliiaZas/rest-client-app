@@ -44,7 +44,7 @@ export default function BodyEditor({
         </div>
       )}
       <Editor
-        height="30vh"
+        height="25vh"
         defaultLanguage={language}
         value={formattedJson}
         onChange={(value) => setBody(value as string)}
