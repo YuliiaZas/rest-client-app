@@ -40,10 +40,6 @@ export default function RestClient({ params }: RestClientProps) {
     }
   }, [headers]);
 
-  useEffect(() => {
-    handleRequest();
-  }, []);
-
   const handleRequest = async () => {
     const isValid = isValidURL(url);
 
