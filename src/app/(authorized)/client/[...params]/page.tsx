@@ -34,7 +34,6 @@ export default function RestClient({ params }: RestClientProps) {
     setHeaderParams,
   } = useFormattedParams(params);
 
-  // const [variables, setVariables] = useLocalStorage<Variables>({
   const [variables] = useLocalStorage<Variables>({
     key: 'variables',
     defaultValue: { test: 'test value' },
@@ -67,7 +66,6 @@ export default function RestClient({ params }: RestClientProps) {
   };
 
   const handleChangeUrl = (newUrl: string) => {
-    console.log('newUrl', newUrl);
     updateUrl(method, newUrl, body, headerParams);
     setUrl(newUrl);
   };
