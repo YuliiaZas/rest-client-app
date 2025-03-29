@@ -6,7 +6,7 @@ export const updateUrl = (
   body: string,
   searchParams?: string
 ) => {
-  let customUrl = `/rest-client/${method}`;
+  let customUrl = `/client/${method}`;
 
   if (url) {
     const base64Url = encodeBase64(url);
