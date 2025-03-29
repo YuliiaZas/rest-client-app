@@ -1,3 +1,5 @@
+@use '@/styles/utils/mixins' as *;
+
 .modal {
   &__wrapper {
     position: fixed;
@@ -9,6 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: var(--z-index-modal);
   }
 
   &__frame {
@@ -19,7 +22,7 @@
     border-radius: 0.5rem;
     background: var(--background-main);
     padding: 1rem 2rem;
-    box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-dark);
+    @include shadow();
   }
 
   &__close {

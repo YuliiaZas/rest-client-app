@@ -6,20 +6,14 @@ import MethodSelector from '@/components/method-selector/method-selector';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
 import { Method } from '@/data';
+import { Variables } from '@/entites';
 import { useFormattedParams, useLocalStorage } from '@/hooks';
 import { IHeader, IResponse } from '@/types';
-import {
-  decodeBase64,
-  getSearchParams,
-  getUrlWithVariableValues,
-  updateUrl,
-} from '@/utils';
+import { getSearchParams, getUrlWithVariableValues, updateUrl } from '@/utils';
 import { isValidURL } from '@/utils/is-valid-url';
 import { Main } from '@/views';
-import { Variables } from '@/entites';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import styles from './client.module.scss';
-
 
 type RestClientProps = {
   params: Promise<{ params: string[] }>;
@@ -78,11 +72,9 @@ export default function RestClient({ params }: RestClientProps) {
     setUrl(newUrl);
   };
 
-  const handleChangeMethod = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newMethod = e.target.value as Method;
-
-    updateUrl(newMethod, url, body, headerParams);
-    setMethod(newMethod);
+  const handleChangeMethod = (newMethod: string) => {
+    updateUrl(newMethod as Method, url, body, headerParams);
+    setMethod(newMethod as Method);
   };
 
   const handleChangeBody = (newBody: string) => {
@@ -104,7 +96,9 @@ export default function RestClient({ params }: RestClientProps) {
         <div className={styles.container}>
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.controls}>
-              <MethodSelector value={method} onChange={handleChangeMethod} />
+              <div className={styles.method}>
+                <MethodSelector value={method} onChange={handleChangeMethod} />
+              </div>
               <InputWithVariables
                 value={url}
                 variables={variables}

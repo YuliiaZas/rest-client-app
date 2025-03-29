@@ -3,6 +3,10 @@
   border-radius: var(--border-radius);
 }
 
+@mixin shadow {
+  box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-dark);
+}
+
 @mixin border-secondary($border-color: var(--lines-main)) {
   @include border-default($border-color, 1px);
 }
