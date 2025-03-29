@@ -6,11 +6,14 @@ import MethodSelector from '@/components/method-selector/method-selector';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
 import { Method } from '@/data';
-import { Variables } from '@/entites';
 import { useFormattedParams, useLocalStorage } from '@/hooks';
-import { IHeader, IResponse } from '@/types';
-import { getSearchParams, getUrlWithVariableValues, updateUrl } from '@/utils';
-import { isValidURL } from '@/utils/is-valid-url';
+import { IHeader, IResponse, IVariable } from '@/types';
+import {
+  getSearchParams,
+  getUrlWithVariableValues,
+  isValidURL,
+  updateUrl,
+} from '@/utils';
 import { Main } from '@/views';
 import { FormEvent, useEffect, useState } from 'react';
 import styles from './client.module.scss';
@@ -34,9 +37,9 @@ export default function RestClient({ params }: RestClientProps) {
     setHeaderParams,
   } = useFormattedParams(params);
 
-  const [variables] = useLocalStorage<Variables>({
+  const [variables] = useLocalStorage<IVariable[]>({
     key: 'variables',
-    defaultValue: { test: 'test value' },
+    defaultValue: [],
   });
 
   useEffect(() => {
@@ -51,8 +54,7 @@ export default function RestClient({ params }: RestClientProps) {
     const isValid = isValidURL(urlWithVariableValues);
 
     if (isValid) {
-      const res = await fetchData(method, url, body, headers);
-
+      const res = await fetchData(method, urlWithVariableValues, body, headers);
       if (res) {
         setResponse({ status: res.status, body: res.body });
       }
