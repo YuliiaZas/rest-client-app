@@ -1,10 +1,10 @@
 'use client';
 
+import { headerColumns } from '@/data';
 import { IHeader } from '@/types';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Button } from '../button';
-import styles from './headers.module.scss';
+import { Table } from '../table';
 
 type HeadersProps = {
   headers: IHeader[];
@@ -31,52 +31,13 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
   };
 
   return (
-    <div>
-      <table className={styles.table}>
-        <thead className={styles.header}>
-          <tr className={styles.row}>
-            <th className={styles.data}>Header Key</th>
-            <th className={styles.data}>Header Value</th>
-            <th className={styles.actions}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {headers.map((header) => (
-            <tr key={header.id} className={styles.row}>
-              <td className={styles.data}>{header.key}</td>
-              <td className={styles.data}>{header.value}</td>
-              <td className={styles.actions}>
-                <Button onClick={() => deleteHeader(header.id)} text="Delete" />
-              </td>
-            </tr>
-          ))}
-          <tr className={styles.row}>
-            <td className={styles.data}>
-              <input
-                placeholder="Header Key"
-                value={newHeader.key}
-                onChange={(e) =>
-                  setNewHeader({ ...newHeader, key: e.target.value })
-                }
-                className={styles.input}
-              />
-            </td>
-            <td className={styles.data}>
-              <input
-                placeholder="Header Value"
-                value={newHeader.value}
-                onChange={(e) =>
-                  setNewHeader({ ...newHeader, value: e.target.value })
-                }
-                className={styles.input}
-              />
-            </td>
-            <td className={styles.actions}>
-              <Button onClick={addHeader} text="Add" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <Table
+      columns={headerColumns}
+      data={headers}
+      deleteItem={deleteHeader}
+      addItem={addHeader}
+      newItem={newHeader}
+      setNewItem={setNewHeader}
+    />
   );
 }
