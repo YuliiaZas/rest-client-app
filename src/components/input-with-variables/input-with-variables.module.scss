@@ -18,7 +18,7 @@
   &_primary {
     @include border-default();
   }
-  
+
   &_secondary {
     @include border-secondary();
   }
@@ -30,7 +30,7 @@
 }
 
 /* For showing through placeholder */
-.input__field:not([value=""]) {
+.input__field:not([value='']) {
   -webkit-text-fill-color: transparent;
 }
 
