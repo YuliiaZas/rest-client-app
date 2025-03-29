@@ -7,7 +7,7 @@ export const supportedLanguagesOptions = [
   'java',
   'c#',
   'go',
-];
+] as const;
 export type SupportedLanguages = (typeof supportedLanguagesOptions)[number];
 
 export const supportedLanguages: Record<

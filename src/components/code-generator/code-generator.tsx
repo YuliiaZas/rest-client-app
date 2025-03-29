@@ -7,7 +7,7 @@ import {
 } from '@/data/supported-languages';
 import { IHeader } from '@/types';
 import { formatHeaders, isValidURL } from '@/utils';
-import { generateCodeSnippet } from '@/utils/code-generator';
+import { generateCodeSnippet } from '@/utils/generate-code-snippet';
 import { useState } from 'react';
 import { CodeBlock, dracula } from 'react-code-blocks';
 import { Button } from '../button';
@@ -49,7 +49,7 @@ export default function CodeGenerator({
 
       setCode(snippet || 'Error generating code');
     } catch (err) {
-      setCode((err as Error).toString());
+      setCode((err as Error).message);
     } finally {
       setLoading(false);
     }
