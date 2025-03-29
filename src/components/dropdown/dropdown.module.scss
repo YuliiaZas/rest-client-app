@@ -23,7 +23,8 @@
     color: initial;
   }
 
-  &:focus, &:focus-visible{
+  &:focus,
+  &:focus-visible {
     border-color: var(--lines-dark);
   }
 }
