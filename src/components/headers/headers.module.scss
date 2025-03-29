@@ -16,19 +16,19 @@
 
 .header,
 .row {
-  .data {
-    width: 40%;
+  .data,
+  .actions {
     display: grid;
     place-items: center;
+  }
+
+  .data {
+    width: 40%;
   }
 
   .actions {
     width: 10%;
   }
-}
-
-.actionBtn {
-  width: 100%;
 }
 
 .input {

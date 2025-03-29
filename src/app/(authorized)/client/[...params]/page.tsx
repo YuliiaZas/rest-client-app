@@ -1,6 +1,7 @@
 'use client';
 
 import { fetchData } from '@/api';
+import { Button } from '@/components';
 import MethodSelector from '@/components/method-selector/method-selector';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
@@ -19,7 +20,7 @@ import {
   useState,
 } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import styles from './rest-client.module.scss';
+import styles from './client.module.scss';
 
 type RestClientProps = {
   params: Promise<{ params: string[] }>;
@@ -122,7 +123,7 @@ export default function RestClient({ params }: RestClientProps) {
                 value={url}
                 onChange={handleChangeUrl}
               />
-              <button className={styles.btn}>Go!</button>
+              <Button text="Send" />
             </div>
           </form>
           <section className={styles.section}>

@@ -3,6 +3,7 @@
 import { IHeader } from '@/types';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from '../button';
 import styles from './headers.module.scss';
 
 type HeadersProps = {
@@ -45,13 +46,7 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
               <td className={styles.data}>{header.key}</td>
               <td className={styles.data}>{header.value}</td>
               <td className={styles.actions}>
-                <button
-                  type="button"
-                  className={'btn ' + styles.actionBtn}
-                  onClick={() => deleteHeader(header.id)}
-                >
-                  Delete
-                </button>
+                <Button onClick={() => deleteHeader(header.id)} text="Delete" />
               </td>
             </tr>
           ))}
@@ -77,13 +72,7 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
               />
             </td>
             <td className={styles.actions}>
-              <button
-                onClick={addHeader}
-                type="button"
-                className={'btn ' + styles.actionBtn}
-              >
-                Add
-              </button>
+              <Button onClick={addHeader} text="Add" />
             </td>
           </tr>
         </tbody>

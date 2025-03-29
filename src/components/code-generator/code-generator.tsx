@@ -10,6 +10,7 @@ import { formatHeaders, isValidURL } from '@/utils';
 import { generateCodeSnippet } from '@/utils/code-generator';
 import { useState } from 'react';
 import { CodeBlock, dracula } from 'react-code-blocks';
+import { Button } from '../button';
 import styles from './code-generator.module.scss';
 
 type CodeGeneratorProps = {
@@ -56,7 +57,7 @@ export default function CodeGenerator({
 
   return (
     <div>
-      <div className={styles.controls}>
+      <div className={styles.code__controls}>
         <select
           onChange={(e) => setLanguage(e.target.value as SupportedLanguages)}
           value={language}
@@ -68,12 +69,14 @@ export default function CodeGenerator({
             </option>
           ))}
         </select>
-        <button onClick={generateSnippet} className="btn" disabled={loading}>
-          {loading ? 'Generating...' : 'Generate'}
-        </button>
+        <Button
+          onClick={generateSnippet}
+          isDisabled={loading}
+          text={loading ? 'Generating...' : 'Generate'}
+        />
       </div>
 
-      <div className={styles.codeWrapper}>
+      <div className={styles.code__wrapper}>
         <CodeBlock
           text={code}
           language={language}
