@@ -14,7 +14,7 @@ export const isVariableDefined = (part: string, variables: IVariable[]) => {
   return name && variable;
 };
 
-export const getUrlWithVariableValues = (
+export const getParamWithVariableValues = (
   url: string,
   variables: IVariable[]
 ) => {
