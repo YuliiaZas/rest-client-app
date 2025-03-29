@@ -32,3 +32,8 @@ body {
 .options {
   color: var(--content-color-options-method);
 }
+
+.select {
+  border: 1px solid var(--lines-main);
+  border-radius: 0.3rem;
+}

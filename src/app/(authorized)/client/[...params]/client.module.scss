@@ -3,7 +3,6 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 100vh;
 }
 
 .container {
@@ -25,12 +24,6 @@
   gap: 0.5rem;
 }
 
-.btn {
-  padding: 1rem;
-  background-color: var(--primary-main);
-  border-radius: 0.3rem;
-}
-
 .method {
   width: 150px;
 }
@@ -45,8 +38,4 @@
 .label {
   font-size: 2rem;
   margin-bottom: 0.3rem;
-}
-
-.section {
-  height: 43vh;
 }
