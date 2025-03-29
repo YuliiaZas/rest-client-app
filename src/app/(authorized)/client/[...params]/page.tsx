@@ -51,10 +51,9 @@ export default function RestClient({ params }: RestClientProps) {
 
   const handleRequest = async () => {
     const urlWithVariableValues = getParamWithVariableValues(url, variables);
-    const isValid = isValidURL(urlWithVariableValues);
     const bodyWithVariableValues = getParamWithVariableValues(body, variables);
 
-    if (isValid) {
+    if (isValidURL(urlWithVariableValues)) {
       const res = await fetchData(
         method,
         urlWithVariableValues,
