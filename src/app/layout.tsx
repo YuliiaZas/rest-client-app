@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 import '../styles/global.scss';
-import { LocaleSwitcher } from '@/components';
+import { Spinner } from '@/components';
 
 export const metadata = {
   title: 'REST client app',
@@ -19,8 +19,7 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className="light-theme">
         <NextIntlClientProvider>
-          <LocaleSwitcher />
-          {children}
+          <Suspense fallback={<Spinner />}>{children}</Suspense>
         </NextIntlClientProvider>
       </body>
     </html>

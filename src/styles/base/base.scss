@@ -1,2 +1,11 @@
 @use 'scss-reset/reset';
 @use './typography';
+@use './buttons';
+
+.hidden {
+  visibility: hidden;
+}
+
+.d-none {
+  display: none;
+}

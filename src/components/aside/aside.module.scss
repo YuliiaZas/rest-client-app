@@ -1,0 +1,19 @@
+.aside {
+  border-right: 1px solid var(--lines-dark);
+  padding: 1.5rem 1rem;
+
+  &__root {
+    background: var(--background-light);
+    width: 15rem;
+  }
+
+  &__client {
+    background: var(--background-dark);
+    width: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem;
+  }
+}

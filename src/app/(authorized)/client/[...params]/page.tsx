@@ -8,6 +8,7 @@ import { Method } from '@/data';
 import { IHeader, IResponse } from '@/types';
 import { decodeBase64, getSearchParams, updateUrl } from '@/utils';
 import { isValidURL } from '@/utils/is-valid-url';
+import { Main } from '@/views';
 import { useSearchParams } from 'next/navigation';
 import {
   ChangeEvent,
@@ -109,42 +110,44 @@ export default function RestClient({ params }: RestClientProps) {
   };
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.controls}>
-            <MethodSelector value={method} onChange={handleChangeMethod} />
-            <input
-              className={styles.input}
-              name="url"
-              value={url}
-              onChange={handleChangeUrl}
-            />
-            <button className="btn">Go!</button>
-          </div>
-        </form>
-        <section>
-          <h2 className={styles.label}>Request</h2>
-          <div>
-            <RequestOptions
-              url={url}
-              method={method}
-              body={body}
-              setBody={handleChangeBody}
-              headers={headers}
-              setHeaders={handleChangeHeaders}
-            />
-          </div>
-        </section>
-        <section>
-          <h2 className={styles.label}>Response</h2>
-          {response ? (
-            <ResponseView response={response} />
-          ) : (
-            <p>No response yet</p>
-          )}
-        </section>
+    <Main>
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.controls}>
+              <MethodSelector value={method} onChange={handleChangeMethod} />
+              <input
+                className={styles.input}
+                name="url"
+                value={url}
+                onChange={handleChangeUrl}
+              />
+              <button className={styles.btn}>Go!</button>
+            </div>
+          </form>
+          <section className={styles.section}>
+            <h2 className={styles.label}>Request</h2>
+            <div>
+              <RequestOptions
+                url={url}
+                method={method}
+                body={body}
+                setBody={handleChangeBody}
+                headers={headers}
+                setHeaders={handleChangeHeaders}
+              />
+            </div>
+          </section>
+          <section className={styles.section}>
+            <h2 className={styles.label}>Response</h2>
+            {response ? (
+              <ResponseView response={response} />
+            ) : (
+              <p>No response yet</p>
+            )}
+          </section>
+        </div>
       </div>
-    </div>
+    </Main>
   );
 }
