@@ -1,18 +1,25 @@
 'use client';
 
 import { fetchData } from '@/api';
-import { Button } from '@/components';
+import { Button, InputWithVariables } from '@/components';
 import MethodSelector from '@/components/method-selector/method-selector';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
 import { Method } from '@/data';
-import { useFormattedParams } from '@/hooks';
+import { useFormattedParams, useLocalStorage } from '@/hooks';
 import { IHeader, IResponse } from '@/types';
-import { getSearchParams, updateUrl } from '@/utils';
+import {
+  decodeBase64,
+  getSearchParams,
+  getUrlWithVariableValues,
+  updateUrl,
+} from '@/utils';
 import { isValidURL } from '@/utils/is-valid-url';
 import { Main } from '@/views';
+import { Variables } from '@/entites';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import styles from './client.module.scss';
+
 
 type RestClientProps = {
   params: Promise<{ params: string[] }>;
@@ -33,6 +40,12 @@ export default function RestClient({ params }: RestClientProps) {
     setHeaderParams,
   } = useFormattedParams(params);
 
+  // const [variables, setVariables] = useLocalStorage<Variables>({
+  const [variables] = useLocalStorage<Variables>({
+    key: 'variables',
+    defaultValue: { test: 'test value' },
+  });
+
   useEffect(() => {
     if (headers.length) {
       const searchParams = getSearchParams(headers);
@@ -41,10 +54,12 @@ export default function RestClient({ params }: RestClientProps) {
   }, [headers]);
 
   const handleRequest = async () => {
-    const isValid = isValidURL(url);
+    const urlWithVariableValues = getUrlWithVariableValues(url, variables);
+    const isValid = isValidURL(urlWithVariableValues);
 
     if (isValid) {
       const res = await fetchData(method, url, body, headers);
+
       if (res) {
         setResponse({ status: res.status, body: res.body });
       }
@@ -57,9 +72,8 @@ export default function RestClient({ params }: RestClientProps) {
     handleRequest();
   };
 
-  const handleChangeUrl = (e: ChangeEvent<HTMLInputElement>) => {
-    const newUrl = e.target.value;
-
+  const handleChangeUrl = (newUrl: string) => {
+    console.log('newUrl', newUrl);
     updateUrl(method, newUrl, body, headerParams);
     setUrl(newUrl);
   };
@@ -91,11 +105,11 @@ export default function RestClient({ params }: RestClientProps) {
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.controls}>
               <MethodSelector value={method} onChange={handleChangeMethod} />
-              <input
-                className={styles.input}
-                name="url"
+              <InputWithVariables
                 value={url}
-                onChange={handleChangeUrl}
+                variables={variables}
+                type={'primary'}
+                onValueChange={handleChangeUrl}
               />
               <Button text="Send" />
             </div>
