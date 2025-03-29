@@ -6,20 +6,12 @@ import MethodSelector from '@/components/method-selector/method-selector';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
 import { Method } from '@/data';
+import { useFormattedParams } from '@/hooks';
 import { IHeader, IResponse } from '@/types';
-import { decodeBase64, getSearchParams, updateUrl } from '@/utils';
+import { getSearchParams, updateUrl } from '@/utils';
 import { isValidURL } from '@/utils/is-valid-url';
 import { Main } from '@/views';
-import { useSearchParams } from 'next/navigation';
-import {
-  ChangeEvent,
-  FormEvent,
-  use,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import styles from './client.module.scss';
 
 type RestClientProps = {
@@ -28,32 +20,18 @@ type RestClientProps = {
 
 export default function RestClient({ params }: RestClientProps) {
   const [response, setResponse] = useState<IResponse | null>(null);
-  const [defaultMethod, encodedUrl, encodedBody] = use(params).params;
-  const [method, setMethod] = useState<Method>(
-    (defaultMethod as Method) ?? 'GET'
-  );
-  const decodedUrl = useMemo(
-    () => decodeBase64(encodedUrl ?? ''),
-    [encodedUrl]
-  );
-  const [url, setUrl] = useState(decodedUrl);
-  const decodedBody = useMemo(
-    () => decodeBase64(encodedBody ?? ''),
-    [encodedUrl]
-  );
-  const [body, setBody] = useState(decodedBody);
-  const searchParams = useSearchParams();
-  const headersArray = useMemo(
-    () =>
-      Array.from(searchParams.entries()).map(([key, value]) => ({
-        id: uuidv4(),
-        key,
-        value,
-      })),
-    [searchParams]
-  );
-  const [headers, setHeaders] = useState<IHeader[]>(headersArray);
-  const [headerParams, setHeaderParams] = useState('');
+  const {
+    url,
+    body,
+    method,
+    headers,
+    headerParams,
+    setUrl,
+    setBody,
+    setMethod,
+    setHeaders,
+    setHeaderParams,
+  } = useFormattedParams(params);
 
   useEffect(() => {
     if (headers.length) {
@@ -70,7 +48,7 @@ export default function RestClient({ params }: RestClientProps) {
     const isValid = isValidURL(url);
 
     if (isValid) {
-      const res = await fetchData(method, url, body, headersArray);
+      const res = await fetchData(method, url, body, headers);
       if (res) {
         setResponse({ status: res.status, body: res.body });
       }
