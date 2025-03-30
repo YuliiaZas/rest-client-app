@@ -3,5 +3,3 @@ export {
   supportedLanguages,
   supportedLanguagesOptions,
 } from './supported-languages';
-export { headerColumns } from './tables/header-columns';
-export { variableColumns } from './tables/variable-columns';

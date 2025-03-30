@@ -1,7 +1,6 @@
 'use client';
 
-import { Table } from '@/components';
-import { variableColumns } from '@/data';
+import { Button, Column, Table } from '@/components';
 import { useLocalStorage } from '@/hooks';
 import { IVariable } from '@/types';
 import { useState } from 'react';
@@ -37,14 +36,52 @@ export default function Variables() {
   return (
     <div className={styles.variables}>
       <h1 className={styles.variables__title}>Variables</h1>
-      <Table
-        columns={variableColumns}
-        data={variables}
-        addItem={addVariable}
-        deleteItem={deleteVariable}
-        newItem={newVariable}
-        setNewItem={setNewVariable}
-      />
+      <Table data={variables} hasFooter={true}>
+        <Column
+          title="Variable Name"
+          type="data"
+          body={(data: IVariable) => <span>{data.name}</span>}
+          footer={
+            <input
+              placeholder="Variable Name"
+              value={newVariable.name}
+              onChange={(e) =>
+                setNewVariable({
+                  ...newVariable,
+                  name: e.target.value,
+                })
+              }
+              className={styles.input}
+            />
+          }
+        />
+        <Column
+          title="Variable Value"
+          type="data"
+          body={(data: IVariable) => <span>{data.value}</span>}
+          footer={
+            <input
+              placeholder="Variable Value"
+              value={newVariable.value}
+              onChange={(e) =>
+                setNewVariable({
+                  ...newVariable,
+                  value: e.target.value,
+                })
+              }
+              className={styles.input}
+            />
+          }
+        />
+        <Column
+          title="Actions"
+          type="actions"
+          body={(data: IVariable) => (
+            <Button onClick={() => deleteVariable(data.id)} text="Delete" />
+          )}
+          footer={<Button onClick={addVariable} text="Add" />}
+        />
+      </Table>
     </div>
   );
 }

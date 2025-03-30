@@ -1,10 +1,12 @@
 'use client';
 
-import { headerColumns } from '@/data';
 import { IHeader } from '@/types';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from '../button';
+import { Column } from '../column';
 import { Table } from '../table';
+import styles from './headers.module.scss';
 
 type HeadersProps = {
   headers: IHeader[];
@@ -31,13 +33,51 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
   };
 
   return (
-    <Table
-      columns={headerColumns}
-      data={headers}
-      deleteItem={deleteHeader}
-      addItem={addHeader}
-      newItem={newHeader}
-      setNewItem={setNewHeader}
-    />
+    <Table data={headers} hasFooter={true}>
+      <Column
+        title="Header Key"
+        type="data"
+        body={(data: IHeader) => <span>{data.key}</span>}
+        footer={
+          <input
+            placeholder="Header Key"
+            value={newHeader.key}
+            onChange={(e) =>
+              setNewHeader({
+                ...newHeader,
+                key: e.target.value,
+              })
+            }
+            className={styles.input}
+          />
+        }
+      />
+      <Column
+        title="Header Value"
+        type="data"
+        body={(data: IHeader) => <span>{data.value}</span>}
+        footer={
+          <input
+            placeholder="Header Value"
+            value={newHeader.value}
+            onChange={(e) =>
+              setNewHeader({
+                ...newHeader,
+                value: e.target.value,
+              })
+            }
+            className={styles.input}
+          />
+        }
+      />
+      <Column
+        title="Actions"
+        type="actions"
+        body={(data: IHeader) => (
+          <Button onClick={() => deleteHeader(data.id)} text="Delete" />
+        )}
+        footer={<Button onClick={addHeader} text="Add" />}
+      />
+    </Table>
   );
 }
