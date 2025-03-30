@@ -8,7 +8,7 @@ import ResponseView from '@/components/response-view/response-view';
 import { Method } from '@/data';
 import { Variables } from '@/entites';
 import { useFormattedParams, useLocalStorage } from '@/hooks';
-import { IHeader, IResponse } from '@/types';
+import { IHeader, IHistory, IResponse } from '@/types';
 import { getSearchParams, getUrlWithVariableValues, updateUrl } from '@/utils';
 import { isValidURL } from '@/utils/is-valid-url';
 import { Main } from '@/views';
@@ -39,6 +39,11 @@ export default function RestClient({ params }: RestClientProps) {
     defaultValue: { test: 'test value' },
   });
 
+  const [history, setHistory] = useLocalStorage<IHistory[]>({
+    key: 'history',
+    defaultValue: [],
+  });
+
   useEffect(() => {
     if (headers.length) {
       const searchParams = getSearchParams(headers);
@@ -55,6 +60,16 @@ export default function RestClient({ params }: RestClientProps) {
 
       if (res) {
         setResponse({ status: res.status, body: res.body });
+        setHistory([
+          ...history,
+          {
+            method,
+            url,
+            body,
+            headers,
+            date: Date.now(),
+          },
+        ]);
       }
     }
   };
