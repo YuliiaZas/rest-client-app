@@ -7,7 +7,7 @@ import {
 } from '@/data/supported-languages';
 import { useLocalStorage } from '@/hooks';
 import { IHeader, IVariable } from '@/types';
-import { formatHeaders, getParamWithVariableValues, isValidURL } from '@/utils';
+import { formatHeaders, isValidURL, replaceVariables } from '@/utils';
 import { generateCodeSnippet } from '@/utils/generate-code-snippet';
 import { useState } from 'react';
 import { CodeBlock, dracula } from 'react-code-blocks';
@@ -39,25 +39,25 @@ export default function CodeGenerator({
   const generateSnippet = async () => {
     try {
       setLoading(true);
-      const urlWithVariableValues = getParamWithVariableValues(url, variables);
+      const { updatedUrl, updatedBody, updatedHeaders } = replaceVariables(
+        url,
+        body,
+        headers,
+        variables
+      );
 
-      if (!isValidURL(urlWithVariableValues)) {
+      if (!isValidURL(updatedUrl)) {
         setCode('URL is invalid');
         return;
       }
 
-      const bodyWithVariableValues = getParamWithVariableValues(
-        body,
-        variables
-      );
-
       const snippet = await generateCodeSnippet({
         method,
-        url: urlWithVariableValues,
-        headers: formatHeaders(headers, { 'Content-Type': 'application/json' }),
-        body: bodyWithVariableValues
-          ? JSON.parse(bodyWithVariableValues)
-          : null,
+        url: updatedUrl,
+        headers: formatHeaders(updatedHeaders, {
+          'Content-Type': 'application/json',
+        }),
+        body: updatedBody ? JSON.parse(updatedBody) : null,
         language,
       });
 

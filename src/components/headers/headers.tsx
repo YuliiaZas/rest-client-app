@@ -1,10 +1,12 @@
 'use client';
 
-import { IHeader } from '@/types';
+import { useLocalStorage } from '@/hooks';
+import { IHeader, IVariable } from '@/types';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from '../button';
 import { Column } from '../column';
+import { InputWithVariables } from '../input-with-variables';
 import { Table } from '../table';
 import styles from './headers.module.scss';
 
@@ -18,6 +20,11 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
     id: uuidv4(),
     key: '',
     value: '',
+  });
+
+  const [variables] = useLocalStorage<IVariable[]>({
+    key: 'variables',
+    defaultValue: [],
   });
 
   const addHeader = () => {
@@ -57,16 +64,16 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
         type="data"
         body={(data: IHeader) => <span>{data.value}</span>}
         footer={
-          <input
+          <InputWithVariables
             placeholder="Header Value"
             value={newHeader.value}
-            onChange={(e) =>
+            variables={variables}
+            onValueChange={(value) =>
               setNewHeader({
                 ...newHeader,
-                value: e.target.value,
+                value,
               })
             }
-            className={styles.input}
           />
         }
       />

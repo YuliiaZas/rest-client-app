@@ -9,9 +9,9 @@ import { Method } from '@/data';
 import { useFormattedParams, useLocalStorage } from '@/hooks';
 import { IHeader, IResponse, IVariable } from '@/types';
 import {
-  getParamWithVariableValues,
   getSearchParams,
   isValidURL,
+  replaceVariables,
   updateUrl,
 } from '@/utils';
 import { Main } from '@/views';
@@ -50,15 +50,19 @@ export default function RestClient({ params }: RestClientProps) {
   }, [headers]);
 
   const handleRequest = async () => {
-    const urlWithVariableValues = getParamWithVariableValues(url, variables);
-    const bodyWithVariableValues = getParamWithVariableValues(body, variables);
+    const { updatedUrl, updatedBody, updatedHeaders } = replaceVariables(
+      url,
+      body,
+      headers,
+      variables
+    );
 
-    if (isValidURL(urlWithVariableValues)) {
+    if (isValidURL(updatedUrl)) {
       const res = await fetchData(
         method,
-        urlWithVariableValues,
-        bodyWithVariableValues,
-        headers
+        updatedUrl,
+        updatedBody,
+        updatedHeaders
       );
       if (res) {
         setResponse({ status: res.status, body: res.body });
