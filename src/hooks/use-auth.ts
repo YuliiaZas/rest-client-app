@@ -10,8 +10,6 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { initializeApp } from 'firebase/app';
 
-console.log(process.env);
-
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
@@ -20,8 +18,6 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_APP_ID,
 };
-
-console.log('CONFIG', firebaseConfig);
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
