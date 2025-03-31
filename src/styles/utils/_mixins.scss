@@ -1,4 +1,3 @@
-
 @mixin border-default($border-color: var(--lines-main), $border-width: 2px) {
   border: $border-width solid $border-color;
   border-radius: var(--border-radius);
@@ -6,6 +5,10 @@
 
 @mixin border-secondary($border-color: var(--lines-main)) {
   @include border-default($border-color, 1px);
+}
+
+@mixin shadow {
+  box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-dark);
 }
 
 @mixin colors($color) {
@@ -31,8 +34,4 @@
     --active-color: var(--background-dimmed);
     --hover-color: var(--background-brightened);
   }
-}
-
-@mixin shadow {
-  box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-dark);
 }

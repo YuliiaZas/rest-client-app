@@ -1,8 +1,13 @@
 'use client';
 
-import { IHeader } from '@/types';
+import { useLocalStorage } from '@/hooks';
+import { IHeader, IVariable } from '@/types';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from '../button';
+import { Column } from '../column';
+import { InputWithVariables } from '../input-with-variables';
+import { Table } from '../table';
 import styles from './headers.module.scss';
 
 type HeadersProps = {
@@ -15,6 +20,11 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
     id: uuidv4(),
     key: '',
     value: '',
+  });
+
+  const [variables] = useLocalStorage<IVariable[]>({
+    key: 'variables',
+    defaultValue: [],
   });
 
   const addHeader = () => {
@@ -30,60 +40,51 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
   };
 
   return (
-    <div>
-      <table className={styles.table}>
-        <thead className={styles.header}>
-          <tr className={styles.row}>
-            <th className={styles.data}>Header Key</th>
-            <th className={styles.data}>Header Value</th>
-            <th className={styles.actions}>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {headers.map((header) => (
-            <tr key={header.id} className={styles.row}>
-              <td className={styles.data}>{header.key}</td>
-              <td className={styles.data}>{header.value}</td>
-              <td className={styles.actions}>
-                <button
-                  type="button"
-                  className={styles.btn}
-                  onClick={() => deleteHeader(header.id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-          <tr className={styles.row}>
-            <td className={styles.data}>
-              <input
-                placeholder="Header Key"
-                value={newHeader.key}
-                onChange={(e) =>
-                  setNewHeader({ ...newHeader, key: e.target.value })
-                }
-                className={styles.input}
-              />
-            </td>
-            <td className={styles.data}>
-              <input
-                placeholder="Header Value"
-                value={newHeader.value}
-                onChange={(e) =>
-                  setNewHeader({ ...newHeader, value: e.target.value })
-                }
-                className={styles.input}
-              />
-            </td>
-            <td className={styles.actions}>
-              <button onClick={addHeader} type="button" className={styles.btn}>
-                Add
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <Table data={headers} hasFooter={true}>
+      <Column
+        title="Header Key"
+        type="data"
+        body={(data: IHeader) => <span>{data.key}</span>}
+        footer={
+          <input
+            placeholder="Header Key"
+            value={newHeader.key}
+            onChange={(e) =>
+              setNewHeader({
+                ...newHeader,
+                key: e.target.value,
+              })
+            }
+            className={styles.input}
+          />
+        }
+      />
+      <Column
+        title="Header Value"
+        type="data"
+        body={(data: IHeader) => <span>{data.value}</span>}
+        footer={
+          <InputWithVariables
+            placeholder="Header Value"
+            value={newHeader.value}
+            variables={variables}
+            onValueChange={(value) =>
+              setNewHeader({
+                ...newHeader,
+                value,
+              })
+            }
+          />
+        }
+      />
+      <Column
+        title="Actions"
+        type="actions"
+        body={(data: IHeader) => (
+          <Button onClick={() => deleteHeader(data.id)} text="Delete" />
+        )}
+        footer={<Button onClick={addHeader} text="Add" />}
+      />
+    </Table>
   );
 }

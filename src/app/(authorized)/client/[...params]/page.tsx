@@ -1,26 +1,22 @@
 'use client';
 
 import { fetchData } from '@/api';
+import { Button, InputWithVariables } from '@/components';
 import MethodSelector from '@/components/method-selector/method-selector';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
 import { Method } from '@/data';
-import { IHeader, IResponse } from '@/types';
+import { useFormattedParams, useLocalStorage } from '@/hooks';
+import { IHeader, IResponse, IVariable } from '@/types';
 import {
-  decodeBase64,
   getSearchParams,
-  getUrlWithVariableValues,
+  isValidURL,
+  replaceVariables,
   updateUrl,
 } from '@/utils';
-import { isValidURL } from '@/utils/is-valid-url';
-import { useSearchParams } from 'next/navigation';
-import { FormEvent, use, useEffect, useMemo, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import styles from './rest-client.module.scss';
 import { Main } from '@/views';
-import { InputWithVariables } from '@/components';
-import { useLocalStorage } from '@/hooks';
-import { Variables } from '@/entites';
+import { FormEvent, useEffect, useState } from 'react';
+import styles from './client.module.scss';
 
 type RestClientProps = {
   params: Promise<{ params: string[] }>;
@@ -28,37 +24,22 @@ type RestClientProps = {
 
 export default function RestClient({ params }: RestClientProps) {
   const [response, setResponse] = useState<IResponse | null>(null);
-  const [defaultMethod, encodedUrl, encodedBody] = use(params).params;
-  const [method, setMethod] = useState<Method>(
-    (defaultMethod as Method) ?? 'GET'
-  );
-  const decodedUrl = useMemo(
-    () => decodeBase64(encodedUrl ?? ''),
-    [encodedUrl]
-  );
-  const [url, setUrl] = useState(decodedUrl);
-  const decodedBody = useMemo(
-    () => decodeBase64(encodedBody ?? ''),
-    [encodedUrl]
-  );
-  const [body, setBody] = useState(decodedBody);
-  const searchParams = useSearchParams();
-  const headersArray = useMemo(
-    () =>
-      Array.from(searchParams.entries()).map(([key, value]) => ({
-        id: uuidv4(),
-        key,
-        value,
-      })),
-    [searchParams]
-  );
-  const [headers, setHeaders] = useState<IHeader[]>(headersArray);
-  const [headerParams, setHeaderParams] = useState('');
+  const {
+    url,
+    body,
+    method,
+    headers,
+    headerParams,
+    setUrl,
+    setBody,
+    setMethod,
+    setHeaders,
+    setHeaderParams,
+  } = useFormattedParams(params);
 
-  // const [variables, setVariables] = useLocalStorage<Variables>({
-  const [variables] = useLocalStorage<Variables>({
+  const [variables] = useLocalStorage<IVariable[]>({
     key: 'variables',
-    defaultValue: { test: 'test value' },
+    defaultValue: [],
   });
 
   useEffect(() => {
@@ -68,20 +49,20 @@ export default function RestClient({ params }: RestClientProps) {
     }
   }, [headers]);
 
-  useEffect(() => {
-    handleRequest();
-  }, []);
-
   const handleRequest = async () => {
-    const urlWithVariableValues = getUrlWithVariableValues(url, variables);
-    const isValid = isValidURL(urlWithVariableValues);
+    const { updatedUrl, updatedBody, updatedHeaders } = replaceVariables(
+      url,
+      body,
+      headers,
+      variables
+    );
 
-    if (isValid) {
+    if (isValidURL(updatedUrl)) {
       const res = await fetchData(
         method,
-        urlWithVariableValues,
-        body,
-        headersArray
+        updatedUrl,
+        updatedBody,
+        updatedHeaders
       );
       if (res) {
         setResponse({ status: res.status, body: res.body });
@@ -96,7 +77,6 @@ export default function RestClient({ params }: RestClientProps) {
   };
 
   const handleChangeUrl = (newUrl: string) => {
-    console.log('newUrl', newUrl);
     updateUrl(method, newUrl, body, headerParams);
     setUrl(newUrl);
   };
@@ -134,13 +114,15 @@ export default function RestClient({ params }: RestClientProps) {
                 type={'primary'}
                 onValueChange={handleChangeUrl}
               />
-              <button className={styles.btn}>Go!</button>
+              <Button text="Send" />
             </div>
           </form>
           <section className={styles.section}>
             <h2 className={styles.label}>Request</h2>
             <div>
               <RequestOptions
+                url={url}
+                method={method}
                 body={body}
                 setBody={handleChangeBody}
                 headers={headers}

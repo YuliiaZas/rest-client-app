@@ -1,5 +1,6 @@
 import { Method } from '@/data';
 import { IHeader, IRequest, IResponse } from '@/types';
+import { formatHeaders } from '@/utils';
 
 export const fetchData = async (
   method: Method,
@@ -10,16 +11,11 @@ export const fetchData = async (
   try {
     const requestOptions: IRequest = {
       method: method,
-      headers: headers.reduce(
-        (acc: Record<string, string>, { key, value }) => {
-          acc[key] = value;
-          return acc;
-        },
-        { 'Content-type': 'application/json; charset=UTF-8' }
-      ),
+      headers: formatHeaders(headers, { 'Content-Type': 'application/json' }),
     };
 
-    if (body && method !== 'GET') {
+    const isBodyAllowed = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method);
+    if (body && isBodyAllowed) {
       requestOptions.body = body;
     }
 
