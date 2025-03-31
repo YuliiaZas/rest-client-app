@@ -77,9 +77,9 @@ export default function RestClient({ params }: RestClientProps) {
           {
             id: uuidv4(),
             method,
-            url,
-            body,
-            headers,
+            url: updatedUrl,
+            body: updatedBody,
+            headers: updatedHeaders,
             date: Date.now(),
           },
         ]);
