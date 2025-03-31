@@ -1,6 +1,6 @@
 // Get new icons from https://phosphoricons.com/
 // To properly follow the component size, change
-// `with` and `height` to `100%`, `fill` to `currentColor`
+// `width` and `height` to `100%`, `fill` to `currentColor`
 export const phosphorIcons = {
   translate: (
     <svg
