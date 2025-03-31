@@ -63,7 +63,7 @@ export const Input = <T extends Record<string, string>>({
 
   return (
     <div className={styles.input__container}>
-      <div className={currentIcon ? styles['input_with-icons'] : ''}>
+      <div className={currentIcon ? styles['input_with-icons'] : undefined}>
         <input
           className={styles.input}
           {...(register ? register(id) : {})}
