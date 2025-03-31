@@ -7,8 +7,8 @@ import { Button, ErrorMessage, Input } from '@/components';
 import {
   FORM_FIELD,
   ILoginForm,
-  SignUpForm,
   SignInForm,
+  SignUpForm,
 } from './login-form.entities';
 import {
   characterSet,
@@ -16,6 +16,8 @@ import {
   signInFormSchema,
   signUpFormSchema,
 } from './login-form.consts';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks';
 
 interface LoginFormProps {
   isSignUp?: boolean;
@@ -24,6 +26,8 @@ interface LoginFormProps {
 export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
   const t = useTranslations('login');
   const [loginError, setLoginError] = useState<string>('');
+  const router = useRouter();
+  const { login, signup } = useAuth();
 
   const fields = useMemo(
     () =>
@@ -47,9 +51,16 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmit = (data: ILoginForm) => {
-    console.log(data);
-    setLoginError('loginError');
+  const onSubmit = async (data: ILoginForm) => {
+    const user = isSignUp
+      ? await signup(data.email, data.password)
+      : await login(data.email, data.password);
+
+    if (!user) {
+      setLoginError('loginError');
+    }
+
+    router.push('/client/GET');
   };
 
   const passwordParams = {

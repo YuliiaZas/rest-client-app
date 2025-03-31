@@ -1,3 +1,4 @@
-export { useFormattedParams } from './useFormattedParams';
-export { useTheme } from './useTheme';
+export { useFormattedParams } from './use-formatted-params';
+export { useTheme } from './use-theme';
 export { useLocalStorage } from './use-local-storage.hook';
+export { useAuth } from './use-auth';

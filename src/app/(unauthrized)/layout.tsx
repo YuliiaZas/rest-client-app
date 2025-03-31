@@ -19,7 +19,7 @@ export default async function RootLayout({
         <h2>Aside</h2>
       </Aside>
       <div className={styles.content}>
-        <Header isAuthenticated={false} />
+        <Header />
         {children}
         <Footer />
       </div>

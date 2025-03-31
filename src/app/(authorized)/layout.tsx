@@ -15,7 +15,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
         <Icon iconName="history" size="3rem" />
       </Aside>
       <div className={styles.content}>
-        <Header isAuthenticated={true} />
+        <Header />
         {children}
         <Footer />
       </div>
