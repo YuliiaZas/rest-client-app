@@ -1,32 +1,37 @@
 .table {
   width: 100%;
+  table-layout: fixed;
 
   &__header {
-    width: 100%;
-    font-size: 1.5rem;
-  }
-
-  &__row {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 0.5rem;
-    gap: 0.5rem;
+    font-size: 1.25rem;
   }
 
   &__header,
   &__row {
     &-data,
     &-actions {
-      display: grid;
-      place-items: center;
+      text-align: center;
+      vertical-align: middle;
+      padding: 0.5rem;
     }
 
     &-data {
       width: 40%;
+      word-break: break-word;
     }
 
     &-actions {
       width: 10%;
+    }
+
+    @media screen and (max-width: 1078px ) {
+      &-data {
+        width: calc(100% - 100px) / 2;
+      }
+  
+      &-actions {
+        width: 100px;
+      }
     }
   }
 }
