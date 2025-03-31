@@ -19,6 +19,7 @@ type FormFieldProps<T extends Record<string, string> = Record<string, string>> =
     icon?: PhosphorIcons;
     iconPosition?: 'left' | 'right';
     onIconClick?: () => void;
+    onValueChange?: (value: string) => void;
   };
 
 export const Input = <T extends Record<string, string>>({
@@ -33,7 +34,10 @@ export const Input = <T extends Record<string, string>>({
   icon,
   iconPosition = 'right',
   onIconClick,
+  onValueChange,
 }: FormFieldProps<T>) => {
+  const [currentValue, setCurrentValue] = useState(defaultValue);
+
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const isPasswordInput = useMemo(() => type === 'password', [type]);
@@ -41,6 +45,10 @@ export const Input = <T extends Record<string, string>>({
     useState<FormFieldProps<T>['type']>(type);
   const [currentIcon, setCurrentIcon] =
     useState<FormFieldProps<T>['icon']>(icon);
+
+  useEffect(() => {
+    setCurrentValue(defaultValue);
+  }, [defaultValue]);
 
   useEffect(() => {
     const errorMessage = !error
@@ -61,19 +69,40 @@ export const Input = <T extends Record<string, string>>({
     [currentType, type]
   );
 
+  const onChangeHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setCurrentValue(value);
+      if (onValueChange) onValueChange(value);
+    },
+    [onValueChange]
+  );
+
   return (
     <div className={styles.input__container}>
-      <div className={currentIcon ? styles['input_with-icons'] : ''}>
-        <input
-          className={styles.input}
-          {...(register ? register(id) : {})}
-          type={currentType}
-          id={id}
-          defaultValue={defaultValue}
-          placeholder={placeholder}
-          autoComplete="nope"
-          onBlur={() => trigger && trigger(id)}
-        />
+      <div className={currentIcon && styles['input_with-icons']}>
+        {register ? (
+          <input
+            {...(register ? register(id) : {})}
+            className={styles.input}
+            type={currentType}
+            id={id}
+            defaultValue={defaultValue}
+            placeholder={placeholder}
+            autoComplete="nope"
+            onBlur={() => trigger && trigger(id)}
+          />
+        ) : (
+          <input
+            className={styles.input}
+            type={currentType}
+            id={id}
+            value={currentValue}
+            placeholder={placeholder}
+            autoComplete="nope"
+            onChange={(e) => onChangeHandler(e)}
+          />
+        )}
         {currentIcon && (
           <div
             className={clsx(
