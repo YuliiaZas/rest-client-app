@@ -81,9 +81,9 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
         title="Actions"
         type="actions"
         body={(data: IHeader) => (
-          <Button onClick={() => deleteHeader(data.id)} text="Delete" />
+          <Button onClick={() => deleteHeader(data.id)} icon="delete" />
         )}
-        footer={<Button onClick={addHeader} text="Add" />}
+        footer={<Button onClick={addHeader} icon="add" />}
       />
     </Table>
   );

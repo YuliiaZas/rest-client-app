@@ -1,8 +1,18 @@
+import { useCallback, useMemo } from 'react';
+import { Icon, PhosphorIcons } from '../icons';
+import clsx from 'clsx';
+import { useTranslations } from 'next-intl';
+
 type ButtonType = 'primary' | 'secondary' | 'transparent';
+const actionButtonTypes = ['add', 'edit', 'delete', 'save', 'cancel'] as const;
+type ActionButtonType = (typeof actionButtonTypes)[number];
 
 interface ButtonProps {
   buttonType?: ButtonType;
-  text: string;
+  text?: string;
+  icon?: PhosphorIcons;
+  iconSize?: string;
+  title?: string;
   isDisabled?: boolean;
   onClick?: () => void;
 }
@@ -10,20 +20,47 @@ interface ButtonProps {
 export const Button = ({
   buttonType = 'primary',
   text,
+  icon,
+  iconSize = '1.5rem',
+  title = '',
   isDisabled = false,
   onClick,
 }: ButtonProps) => {
-  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.blur();
-    if (onClick) onClick();
-  };
+  const t = useTranslations('actions');
+
+  const isIconButton = useMemo(() => icon && !text, [icon, text]);
+
+  const isActionButton = useMemo(
+    () => icon && !text && actionButtonTypes.includes(icon as ActionButtonType),
+    [icon, text]
+  );
+
+  const translatedTitle = useMemo(() => {
+    if (title) return title;
+    if (isActionButton && t) return t(icon as string);
+    return '';
+  }, [title, isActionButton, icon]);
+
+  const handleButtonClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.currentTarget.blur();
+      if (onClick) onClick();
+    },
+    [onClick]
+  );
 
   return (
     <button
-      className={`button_${buttonType}`}
+      className={clsx(
+        `button_${buttonType}`,
+        isIconButton && 'button_icon',
+        isActionButton && `button_action button_action_${icon}`
+      )}
+      title={translatedTitle}
       disabled={isDisabled}
       onClick={handleButtonClick}
     >
+      {icon && <Icon iconName={icon} size={iconSize} />}
       {text}
     </button>
   );

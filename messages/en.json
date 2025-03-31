@@ -16,5 +16,12 @@
     "signOut": "Sign Out",
     "signUp": "Sign Up",
     "loginError": "Invalid email or password"
+  },
+  "actions": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel"
   }
 }
