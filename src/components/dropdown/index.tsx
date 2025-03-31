@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useState, useRef, useCallback } from 'react';
+import { ColorsSchema } from '@/entites';
 import styles from './dropdown.module.scss';
 import { Icon } from '../icons';
 import clsx from 'clsx';
@@ -16,7 +17,8 @@ interface DropdownProps {
   selectedItem: string;
   selectOption: (value: string) => void;
   buttonChildren?: ReactNode;
-  buttonTransparent?: boolean;
+  colors?: ColorsSchema;
+  showButtonBorder?: boolean;
   dropdownClass?: string;
   positionedRigth?: boolean;
 }
@@ -26,7 +28,8 @@ export const Dropdown = ({
   selectedItem,
   selectOption,
   buttonChildren,
-  buttonTransparent = false,
+  colors = 'main',
+  showButtonBorder = true,
   dropdownClass,
   positionedRigth = false,
 }: DropdownProps) => {
@@ -60,12 +63,15 @@ export const Dropdown = ({
   }, [isOpen]);
 
   return (
-    <div ref={ref} className={clsx(styles.dropdown, dropdownClass)}>
+    <div
+      ref={ref}
+      className={clsx(styles.dropdown, `colors-${colors}`, dropdownClass)}
+    >
       <button
         onClick={toggleDropdown}
         className={clsx(
           styles.dropdown__button,
-          buttonTransparent ? styles.dropdown__button_transparent : ''
+          !showButtonBorder && styles.dropdown__button_borderless
         )}
       >
         {buttonChildren ||
@@ -74,14 +80,15 @@ export const Dropdown = ({
         <Icon iconName={isOpen ? 'caret-up' : 'caret-down'} size="1rem" />
       </button>
       {isOpen && (
-        <div className={`${styles.box} ${positionedRigth ? styles.right : ''}`}>
+        <div className={clsx(styles.box, positionedRigth && styles.right)}>
           {items.map((item) => (
             <div
               key={item.value}
               className={clsx(
                 item.itemClass,
                 styles.dropdow__item,
-                item.value === selectedItem ? styles.dropdow__item_active : ''
+                `colors-${colors}-state`,
+                item.value === selectedItem && 'active'
               )}
               onClick={() => handleSelectItem(item.value)}
             >
