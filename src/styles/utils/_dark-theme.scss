@@ -34,14 +34,16 @@
 
     // Background Colors:
     --background-main: #1a1a1a;
+    --background-content: #f2f0f0;
     --background-light: #232323;
     --background-dark: #111111;
     --background-disabled: #313131;
-    --background-dimmed: rgba(255, 255, 255, 0.1);
+    --background-dimmed: rgba(125, 125, 125, 0.5);
     --background-brightened: rgba(255, 255, 255, 0.2);
 
     // Text Colors:
     --text-main: #e4e4e4;
+    --text-content: #1f1f1f;
     --text-light: #a6a6a6;
     --text-dark: #ffffff;
     --text-muted: #6b6b6b;
@@ -61,12 +63,22 @@
     --shadow-light: rgba(0, 0, 0, 0.25);
     --shadow-dark: rgba(0, 0, 0, 0.5);
 
+    //Highlights Contrast:
+    --highlight-main-active: #f7fafc69;
+    --highlight-main-hover: #f0f4f85c;
+    --highlight-content-active: #92a4b04d;
+    --highlight-content-hover: #dbe1e7f2;
+    --highlight-light-active: #f0f4f836;
+    --highlight-light-hover: #daebfb7a;
+    --highlight-dark-active: #f7fafc69;
+    --highlight-dark-hover: #f0f4f85c;
+
     // Methods Colors:
-    --content-color-success: #007F31;
-    --content-color-warning: #AD7A03;
-    --content-color-info: #0053B8;
-    --content-color-patch-method: #623497;
-    --content-color-error: #8E1A10;
-    --content-color-options-method: #A61468;
+    --content-color-success: #0c9c00;
+    --content-color-warning: #d89903;
+    --content-color-info: #0067e4;
+    --content-color-patch-method: #8c42e2;
+    --content-color-error: #d41505;
+    --content-color-options-method: #d41482;
   }
 }

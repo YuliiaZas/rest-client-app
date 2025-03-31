@@ -10,7 +10,7 @@
   min-width: var(--input-width-default);
   padding-inline: var(--input-padding-inline-default);
   font-size: 1rem;
-  color: var(--text-main);
+  @include colors('dark');
   @include border-default();
 
   &:focus {

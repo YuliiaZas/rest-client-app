@@ -2,7 +2,7 @@
 
 .card {
   padding: 2rem 1rem;
-  background: var(--background-main);
+  @include colors('main');
   width: 15rem;
   height: auto;
   @include shadow();

@@ -20,7 +20,7 @@
     height: auto;
     min-height: 20rem;
     border-radius: 0.5rem;
-    background: var(--background-main);
+    @include colors('main');
     padding: 1rem 2rem;
     @include shadow();
   }
