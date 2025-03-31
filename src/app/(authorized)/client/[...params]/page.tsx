@@ -16,6 +16,7 @@ import {
 } from '@/utils';
 import { Main } from '@/views';
 import { FormEvent, useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import styles from './client.module.scss';
 
 type RestClientProps = {
@@ -74,6 +75,7 @@ export default function RestClient({ params }: RestClientProps) {
         setHistory([
           ...history,
           {
+            id: uuidv4(),
             method,
             url,
             body,
