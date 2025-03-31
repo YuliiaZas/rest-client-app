@@ -30,7 +30,7 @@ export default function History() {
       searchParams
     );
 
-    router.push(`${process.env.APP_URL}${updatedUrl}`);
+    router.push(updatedUrl);
   };
 
   const sortedHistory = history.sort((a, b) => b.date - a.date);
