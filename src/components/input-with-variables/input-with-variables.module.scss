@@ -12,22 +12,7 @@
   width: 100%;
   inset: 0;
   z-index: 1;
-  border: none;
-  outline: none;
   background: transparent;
-
-  &_primary {
-    @include border-default();
-  }
-
-  &_secondary {
-    @include border-secondary();
-  }
-
-  &:focus {
-    outline: none;
-    border-color: var(--primary-main);
-  }
 }
 
 /* For showing through placeholder */
