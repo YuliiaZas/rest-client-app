@@ -3,3 +3,4 @@ export type { IColumn } from './column.type';
 export type { IHeader } from './header.type';
 export type { IRequest } from './request.type';
 export type { IResponse } from './response.type';
+export type { IVariable } from './variable.type';

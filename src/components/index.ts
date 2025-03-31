@@ -1,6 +1,7 @@
 export { Aside } from './aside';
 export { Button } from './button';
 export { Card } from './card';
+export { Column } from './column';
 export { Dropdown } from './dropdown';
 export { ErrorMessage } from './error-message';
 export { Footer } from './footer';

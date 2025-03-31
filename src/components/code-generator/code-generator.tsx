@@ -5,8 +5,9 @@ import {
   SupportedLanguages,
   supportedLanguagesOptions,
 } from '@/data/supported-languages';
-import { IHeader } from '@/types';
-import { formatHeaders, isValidURL } from '@/utils';
+import { useLocalStorage } from '@/hooks';
+import { IHeader, IVariable } from '@/types';
+import { formatHeaders, isValidURL, replaceVariables } from '@/utils';
 import { generateCodeSnippet } from '@/utils/generate-code-snippet';
 import { useState } from 'react';
 import { CodeBlock, dracula } from 'react-code-blocks';
@@ -30,20 +31,33 @@ export default function CodeGenerator({
   const [code, setCode] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
+  const [variables] = useLocalStorage<IVariable[]>({
+    key: 'variables',
+    defaultValue: [],
+  });
+
   const generateSnippet = async () => {
     try {
       setLoading(true);
+      const { updatedUrl, updatedBody, updatedHeaders } = replaceVariables(
+        url,
+        body,
+        headers,
+        variables
+      );
 
-      if (!isValidURL(url)) {
+      if (!isValidURL(updatedUrl)) {
         setCode('URL is invalid');
         return;
       }
 
       const snippet = await generateCodeSnippet({
         method,
-        url,
-        headers: formatHeaders(headers, { 'Content-Type': 'application/json' }),
-        body: body ? JSON.parse(body) : null,
+        url: updatedUrl,
+        headers: formatHeaders(updatedHeaders, {
+          'Content-Type': 'application/json',
+        }),
+        body: updatedBody ? JSON.parse(updatedBody) : null,
         language,
       });
 

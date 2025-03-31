@@ -1,9 +1,9 @@
 'use client';
 
-import { ReactNode, useEffect, useState, useRef, useCallback } from 'react';
-import styles from './dropdown.module.scss';
-import { Icon } from '../icons';
 import clsx from 'clsx';
+import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { Icon } from '../icons';
+import styles from './dropdown.module.scss';
 
 export type DropdownItem = {
   value: string;
@@ -67,6 +67,7 @@ export const Dropdown = ({
           styles.dropdown__button,
           buttonTransparent ? styles.dropdown__button_transparent : ''
         )}
+        type="button"
       >
         {buttonChildren ||
           items.find((item) => item.value === selectedItem)?.label ||
