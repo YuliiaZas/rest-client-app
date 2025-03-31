@@ -1,0 +1,49 @@
+@use '@/styles/utils/mixins' as *;
+
+$colors-shema: 'main', 'content', 'dark', 'light';
+
+@each $color in $colors-shema {
+  .colors-#{$color} {
+    @include colors($color);
+
+    &-state {
+      @include colors-state($color);
+
+      &:hover {
+        background-color: var(--hover-color);
+      }
+  
+      &.active {
+        background-color: var(--active-color);
+      }
+    }
+  }
+}
+
+.get {
+  color: var(--content-color-success);
+}
+
+.post {
+  color: var(--content-color-warning);
+}
+
+.put {
+  color: var(--content-color-info);
+}
+
+.patch {
+  color: var(--content-color-patch-method);
+}
+
+.delete {
+  color: var(--content-color-error);
+}
+
+.head {
+  color: var(--content-color-success);
+}
+
+.options {
+  color: var(--content-color-options-method);
+}

@@ -1,34 +1,7 @@
 @forward 'base/base';
 @forward 'utils/utils';
+@use '@/styles/utils/mixins' as *;
 
 body {
-  color: var(--text-main);
-}
-
-.get {
-  color: var(--content-color-success);
-}
-
-.post {
-  color: var(--content-color-warning);
-}
-
-.put {
-  color: var(--content-color-info);
-}
-
-.patch {
-  color: var(--content-color-patch-method);
-}
-
-.delete {
-  color: var(--content-color-error);
-}
-
-.head {
-  color: var(--content-color-success);
-}
-
-.options {
-  color: var(--content-color-options-method);
+  @include colors('content');
 }
