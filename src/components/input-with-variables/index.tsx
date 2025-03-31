@@ -1,14 +1,14 @@
 'use client';
 
+import { IVariable } from '@/types';
+import { isVariableDefined, variableRegExp } from '@/utils';
+import clsx from 'clsx';
 import { useCallback, useRef, useState } from 'react';
 import styles from './input-with-variables.module.scss';
-import clsx from 'clsx';
-import { isVariableDefined, variableRegExp } from '@/utils';
-import { Variables } from '@/entites';
 
 type InputWithVariablesProps = {
   value: string;
-  variables?: Variables;
+  variables?: IVariable[];
   placeholder?: string;
   type?: 'primary' | 'secondary';
   onValueChange: (value: string) => void;
@@ -16,13 +16,12 @@ type InputWithVariablesProps = {
 
 export const InputWithVariables = ({
   value,
-  variables = {},
+  variables = [],
   placeholder = 'Type the URL here',
   type = 'secondary',
   onValueChange,
 }: InputWithVariablesProps) => {
   const ref = useRef<HTMLDivElement>(null);
-
   const [currentValue, setCurrentValue] = useState(value);
 
   const [hoveredPartIndex, setHoveredPartIndex] = useState<number | null>(null);

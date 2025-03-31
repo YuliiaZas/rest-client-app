@@ -1,82 +1,74 @@
-import { IColumn } from '@/types';
-import { Button } from '../button';
+import { Children, isValidElement, ReactNode } from 'react';
 import styles from './table.module.scss';
 
 type TableProps<T extends { id: string }> = {
-  columns: IColumn[];
   data: T[];
-  deleteItem: (id: string) => void;
-  addItem: () => void;
-  setNewItem: (item: T) => void;
-  newItem: T;
+  children: ReactNode;
+  hasFooter?: boolean;
+};
+
+type TableChild<T> = {
+  title: string;
+  type: string;
+  body: (data: T) => JSX.Element;
+  footer?: ReactNode;
 };
 
 export function Table<T extends { id: string }>({
-  columns,
   data,
-  deleteItem,
-  addItem,
-  setNewItem,
-  newItem,
+  children,
+  hasFooter = false,
 }: TableProps<T>) {
+  const columns = Children.toArray(children)
+    .filter(isValidElement)
+    .map((child) => {
+      const element = child as React.ReactElement<TableChild<T>>;
+      return {
+        title: element.props.title,
+        type: element.props.type,
+        body: element.props.body,
+        footer: element.props.footer,
+      };
+    });
+
   return (
     <table className={styles.table}>
-      <thead className={styles.header}>
-        <tr className={styles.row}>
+      <thead className={styles.table__header}>
+        <tr className={styles.table__row}>
           {columns.map((column) => (
-            <th className={styles[column.type]} key={column.label}>
-              {column.label}
+            <th
+              key={column.title}
+              className={styles[`table__row-${column.type}`]}
+            >
+              {column.title}
             </th>
           ))}
         </tr>
       </thead>
       <tbody>
-        {data.map((item: T) => {
-          const cols = Object.keys(item).filter((i) => i !== 'id');
-
-          return (
-            <tr key={item.id} className={styles.row}>
-              {cols.map((col) => (
-                <td className={styles.data} key={col}>
-                  {item[col as keyof T] as string}
-                </td>
-              ))}
-
-              {deleteItem && (
-                <td className={styles.actions}>
-                  <Button onClick={() => deleteItem(item.id)} text="Delete" />
-                </td>
-              )}
-            </tr>
-          );
-        })}
-        {addItem && (
-          <tr className={styles.row}>
-            {columns
-              .filter((column) => column.type !== 'actions')
-              .map((column) => {
-                return (
-                  <td className={styles.data} key={column.name}>
-                    <input
-                      placeholder={column.label}
-                      value={String(newItem[column.name as keyof T] ?? '')}
-                      onChange={(e) =>
-                        setNewItem({
-                          ...newItem,
-                          [column.name]: e.target.value,
-                        })
-                      }
-                      className={styles.input}
-                    />
-                  </td>
-                );
-              })}
-            <td className={styles.actions}>
-              <Button onClick={addItem} text="Add" />
-            </td>
+        {data.map((row) => (
+          <tr key={row.id} className={styles.table__row}>
+            {columns.map((column, index) => (
+              <td key={index} className={styles[`table__row-${column.type}`]}>
+                {typeof column.body === 'function'
+                  ? column.body(row)
+                  : column.body}
+              </td>
+            ))}
           </tr>
-        )}
+        ))}
       </tbody>
+      {hasFooter && (
+        <tfoot>
+          <tr className={styles.table__row}>
+            {columns.map((column, index) => (
+              <td key={index} className={styles[`table__row-${column.type}`]}>
+                {column.footer}
+              </td>
+            ))}
+          </tr>
+        </tfoot>
+      )}
     </table>
   );
 }

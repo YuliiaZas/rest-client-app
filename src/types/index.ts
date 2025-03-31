@@ -4,3 +4,4 @@ export type { IHeader } from './header.type';
 export type { IHistory } from './history.type';
 export type { IRequest } from './request.type';
 export type { IResponse } from './response.type';
+export type { IVariable } from './variable.type';

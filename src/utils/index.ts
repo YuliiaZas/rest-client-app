@@ -4,5 +4,6 @@ export { formatHeaders } from './format-headers';
 export { getSearchParams } from './get-search-params';
 export { getUpdatedUrl } from './get-updated-url';
 export { isValidURL } from './is-valid-url';
+export { replaceVariables } from './replace-variables';
 export { updateUrl } from './update-url';
 export * from './variable-utils';
