@@ -11,7 +11,7 @@ interface ButtonProps {
   buttonType?: ButtonType;
   text?: string;
   icon?: PhosphorIcons;
-  iconSize?: string;
+  fontSize?: string;
   title?: string;
   isDisabled?: boolean;
   onClick?: () => void;
@@ -21,7 +21,7 @@ export const Button = ({
   buttonType = 'primary',
   text,
   icon,
-  iconSize = '1.5rem',
+  fontSize,
   title = '',
   isDisabled = false,
   onClick,
@@ -41,6 +41,12 @@ export const Button = ({
     return '';
   }, [title, isActionButton, icon]);
 
+  const iconSize = useMemo(() => {
+    if (fontSize) return fontSize;
+    if (isActionButton) return '1.25rem';
+    return '1rem';
+  }, [isIconButton, fontSize]);
+
   const handleButtonClick = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.currentTarget.blur();
@@ -56,6 +62,7 @@ export const Button = ({
         isIconButton && 'button_icon',
         isActionButton && `button_action button_action_${icon}`
       )}
+      style={{ fontSize }}
       title={translatedTitle}
       disabled={isDisabled}
       onClick={handleButtonClick}
