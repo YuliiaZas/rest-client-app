@@ -1,4 +1,4 @@
-import { encodeBase64 } from './encode-base64';
+import { getUpdatedUrl } from './get-updated-url';
 
 export const updateUrl = (
   method: string,
@@ -6,23 +6,9 @@ export const updateUrl = (
   body: string,
   searchParams?: string
 ) => {
-  let customUrl = `/client/${method}`;
-
-  if (url) {
-    const base64Url = encodeBase64(url);
-    customUrl += `/${base64Url}`;
-  }
-
-  if (body) {
-    const base64Body = encodeBase64(body);
-    customUrl += `/${base64Body}`;
-  }
-
-  if (searchParams) {
-    customUrl += `?${searchParams}`;
-  }
+  const updatedUrl = getUpdatedUrl(method, url, body, searchParams);
 
   if (window !== undefined) {
-    window.history.pushState({}, '', customUrl);
+    window.history.pushState({}, '', updatedUrl);
   }
 };
