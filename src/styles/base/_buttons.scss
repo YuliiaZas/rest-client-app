@@ -1,7 +1,6 @@
 @use '@/styles/utils/mixins' as *;
 
 @mixin button-styles($type) {
-  padding: 0.5rem 1rem;
   background-color: var(--#{$type}-main);
   color: var(--#{$type}-contrast-text);
   @include border-default(var(--#{$type}-main));
@@ -25,10 +24,12 @@
 }
 
 .button_primary {
+  padding: 0.5rem 1rem;
   @include button-styles('primary');
 }
 
 .button_secondary {
+  padding: 0.5rem 1rem;
   @include button-styles('secondary');
 }
 
@@ -40,3 +41,16 @@
 
   @include button-styles('transparent');
 }
+
+.button_icon {
+  padding: 0.25rem;
+
+  &.button_action {
+    @include button-styles('secondary');
+
+    &_delete {
+      color: var(--content-color-error)
+    }
+  }
+}
+
