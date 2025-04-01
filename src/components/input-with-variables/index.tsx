@@ -3,7 +3,7 @@
 import { IVariable } from '@/types';
 import { isVariableDefined, variableRegExp } from '@/utils';
 import clsx from 'clsx';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './input-with-variables.module.scss';
 
 type InputWithVariablesProps = {
@@ -25,6 +25,10 @@ export const InputWithVariables = ({
   const [currentValue, setCurrentValue] = useState(value);
 
   const [hoveredPartIndex, setHoveredPartIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    setCurrentValue(value);
+  }, [value]);
 
   const syncScroll = useCallback((e: React.UIEvent<HTMLInputElement>) => {
     if (!ref.current) return;

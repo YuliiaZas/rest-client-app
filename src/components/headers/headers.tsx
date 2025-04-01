@@ -8,7 +8,7 @@ import { Button } from '../button';
 import { Column } from '../column';
 import { InputWithVariables } from '../input-with-variables';
 import { Table } from '../table';
-import styles from './headers.module.scss';
+import { Input } from '../input';
 
 type HeadersProps = {
   headers: IHeader[];
@@ -46,16 +46,13 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
         type="data"
         body={(data: IHeader) => <span>{data.key}</span>}
         footer={
-          <input
+          <Input
+            id={newHeader.id}
+            defaultValue={newHeader.key}
             placeholder="Header Key"
-            value={newHeader.key}
-            onChange={(e) =>
-              setNewHeader((prev: IHeader) => ({
-                ...prev,
-                key: e.target.value,
-              }))
-            }
-            className={styles.input}
+            onValueChange={(key) => {
+              setNewHeader((prevHeader) => ({ ...prevHeader, key }));
+            }}
           />
         }
       />
@@ -69,10 +66,7 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
             value={newHeader.value}
             variables={variables}
             onValueChange={(value) =>
-              setNewHeader((prev: IHeader) => ({
-                ...prev,
-                value,
-              }))
+              setNewHeader((prevHeader) => ({ ...prevHeader, value }))
             }
           />
         }
