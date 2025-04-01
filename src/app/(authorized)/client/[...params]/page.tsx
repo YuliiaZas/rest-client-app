@@ -7,7 +7,7 @@ import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
 import { Method } from '@/data';
 import { useFormattedParams, useLocalStorage } from '@/hooks';
-import { IHeader, IResponse, IVariable } from '@/types';
+import { IHeader, IHistory, IResponse, IVariable } from '@/types';
 import {
   getSearchParams,
   isValidURL,
@@ -16,6 +16,7 @@ import {
 } from '@/utils';
 import { Main } from '@/views';
 import { FormEvent, useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import styles from './client.module.scss';
 
 type RestClientProps = {
@@ -39,6 +40,11 @@ export default function RestClient({ params }: RestClientProps) {
 
   const [variables] = useLocalStorage<IVariable[]>({
     key: 'variables',
+    defaultValue: [],
+  });
+
+  const [history, setHistory] = useLocalStorage<IHistory[]>({
+    key: 'history',
     defaultValue: [],
   });
 
@@ -66,6 +72,17 @@ export default function RestClient({ params }: RestClientProps) {
       );
       if (res) {
         setResponse({ status: res.status, body: res.body });
+        setHistory([
+          ...history,
+          {
+            id: uuidv4(),
+            method,
+            url: updatedUrl,
+            body: updatedBody,
+            headers: updatedHeaders,
+            date: Date.now(),
+          },
+        ]);
       }
     }
   };
