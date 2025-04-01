@@ -56,10 +56,10 @@ export default function Variables() {
                 placeholder="Variable Name"
                 value={newVariable.name}
                 onChange={(e) =>
-                  setNewVariable({
-                    ...newVariable,
+                  setNewVariable((prev: IVariable) => ({
+                    ...prev,
                     name: e.target.value,
-                  })
+                  }))
                 }
                 className={styles.input}
               />
@@ -74,10 +74,10 @@ export default function Variables() {
                 placeholder="Variable Value"
                 value={newVariable.value}
                 onChange={(e) =>
-                  setNewVariable({
-                    ...newVariable,
+                  setNewVariable((prev: IVariable) => ({
+                    ...prev,
                     value: e.target.value,
-                  })
+                  }))
                 }
                 className={styles.input}
               />
