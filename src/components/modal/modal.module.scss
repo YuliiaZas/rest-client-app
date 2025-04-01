@@ -19,7 +19,7 @@
     width: 30rem;
     height: auto;
     border-radius: 0.5rem;
-    background: var(--background-main);
+    @include colors('main');
     padding: 2.5rem 2rem;
     @include shadow();
   }
@@ -29,8 +29,7 @@
     top: 1rem;
     right: 1rem;
     font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-main);
+    color: inherit;
 
     &:hover {
       scale: 1.1;

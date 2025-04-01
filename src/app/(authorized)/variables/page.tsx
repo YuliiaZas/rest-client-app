@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Column, Spinner, Table } from '@/components';
+import { Button, Column, Input, Spinner, Table } from '@/components';
 import { useLocalStorage } from '@/hooks';
 import { IVariable } from '@/types';
 import { useEffect, useState } from 'react';
@@ -51,16 +51,13 @@ export default function Variables() {
             type="data"
             body={(data: IVariable) => <span>{data.name}</span>}
             footer={
-              <input
+              <Input
+                id={`${newVariable.id}-name`}
                 placeholder="Variable Name"
-                value={newVariable.name}
-                onChange={(e) =>
-                  setNewVariable((prev: IVariable) => ({
-                    ...prev,
-                    name: e.target.value,
-                  }))
-                }
-                className={styles.input}
+                defaultValue={newVariable.name}
+                onValueChange={(name) => {
+                  setNewVariable((prev: IVariable) => ({ ...prev, name }));
+                }}
               />
             }
           />
@@ -69,16 +66,13 @@ export default function Variables() {
             type="data"
             body={(data: IVariable) => <span>{data.value}</span>}
             footer={
-              <input
+              <Input
+                id={`${newVariable.id}-value`}
                 placeholder="Variable Value"
-                value={newVariable.value}
-                onChange={(e) =>
-                  setNewVariable((prev: IVariable) => ({
-                    ...prev,
-                    value: e.target.value,
-                  }))
-                }
-                className={styles.input}
+                defaultValue={newVariable.value}
+                onValueChange={(value) => {
+                  setNewVariable((prev: IVariable) => ({ ...prev, value }));
+                }}
               />
             }
           />

@@ -1,11 +1,12 @@
+@use '@/styles/utils/mixins' as *;
+
 .header {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
-  background: var(--background-dark);
-  color: var(--text-main);
+  @include colors('dark');
   font-size: 0.8rem;
   position: sticky;
   top: 0.5rem;

@@ -114,6 +114,8 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
         return (
           <Input<ILoginForm>
             id={fieldName}
+            typeClass="primary"
+            colors="dark"
             placeholder={t(fieldName)}
             type={fieldName === FORM_FIELD.EMAIL ? 'text' : 'password'}
             withValidation={true}

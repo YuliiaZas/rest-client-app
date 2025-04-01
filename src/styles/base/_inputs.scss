@@ -1,0 +1,19 @@
+@use '@/styles/utils/mixins' as *;
+
+.input {
+  &_primary,
+  &_secondary {
+    &:focus {
+      outline: none;
+      border-color: var(--primary-main);
+    }
+  }
+
+  &_primary {
+    @include border-default();
+  }
+  
+  &_secondary {
+    @include border-secondary();
+  }
+}

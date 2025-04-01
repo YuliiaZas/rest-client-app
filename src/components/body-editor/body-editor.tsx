@@ -38,8 +38,9 @@ export default function BodyEditor({
           <Dropdown
             items={languageOptions}
             selectedItem={language}
+            showButtonBorder={false}
+            colors="content"
             selectOption={(value) => setLanguage(value as Language)}
-            buttonTransparent={true}
           />
         </div>
       )}
