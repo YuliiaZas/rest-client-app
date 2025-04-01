@@ -1,7 +1,10 @@
 {
   "root": {
     "title": "REST клиент",
-    "description": "RS School React course 2025 Q1 финальное задание"
+    "description": "RS School React course 2025 Q1 финальное задание",
+    "theme": "Сменить тему",
+    "language": "Сменить язык",
+    "signout": "Выйти"
   },
   "login": {
     "email": "Электронная почта",
@@ -18,5 +21,12 @@
     "invalidCredentials": "Неверный адрес эл. почты и/или пароль",
     "loginError": "Ошибка при входе",
     "signUpError": "Ошибка при регистрации"
+  },
+  "actions": {
+    "add": "Добавить",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "save": "Сохранить",
+    "cancel": "Отмена"
   }
 }

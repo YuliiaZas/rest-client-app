@@ -5,6 +5,7 @@ import { Path, UseFormRegister, UseFormTrigger } from 'react-hook-form';
 import { ErrorMessage, Icon } from '@/components';
 import { PhosphorIcons } from '@/components/icons';
 import styles from './input.module.scss';
+import { ColorsSchema } from '@/entites';
 
 type FormFieldProps<T extends Record<string, string> = Record<string, string>> =
   {
@@ -18,12 +19,15 @@ type FormFieldProps<T extends Record<string, string> = Record<string, string>> =
     error?: { message?: string } | string;
     icon?: PhosphorIcons;
     iconPosition?: 'left' | 'right';
+    typeClass?: 'primary' | 'secondary';
+    colors?: ColorsSchema;
     onIconClick?: () => void;
+    onValueChange?: (value: string) => void;
   };
 
 export const Input = <T extends Record<string, string>>({
   id,
-  defaultValue = '',
+  defaultValue,
   placeholder = 'Type value',
   type = 'text',
   withValidation = false,
@@ -32,8 +36,13 @@ export const Input = <T extends Record<string, string>>({
   error,
   icon,
   iconPosition = 'right',
+  typeClass = 'secondary',
+  colors = 'content',
   onIconClick,
+  onValueChange,
 }: FormFieldProps<T>) => {
+  const [currentValue, setCurrentValue] = useState(defaultValue);
+
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const isPasswordInput = useMemo(() => type === 'password', [type]);
@@ -41,6 +50,12 @@ export const Input = <T extends Record<string, string>>({
     useState<FormFieldProps<T>['type']>(type);
   const [currentIcon, setCurrentIcon] =
     useState<FormFieldProps<T>['icon']>(icon);
+
+  // TODO: check if this may be removed with correct handling of `defaultValue` changes
+  // Places where should be checked: Variables, Headers - after click on `Add` button
+  useEffect(() => {
+    setCurrentValue(defaultValue);
+  }, [defaultValue]);
 
   useEffect(() => {
     const errorMessage = !error
@@ -61,19 +76,48 @@ export const Input = <T extends Record<string, string>>({
     [currentType, type]
   );
 
+  const onChangeHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setCurrentValue(value);
+      if (onValueChange) onValueChange(value);
+    },
+    [onValueChange]
+  );
+
   return (
     <div className={styles.input__container}>
-      <div className={currentIcon ? styles['input_with-icons'] : undefined}>
-        <input
-          className={styles.input}
-          {...(register ? register(id) : {})}
-          type={currentType}
-          id={id}
-          defaultValue={defaultValue}
-          placeholder={placeholder}
-          autoComplete="nope"
-          onBlur={() => trigger && trigger(id)}
-        />
+      <div className={currentIcon && styles['input_with-icons']}>
+        {register ? (
+          <input
+            {...(register ? register(id) : {})}
+            className={clsx(
+              styles.input,
+              `input_${typeClass}`,
+              `colors-${colors}`
+            )}
+            type={currentType}
+            id={id}
+            defaultValue={defaultValue}
+            placeholder={placeholder}
+            autoComplete="nope"
+            onBlur={() => trigger && trigger(id)}
+          />
+        ) : (
+          <input
+            className={clsx(
+              styles.input,
+              `input_${typeClass}`,
+              `colors-${colors}`
+            )}
+            type={currentType}
+            id={id}
+            value={currentValue}
+            placeholder={placeholder}
+            autoComplete="nope"
+            onChange={(e) => onChangeHandler(e)}
+          />
+        )}
         {currentIcon && (
           <div
             className={clsx(

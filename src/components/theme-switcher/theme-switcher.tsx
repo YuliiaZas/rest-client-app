@@ -1,20 +1,25 @@
 'use client';
 
-import { Icon } from '@/components';
+import { useTranslations } from 'next-intl';
+import { Button } from '@/components';
 import { useTheme } from '@/hooks';
 import { AppTheme } from '@/entites';
-import styles from './theme-switcher.module.scss';
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
+
+  const t = useTranslations('root');
 
   function toggleTheme() {
     setTheme(theme === AppTheme.light ? AppTheme.dark : AppTheme.light);
   }
 
   return (
-    <button onClick={toggleTheme} className={styles.theme__button}>
-      <Icon iconName="paint" size="1rem" />
-    </button>
+    <Button
+      icon="paint"
+      buttonType="transparent"
+      title={t('theme')}
+      onClick={toggleTheme}
+    />
   );
 }

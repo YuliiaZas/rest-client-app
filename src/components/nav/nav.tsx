@@ -2,11 +2,13 @@
 
 import styles from './nav.module.scss';
 import Link from 'next/link';
-import { Icon, Translated } from '@/components';
+import { useTranslations } from 'next-intl';
+import { Button, Icon, Translated } from '@/components';
 import { signOut, useSession } from 'next-auth/react';
 
 export function Nav() {
   const { status } = useSession();
+  const t = useTranslations('root');
 
   return (
     <nav className={styles.nav}>
@@ -14,7 +16,11 @@ export function Nav() {
         {status === 'authenticated' ? (
           <>
             <li onClick={() => signOut()}>
-              <Icon iconName="sign-out" size="1rem" />
+              <Button
+                icon="sign-out"
+                buttonType="transparent"
+                title={t('signout')}
+              />
             </li>
           </>
         ) : (
