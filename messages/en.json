@@ -15,6 +15,8 @@
     "signIn": "Sign In",
     "signOut": "Sign Out",
     "signUp": "Sign Up",
-    "loginError": "Invalid email or password"
+    "invalidCredentials": "Invalid email or password",
+    "loginError": "Error during login",
+    "signUpError": "Error during signup"
   }
 }

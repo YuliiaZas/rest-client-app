@@ -7,3 +7,4 @@ export { isValidURL } from './is-valid-url';
 export { replaceVariables } from './replace-variables';
 export { updateUrl } from './update-url';
 export * from './variable-utils';
+export * from './firebase';
