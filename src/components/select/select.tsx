@@ -11,6 +11,7 @@ type SelectButtonProps = {
   options: { label: string; value: string }[];
   defaultValue?: string;
   disabled?: boolean;
+  title?: string;
 };
 
 export function Select({
@@ -19,6 +20,7 @@ export function Select({
   defaultValue,
   disabled,
   icon,
+  title = '',
 }: SelectButtonProps) {
   const [open, setOpen] = useState<boolean>(false);
 
@@ -40,6 +42,7 @@ export function Select({
         onClick={toggleOpen}
         onChange={handleSelect}
         defaultValue={defaultValue}
+        title={title}
       >
         {options.map(({ label, value }) => (
           <option key={value} value={value}>

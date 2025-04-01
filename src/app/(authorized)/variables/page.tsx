@@ -40,7 +40,6 @@ export default function Variables() {
   return (
     <div className={styles.variables}>
       <h1 className={styles.variables__title}>Variables</h1>
-
       {isLoading ? (
         <div className={styles.wrapper}>
           <Spinner />
@@ -81,9 +80,9 @@ export default function Variables() {
             title="Actions"
             type="actions"
             body={(data: IVariable) => (
-              <Button onClick={() => deleteVariable(data.id)} text="Delete" />
+              <Button onClick={() => deleteVariable(data.id)} icon="delete" />
             )}
-            footer={<Button onClick={addVariable} text="Add" />}
+            footer={<Button onClick={addVariable} icon="add" />}
           />
         </Table>
       )}
