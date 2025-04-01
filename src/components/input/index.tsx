@@ -24,7 +24,7 @@ type FormFieldProps<T extends Record<string, string> = Record<string, string>> =
 
 export const Input = <T extends Record<string, string>>({
   id,
-  defaultValue = '',
+  defaultValue,
   placeholder = 'Type value',
   type = 'text',
   withValidation = false,
@@ -46,6 +46,8 @@ export const Input = <T extends Record<string, string>>({
   const [currentIcon, setCurrentIcon] =
     useState<FormFieldProps<T>['icon']>(icon);
 
+  // TODO: check if this may be removed with correct handling of `defaultValue` changes
+  // Places where should be checked: Variables, Headers - after click on `Add` button
   useEffect(() => {
     setCurrentValue(defaultValue);
   }, [defaultValue]);
