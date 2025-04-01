@@ -1,9 +1,9 @@
 'use client';
 
-import { Button, Column, Table } from '@/components';
+import { Button, Column, Input, Spinner, Table } from '@/components';
 import { useLocalStorage } from '@/hooks';
 import { IVariable } from '@/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './variables.module.scss';
 
@@ -13,10 +13,15 @@ export default function Variables() {
     name: '',
     value: '',
   });
+  const [isLoading, setIsLoading] = useState(true);
   const [variables, setVariables] = useLocalStorage<IVariable[]>({
     key: 'variables',
     defaultValue: [],
   });
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [variables]);
 
   const addVariable = () => {
     if (newVariable.name && newVariable.value) {
@@ -35,23 +40,24 @@ export default function Variables() {
   return (
     <div className={styles.variables}>
       <h1 className={styles.variables__title}>Variables</h1>
-      {Array.isArray(variables) && (
+      {isLoading ? (
+        <div className={styles.wrapper}>
+          <Spinner />
+        </div>
+      ) : (
         <Table data={variables} hasFooter={true}>
           <Column
             title="Variable Name"
             type="data"
             body={(data: IVariable) => <span>{data.name}</span>}
             footer={
-              <input
+              <Input
+                id={`${newVariable.id}-name`}
                 placeholder="Variable Name"
-                value={newVariable.name}
-                onChange={(e) =>
-                  setNewVariable((prev: IVariable) => ({
-                    ...prev,
-                    name: e.target.value,
-                  }))
-                }
-                className={styles.input}
+                defaultValue={newVariable.name}
+                onValueChange={(name) => {
+                  setNewVariable((prev: IVariable) => ({ ...prev, name }));
+                }}
               />
             }
           />
@@ -60,16 +66,13 @@ export default function Variables() {
             type="data"
             body={(data: IVariable) => <span>{data.value}</span>}
             footer={
-              <input
+              <Input
+                id={`${newVariable.id}-value`}
                 placeholder="Variable Value"
-                value={newVariable.value}
-                onChange={(e) =>
-                  setNewVariable((prev: IVariable) => ({
-                    ...prev,
-                    value: e.target.value,
-                  }))
-                }
-                className={styles.input}
+                defaultValue={newVariable.value}
+                onValueChange={(value) => {
+                  setNewVariable((prev: IVariable) => ({ ...prev, value }));
+                }}
               />
             }
           />
@@ -77,9 +80,9 @@ export default function Variables() {
             title="Actions"
             type="actions"
             body={(data: IVariable) => (
-              <Button onClick={() => deleteVariable(data.id)} text="Delete" />
+              <Button onClick={() => deleteVariable(data.id)} icon="delete" />
             )}
-            footer={<Button onClick={addVariable} text="Add" />}
+            footer={<Button onClick={addVariable} icon="add" />}
           />
         </Table>
       )}
