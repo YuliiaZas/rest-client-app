@@ -12,6 +12,7 @@ import { generateCodeSnippet } from '@/utils/generate-code-snippet';
 import { useState } from 'react';
 import { CodeBlock, dracula } from 'react-code-blocks';
 import { Button } from '../button';
+import { Dropdown } from '../dropdown';
 import styles from './code-generator.module.scss';
 
 type CodeGeneratorProps = {
@@ -72,21 +73,21 @@ export default function CodeGenerator({
   return (
     <div>
       <div className={styles.code__controls}>
-        <select
-          onChange={(e) => setLanguage(e.target.value as SupportedLanguages)}
-          value={language}
-          className="select"
-        >
-          {supportedLanguagesOptions.map((lang) => (
-            <option key={lang} value={lang}>
-              {lang.toUpperCase()}
-            </option>
-          ))}
-        </select>
+        <Dropdown
+          items={supportedLanguagesOptions.map((value) => ({
+            value,
+            label: value.toUpperCase(),
+          }))}
+          selectedItem={language}
+          showButtonBorder={false}
+          colors="content"
+          selectOption={(value) => setLanguage(value as SupportedLanguages)}
+        />
         <Button
           onClick={generateSnippet}
           isDisabled={loading}
           text={loading ? 'Generating...' : 'Generate'}
+          buttonType="secondary"
         />
       </div>
 
