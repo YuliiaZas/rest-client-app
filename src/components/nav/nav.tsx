@@ -3,17 +3,17 @@
 import styles from './nav.module.scss';
 import Link from 'next/link';
 import { Icon, Translated } from '@/components';
-import { useAuth } from '@/hooks';
+import { signOut, useSession } from 'next-auth/react';
 
 export function Nav() {
-  const { isAuthenticated, logout } = useAuth();
+  const { status } = useSession();
 
   return (
     <nav className={styles.nav}>
       <ul>
-        {isAuthenticated ? (
+        {status === 'authenticated' ? (
           <>
-            <li onClick={logout}>
+            <li onClick={() => signOut()}>
               <Icon iconName="sign-out" size="1rem" />
             </li>
           </>

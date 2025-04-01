@@ -1,12 +1,22 @@
 import { ReactNode } from 'react';
 import { Aside, Footer, Header, Icon } from '@/components';
 import styles from './layout.module.scss';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/utils';
+import { redirect } from 'next/navigation';
 
 type ClientLayoutProps = {
   children: ReactNode;
 };
 
-export default function ClientLayout({ children }: ClientLayoutProps) {
+export default async function ClientLayout({ children }: ClientLayoutProps) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    // TODO: correct URL for redirect
+    redirect('/');
+  }
+
   return (
     <div className={styles.client}>
       <Aside type="client">
