@@ -50,10 +50,10 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
             placeholder="Header Key"
             value={newHeader.key}
             onChange={(e) =>
-              setNewHeader({
-                ...newHeader,
+              setNewHeader((prev: IHeader) => ({
+                ...prev,
                 key: e.target.value,
-              })
+              }))
             }
             className={styles.input}
           />
@@ -69,10 +69,10 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
             value={newHeader.value}
             variables={variables}
             onValueChange={(value) =>
-              setNewHeader({
-                ...newHeader,
+              setNewHeader((prev: IHeader) => ({
+                ...prev,
                 value,
-              })
+              }))
             }
           />
         }
