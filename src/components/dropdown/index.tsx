@@ -34,6 +34,7 @@ export const Dropdown = ({
   positionedRigth = false,
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -62,6 +63,52 @@ export const Dropdown = ({
     setIsOpen(!isOpen);
   }, [isOpen]);
 
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (!isOpen) return;
+
+      switch (event.key) {
+        case 'ArrowDown':
+          setHighlightedIndex((prev) =>
+            prev === null || prev === items.length - 1 ? 0 : prev + 1
+          );
+          break;
+        case 'ArrowUp':
+          setHighlightedIndex((prev) =>
+            prev === null || prev === 0 ? items.length - 1 : prev - 1
+          );
+          break;
+        case 'Enter':
+          event.preventDefault();
+          if (highlightedIndex !== null) {
+            handleSelectItem(items[highlightedIndex].value);
+          } else {
+            setIsOpen(false);
+          }
+          break;
+        case 'Escape':
+        case 'Tab':
+          setIsOpen(false);
+          break;
+        default:
+          break;
+      }
+    },
+    [isOpen, items, highlightedIndex, handleSelectItem]
+  );
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+    } else {
+      setHighlightedIndex(null);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, handleKeyDown]);
+
   return (
     <div
       ref={ref}
@@ -81,22 +128,23 @@ export const Dropdown = ({
         <Icon iconName={isOpen ? 'caret-up' : 'caret-down'} size="1rem" />
       </button>
       {isOpen && (
-        <div className={clsx(styles.box, positionedRigth && styles.right)}>
-          {items.map((item) => (
-            <div
+        <ul className={clsx(styles.box, positionedRigth && styles.right)}>
+          {items.map((item, i) => (
+            <li
               key={item.value}
               className={clsx(
                 item.itemClass,
                 styles.dropdow__item,
                 `colors-${colors}-state`,
-                item.value === selectedItem && 'active'
+                item.value === selectedItem && 'active',
+                highlightedIndex === i && 'highlighted'
               )}
               onClick={() => handleSelectItem(item.value)}
             >
               {item.label || item.value}
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );
