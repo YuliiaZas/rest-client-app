@@ -86,9 +86,9 @@ export default function Variables() {
             title="Actions"
             type="actions"
             body={(data: IVariable) => (
-              <Button onClick={() => deleteVariable(data.id)} text="Delete" />
+              <Button onClick={() => deleteVariable(data.id)} icon="delete" />
             )}
-            footer={<Button onClick={addVariable} text="Add" />}
+            footer={<Button onClick={addVariable} icon="add" />}
           />
         </Table>
       )}
