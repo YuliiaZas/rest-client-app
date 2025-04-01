@@ -1,14 +1,14 @@
 'use client';
 import { useTranslations } from 'next-intl';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Button, ErrorMessage, Input } from '@/components';
+import { Button, ErrorMessage, Input, Spinner } from '@/components';
 import {
   FORM_FIELD,
   ILoginForm,
-  SignUpForm,
   SignInForm,
+  SignUpForm,
 } from './login-form.entities';
 import {
   characterSet,
@@ -16,6 +16,9 @@ import {
   signInFormSchema,
   signUpFormSchema,
 } from './login-form.consts';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { firebaseSignup } from '@/utils';
 
 interface LoginFormProps {
   isSignUp?: boolean;
@@ -24,6 +27,8 @@ interface LoginFormProps {
 export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
   const t = useTranslations('login');
   const [loginError, setLoginError] = useState<string>('');
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const fields = useMemo(
     () =>
@@ -47,9 +52,37 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmit = (data: ILoginForm) => {
-    console.log(data);
-    setLoginError('loginError');
+  const login = async (email: string, password: string) => {
+    const response = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (response?.error) {
+      setLoginError(response.error);
+      return;
+    }
+
+    // TODO: correct URL for redirect
+    router.push('/client/GET');
+  };
+
+  const onSubmit = async (data: ILoginForm) => {
+    if (isSignUp) {
+      startTransition(async () => {
+        const firebaseUser = await firebaseSignup(data.email, data.password);
+        if (!firebaseUser) {
+          setLoginError('signUpError');
+          return;
+        }
+        await login(data.email, data.password);
+      });
+    } else {
+      startTransition(async () => {
+        await login(data.email, data.password);
+      });
+    }
   };
 
   const passwordParams = {
@@ -75,6 +108,7 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {isPending && <Spinner />}
       {fields.map((field) => {
         const fieldName = field as keyof ILoginForm;
         return (

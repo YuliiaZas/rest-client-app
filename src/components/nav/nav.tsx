@@ -1,16 +1,23 @@
+'use client';
+
 import styles from './nav.module.scss';
 import Link from 'next/link';
 import { Icon, Translated } from '@/components';
+import { signOut, useSession } from 'next-auth/react';
 
-interface NavProps {
-  isAuthenticated?: boolean;
-}
+export function Nav() {
+  const { status } = useSession();
 
-export function Nav({ isAuthenticated }: NavProps) {
   return (
     <nav className={styles.nav}>
       <ul>
-        {!isAuthenticated && (
+        {status === 'authenticated' ? (
+          <>
+            <li onClick={() => signOut()}>
+              <Icon iconName="sign-out" size="1rem" />
+            </li>
+          </>
+        ) : (
           <>
             <Icon iconName="key" size="1rem" />
             <li>

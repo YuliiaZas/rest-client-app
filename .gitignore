@@ -22,3 +22,4 @@ coverage
 .vercel
 
 package-lock.json
+.env
