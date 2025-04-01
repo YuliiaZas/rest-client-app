@@ -5,12 +5,14 @@ import { isVariableDefined, variableRegExp } from '@/utils';
 import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styles from './input-with-variables.module.scss';
+import { ColorsSchema } from '@/entites';
 
 type InputWithVariablesProps = {
   value: string;
   variables?: IVariable[];
   placeholder?: string;
-  type?: 'primary' | 'secondary';
+  typeClass?: 'primary' | 'secondary';
+  colors?: ColorsSchema;
   onValueChange: (value: string) => void;
 };
 
@@ -18,7 +20,8 @@ export const InputWithVariables = ({
   value,
   variables = [],
   placeholder = 'Type the URL here',
-  type = 'secondary',
+  typeClass = 'secondary',
+  colors = 'content',
   onValueChange,
 }: InputWithVariablesProps) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -73,7 +76,11 @@ export const InputWithVariables = ({
   return (
     <div className={styles.input__wrapper}>
       <input
-        className={clsx(styles.input__field, styles[`input__field_${type}`])}
+        className={clsx(
+          styles.input__field,
+          `input_${typeClass}`,
+          `colors-${colors}`
+        )}
         placeholder={placeholder}
         value={currentValue}
         onChange={onChangeHandler}

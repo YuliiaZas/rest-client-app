@@ -9,13 +9,6 @@
   width: 100%;
   padding-inline: var(--input-padding-inline-default);
   font-size: 1rem;
-  color: var(--text-main);
-  @include border-default();
-
-  &:focus {
-    outline: none;
-    border-color: var(--primary-main);
-  }
 }
 
 .input_with-icons {

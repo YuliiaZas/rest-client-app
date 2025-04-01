@@ -34,6 +34,7 @@
 
     // Background Colors:
     --background-main: #ffffff;
+    --background-content: #ffffff;
     --background-light: #f8fbfd;
     --background-dark: #e4ebf3;
     --background-disabled: #e0e6eb;
@@ -42,6 +43,7 @@
 
     // Text Colors:
     --text-main: #2d3748;
+    --text-content: #2d3748;
     --text-light: #718096;
     --text-dark: #1a202c;
     --text-muted: #6b6b6b;
@@ -60,6 +62,16 @@
     // Shadows and Highlights:
     --shadow-light: rgba(0, 0, 0, 0.05);
     --shadow-dark: rgba(0, 0, 0, 0.15);
+
+    //Highlights Contrast:
+    --highlight-main-active: #eef4f7fa;
+    --highlight-main-hover: #f0f4f8bf;
+    --highlight-content-active: #eef4f7fa;
+    --highlight-content-hover: #f0f4f8bf;
+    --highlight-light-active: #eef4f7fa;
+    --highlight-light-hover: #f0f4f8bf;
+    --highlight-dark-active: #f7fafcbf;
+    --highlight-dark-hover: #f0f4f8bf;
 
     // Methods Colors:
     --content-color-success: #007f31;

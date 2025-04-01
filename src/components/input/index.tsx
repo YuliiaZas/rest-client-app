@@ -5,6 +5,7 @@ import { Path, UseFormRegister, UseFormTrigger } from 'react-hook-form';
 import { ErrorMessage, Icon } from '@/components';
 import { PhosphorIcons } from '@/components/icons';
 import styles from './input.module.scss';
+import { ColorsSchema } from '@/entites';
 
 type FormFieldProps<T extends Record<string, string> = Record<string, string>> =
   {
@@ -18,6 +19,8 @@ type FormFieldProps<T extends Record<string, string> = Record<string, string>> =
     error?: { message?: string } | string;
     icon?: PhosphorIcons;
     iconPosition?: 'left' | 'right';
+    typeClass?: 'primary' | 'secondary';
+    colors?: ColorsSchema;
     onIconClick?: () => void;
     onValueChange?: (value: string) => void;
   };
@@ -33,6 +36,8 @@ export const Input = <T extends Record<string, string>>({
   error,
   icon,
   iconPosition = 'right',
+  typeClass = 'secondary',
+  colors = 'content',
   onIconClick,
   onValueChange,
 }: FormFieldProps<T>) => {
@@ -86,7 +91,11 @@ export const Input = <T extends Record<string, string>>({
         {register ? (
           <input
             {...(register ? register(id) : {})}
-            className={styles.input}
+            className={clsx(
+              styles.input,
+              `input_${typeClass}`,
+              `colors-${colors}`
+            )}
             type={currentType}
             id={id}
             defaultValue={defaultValue}
@@ -96,7 +105,11 @@ export const Input = <T extends Record<string, string>>({
           />
         ) : (
           <input
-            className={styles.input}
+            className={clsx(
+              styles.input,
+              `input_${typeClass}`,
+              `colors-${colors}`
+            )}
             type={currentType}
             id={id}
             value={currentValue}

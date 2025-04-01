@@ -1,14 +1,16 @@
+@use '@/styles/utils/mixins' as *;
+
 .aside {
   border-right: 1px solid var(--lines-dark);
   padding: 1.5rem 1rem;
 
   &__root {
-    background: var(--background-light);
+    @include colors('light');
     width: 15rem;
   }
 
   &__client {
-    background: var(--background-dark);
+    @include colors('dark');
     width: 5rem;
     display: flex;
     flex-direction: column;

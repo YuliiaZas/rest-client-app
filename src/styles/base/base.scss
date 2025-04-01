@@ -1,6 +1,8 @@
 @use 'scss-reset/reset';
 @use './typography';
 @use './buttons';
+@use './inputs';
+@use './colors';
 
 .hidden {
   visibility: hidden;

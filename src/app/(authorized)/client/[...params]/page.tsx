@@ -128,7 +128,7 @@ export default function RestClient({ params }: RestClientProps) {
               <InputWithVariables
                 value={url}
                 variables={variables}
-                type={'primary'}
+                typeClass={'primary'}
                 onValueChange={handleChangeUrl}
               />
               <Button text="Send" />
