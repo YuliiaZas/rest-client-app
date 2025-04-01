@@ -5,4 +5,8 @@
     align-items: center;
     gap: 2ch;
   }
+
+  & li {
+    cursor: pointer;
+  }
 }

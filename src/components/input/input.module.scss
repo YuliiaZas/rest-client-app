@@ -1,12 +1,13 @@
 @use '@/styles/utils/mixins' as *;
 
 .input__container {
-  max-width: min-content;
+  width: 100%;
 }
 
 .input {
   min-height: var(--input-height-default);
   min-width: var(--input-width-default);
+  width: 100%;
   padding-inline: var(--input-padding-inline-default);
   font-size: 1rem;
   color: var(--text-main);
@@ -22,7 +23,6 @@
   --input-icon-padding: 0.5rem;
   --input-placeholder-padding: 1.75rem;
   position: relative;
-  width: max-content;
 
   .input {
     max-width: 100%;

@@ -15,7 +15,9 @@
     "signIn": "Sign In",
     "signOut": "Sign Out",
     "signUp": "Sign Up",
-    "loginError": "Invalid email or password"
+    "invalidCredentials": "Invalid email or password",
+    "loginError": "Error during login",
+    "signUpError": "Error during signup"
   },
   "actions": {
     "add": "Add",
@@ -23,5 +25,5 @@
     "delete": "Delete",
     "save": "Save",
     "cancel": "Cancel"
-  }
+   }
 }
