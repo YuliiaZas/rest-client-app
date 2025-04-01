@@ -49,8 +49,7 @@
     @include button-styles('secondary');
 
     &_delete {
-      color: var(--content-color-error)
+      color: var(--content-color-error);
     }
   }
 }
-
