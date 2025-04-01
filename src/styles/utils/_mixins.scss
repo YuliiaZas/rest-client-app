@@ -27,7 +27,15 @@
 }
 
 @mixin colors-state($color) {
-  @if $color == 'dark' or $color == 'light'  or $color == 'content' or $color == 'main' {
+  @if $color ==
+    'dark' or
+    $color ==
+    'light' or
+    $color ==
+    'content' or
+    $color ==
+    'main'
+  {
     --active-color: var(--highlight-#{$color}-active);
     --hover-color: var(--highlight-#{$color}-hover);
   } @else {

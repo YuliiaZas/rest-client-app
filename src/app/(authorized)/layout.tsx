@@ -4,6 +4,7 @@ import styles from './layout.module.scss';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 type ClientLayoutProps = {
   children: ReactNode;
@@ -20,9 +21,15 @@ export default async function ClientLayout({ children }: ClientLayoutProps) {
   return (
     <div className={styles.client}>
       <Aside type="client">
-        <Icon iconName="user" size="3rem" />
-        <Icon iconName="stack" size="3rem" />
-        <Icon iconName="history" size="3rem" />
+        <Link href="/client/GET">
+          <Icon iconName="planet" size="3rem" />
+        </Link>
+        <Link href="/history">
+          <Icon iconName="history" size="3rem" />
+        </Link>
+        <Link href="/variables">
+          <Icon iconName="stack" size="3rem" />
+        </Link>
       </Aside>
       <div className={styles.content}>
         <Header />

@@ -13,7 +13,7 @@ $colors-shema: 'main', 'content', 'dark', 'light';
       &.highlighted {
         background-color: var(--hover-color);
       }
-  
+
       &.active {
         background-color: var(--active-color);
       }
