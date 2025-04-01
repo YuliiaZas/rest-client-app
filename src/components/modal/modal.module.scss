@@ -18,10 +18,9 @@
     position: relative;
     width: 30rem;
     height: auto;
-    min-height: 20rem;
     border-radius: 0.5rem;
     @include colors('main');
-    padding: 1rem 2rem;
+    padding: 2.5rem 2rem;
     @include shadow();
   }
 
@@ -30,8 +29,7 @@
     top: 1rem;
     right: 1rem;
     font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-main);
+    color: inherit;
 
     &:hover {
       scale: 1.1;

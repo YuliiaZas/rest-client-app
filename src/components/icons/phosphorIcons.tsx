@@ -1,4 +1,6 @@
 // Get new icons from https://phosphoricons.com/
+// To properly follow the component size, change
+// `width` and `height` to `100%`, `fill` to `currentColor`
 export const phosphorIcons = {
   translate: (
     <svg
@@ -91,8 +93,8 @@ export const phosphorIcons = {
   eye: (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="32"
-      height="32"
+      width="100%"
+      height="100%"
       fill="currentColor"
       viewBox="0 0 256 256"
     >
@@ -102,8 +104,8 @@ export const phosphorIcons = {
   'eye-slash': (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="32"
-      height="32"
+      width="100%"
+      height="100%"
       fill="currentColor"
       viewBox="0 0 256 256"
     >
@@ -113,8 +115,8 @@ export const phosphorIcons = {
   'caret-down': (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="32"
-      height="32"
+      width="100%"
+      height="100%"
       fill="currentColor"
       viewBox="0 0 256 256"
     >
@@ -124,12 +126,23 @@ export const phosphorIcons = {
   'caret-up': (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="32"
-      height="32"
+      width="100%"
+      height="100%"
       fill="currentColor"
       viewBox="0 0 256 256"
     >
       <path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"></path>
+    </svg>
+  ),
+  'sign-out': (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="100%"
+      height="100%"
+      fill="currentColor"
+      viewBox="0 0 256 256"
+    >
+      <path d="M120,216a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V40a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H56V208h56A8,8,0,0,1,120,216Zm109.66-93.66-40-40a8,8,0,0,0-11.32,11.32L204.69,120H112a8,8,0,0,0,0,16h92.69l-26.35,26.34a8,8,0,0,0,11.32,11.32l40-40A8,8,0,0,0,229.66,122.34Z"></path>
     </svg>
   ),
 };
