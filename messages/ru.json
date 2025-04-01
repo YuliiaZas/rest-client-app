@@ -1,7 +1,10 @@
 {
   "root": {
     "title": "REST клиент",
-    "description": "RS School React course 2025 Q1 финальное задание"
+    "description": "RS School React course 2025 Q1 финальное задание",
+    "theme": "Сменить тему",
+    "language": "Сменить язык",
+    "signout": "Выйти"
   },
   "login": {
     "email": "Электронная почта",
