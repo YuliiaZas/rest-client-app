@@ -53,7 +53,6 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
             onValueChange={(key) => {
               setNewHeader((prevHeader) => ({ ...prevHeader, key }));
             }}
-
           />
         }
       />
