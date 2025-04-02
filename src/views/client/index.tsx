@@ -9,6 +9,7 @@ import { Method } from '@/data';
 import { useFormattedParams, useLocalStorage } from '@/hooks';
 import { IHeader, IHistory, IResponse, IVariable } from '@/types';
 import {
+  defaultAlProtocol,
   getSearchParams,
   isValidURL,
   replaceVariables,
@@ -57,7 +58,7 @@ export default function RestClient({ params }: RestClientProps) {
 
   const handleRequest = async () => {
     const { updatedUrl, updatedBody, updatedHeaders } = replaceVariables(
-      url,
+      defaultAlProtocol(url),
       body,
       headers,
       variables
