@@ -1,8 +1,8 @@
 import Editor, { Monaco } from '@monaco-editor/react';
 import { useEffect, useState } from 'react';
-import styles from './body-editor.module.scss';
 import { DropdownItem } from '@/entites';
 import { Dropdown } from '../dropdown';
+import { ScrollLayout } from '../scroll-layout';
 
 type RequestOptions = {
   body: string;
@@ -47,9 +47,9 @@ export default function BodyEditor({
   };
 
   return (
-    <>
-      {!readOnly && (
-        <div className={styles.editor__selector}>
+    <ScrollLayout
+      headerChildren={
+        !readOnly && (
           <Dropdown
             items={languageOptions}
             selectedItem={language}
@@ -57,22 +57,23 @@ export default function BodyEditor({
             colors="content"
             selectOption={(value) => setLanguage(value as Language)}
           />
-        </div>
-      )}
-      <Editor
-        height="25vh"
-        theme="customTheme"
-        beforeMount={handleEditorMount}
-        defaultLanguage={language}
-        value={formattedJson}
-        onChange={(value) => setBody(value as string)}
-        key={language}
-        options={{
-          readOnly,
-          selectOnLineNumbers: true,
-          automaticLayout: true,
-        }}
-      />
-    </>
+        )
+      }
+      contentChildren={
+        <Editor
+          theme="customTheme"
+          beforeMount={handleEditorMount}
+          defaultLanguage={language}
+          value={formattedJson}
+          onChange={(value) => setBody(value as string)}
+          key={language}
+          options={{
+            readOnly,
+            selectOnLineNumbers: true,
+            automaticLayout: true,
+          }}
+        />
+      }
+    />
   );
 }
