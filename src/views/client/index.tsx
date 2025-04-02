@@ -84,6 +84,12 @@ export default function RestClient({ params }: RestClientProps) {
       updatedHeaders
     );
 
+    if (res.status === 0) {
+      setAppError(ErrorType.app);
+      setResponse({ status: 0, body: 'Error fetching data' });
+      return;
+    }
+
     if (res) {
       setResponse({ status: res.status, body: res.body });
       setHistory([

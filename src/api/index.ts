@@ -36,7 +36,6 @@ export const fetchData = async (
 
     if (contentType?.includes('application/json')) {
       const json = await response.json();
-      console.log('JSON', json);
       jsonString = JSON.stringify(json);
     }
 
@@ -47,14 +46,10 @@ export const fetchData = async (
 
     return { status: response.status, body: jsonString };
   } catch (error: unknown) {
-    console.debug(error);
-
     if (error instanceof TypeError) {
       return {
         status: 0,
-        body: JSON.stringify({
-          error: 'Failed to fetch',
-        }),
+        body: 'Failed to fetch',
       };
     }
 
