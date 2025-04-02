@@ -14,6 +14,7 @@ import { CodeBlock, atomOneLight } from 'react-code-blocks';
 import { Button } from '../button';
 import { Dropdown } from '../dropdown';
 import styles from './code-generator.module.scss';
+import { ScrollLayout } from '../scroll-layout';
 
 type CodeGeneratorProps = {
   method: Method;
@@ -71,34 +72,37 @@ export default function CodeGenerator({
   };
 
   return (
-    <div>
-      <div className={styles.code__controls}>
-        <Dropdown
-          items={supportedLanguagesOptions.map((value) => ({
-            value,
-            label: value.toUpperCase(),
-          }))}
-          selectedItem={language}
-          showButtonBorder={false}
-          colors="content"
-          selectOption={(value) => setLanguage(value as SupportedLanguages)}
-        />
-        <Button
-          onClick={generateSnippet}
-          isDisabled={loading}
-          text={loading ? 'Generating...' : 'Generate'}
-          buttonType="secondary"
-        />
-      </div>
-
-      <div className={styles.code__wrapper}>
-        <CodeBlock
-          text={code}
-          language={language}
-          theme={atomOneLight}
-          showLineNumbers={false}
-        />
-      </div>
-    </div>
+    <ScrollLayout
+      headerChildren={
+        <div className={styles.code__controls}>
+          <Dropdown
+            items={supportedLanguagesOptions.map((value) => ({
+              value,
+              label: value.toUpperCase(),
+            }))}
+            selectedItem={language}
+            showButtonBorder={false}
+            colors="content"
+            selectOption={(value) => setLanguage(value as SupportedLanguages)}
+          />
+          <Button
+            onClick={generateSnippet}
+            isDisabled={loading}
+            text={loading ? 'Generating...' : 'Generate'}
+            buttonType="secondary"
+          />
+        </div>
+      }
+      contentChildren={
+        <div className={styles.code__wrapper}>
+          <CodeBlock
+            text={code}
+            language={language}
+            theme={atomOneLight}
+            showLineNumbers={false}
+          />
+        </div>
+      }
+    />
   );
 }
