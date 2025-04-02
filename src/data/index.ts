@@ -3,3 +3,4 @@ export {
   supportedLanguages,
   supportedLanguagesOptions,
 } from './supported-languages';
+export { defaultHeaders } from './http-headers';
