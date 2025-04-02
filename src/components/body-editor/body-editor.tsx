@@ -1,4 +1,4 @@
-import Editor from '@monaco-editor/react';
+import Editor, { useMonaco } from '@monaco-editor/react';
 import { useEffect, useState } from 'react';
 import styles from './body-editor.module.scss';
 import { DropdownItem } from '@/entites';
@@ -17,6 +17,7 @@ export default function BodyEditor({
   setBody,
   readOnly,
 }: RequestOptions) {
+  const monaco = useMonaco();
   const [formattedJson, setFormattedJson] = useState(body);
   const [language, setLanguage] = useState<Language>('json');
   const languageOptions: DropdownItem[] = [
@@ -34,6 +35,20 @@ export default function BodyEditor({
       console.error(err);
     }
   }, [body, readOnly]);
+
+  useEffect(() => {
+    if (!monaco?.editor) return;
+    monaco.editor.defineTheme('customTheme', {
+      base: 'vs',
+      inherit: true,
+      rules: [],
+      colors: {
+        'editor.background': '#fafafa',
+      },
+    });
+
+    monaco.editor.setTheme('customTheme');
+  }, [monaco]);
 
   return (
     <>

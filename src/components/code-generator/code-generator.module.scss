@@ -8,6 +8,9 @@
   &__wrapper {
     height: 30vh;
     overflow-y: auto;
-    background: #282a36;
+
+    span {
+      height: 100%;
+    }
   }
 }

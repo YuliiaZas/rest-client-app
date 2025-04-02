@@ -10,7 +10,7 @@ import { IHeader, IVariable } from '@/types';
 import { formatHeaders, isValidURL, replaceVariables } from '@/utils';
 import { generateCodeSnippet } from '@/utils/generate-code-snippet';
 import { useState } from 'react';
-import { CodeBlock, dracula } from 'react-code-blocks';
+import { CodeBlock, atomOneLight } from 'react-code-blocks';
 import { Button } from '../button';
 import { Dropdown } from '../dropdown';
 import styles from './code-generator.module.scss';
@@ -95,7 +95,7 @@ export default function CodeGenerator({
         <CodeBlock
           text={code}
           language={language}
-          theme={dracula}
+          theme={atomOneLight}
           showLineNumbers={false}
         />
       </div>
