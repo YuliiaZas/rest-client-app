@@ -91,10 +91,10 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
         type="data"
         body={(data: IHeader) =>
           editableHeader?.id === data.id ? (
-            <Input
-              id={`${newHeader.id}-value-body`}
+            <InputWithVariables
               placeholder="Header Value"
-              defaultValue={data.value}
+              value={data.value}
+              variables={variables}
               onValueChange={(value) => {
                 editHeader('value', value);
               }}
