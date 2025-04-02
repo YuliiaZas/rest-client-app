@@ -9,6 +9,7 @@ import { Column } from '../column';
 import { InputWithVariables } from '../input-with-variables';
 import { Table } from '../table';
 import { Input } from '../input';
+import { ScrollLayout } from '../scroll-layout';
 
 type HeadersProps = {
   headers: IHeader[];
@@ -40,45 +41,47 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
   };
 
   return (
-    <Table data={headers} hasFooter={true}>
-      <Column
-        title="Header Key"
-        type="data"
-        body={(data: IHeader) => <span>{data.key}</span>}
-        footer={
-          <Input
-            id={newHeader.id}
-            defaultValue={newHeader.key}
-            placeholder="Header Key"
-            onValueChange={(key) => {
-              setNewHeader((prevHeader) => ({ ...prevHeader, key }));
-            }}
-          />
-        }
-      />
-      <Column
-        title="Header Value"
-        type="data"
-        body={(data: IHeader) => <span>{data.value}</span>}
-        footer={
-          <InputWithVariables
-            placeholder="Header Value"
-            value={newHeader.value}
-            variables={variables}
-            onValueChange={(value) =>
-              setNewHeader((prevHeader) => ({ ...prevHeader, value }))
-            }
-          />
-        }
-      />
-      <Column
-        title="Actions"
-        type="actions"
-        body={(data: IHeader) => (
-          <Button onClick={() => deleteHeader(data.id)} icon="delete" />
-        )}
-        footer={<Button onClick={addHeader} icon="add" />}
-      />
-    </Table>
+    <ScrollLayout>
+      <Table data={headers} hasFooter={true}>
+        <Column
+          title="Header Key"
+          type="data"
+          body={(data: IHeader) => <span>{data.key}</span>}
+          footer={
+            <Input
+              id={newHeader.id}
+              defaultValue={newHeader.key}
+              placeholder="Header Key"
+              onValueChange={(key) => {
+                setNewHeader((prevHeader) => ({ ...prevHeader, key }));
+              }}
+            />
+          }
+        />
+        <Column
+          title="Header Value"
+          type="data"
+          body={(data: IHeader) => <span>{data.value}</span>}
+          footer={
+            <InputWithVariables
+              placeholder="Header Value"
+              value={newHeader.value}
+              variables={variables}
+              onValueChange={(value) =>
+                setNewHeader((prevHeader) => ({ ...prevHeader, value }))
+              }
+            />
+          }
+        />
+        <Column
+          title="Actions"
+          type="actions"
+          body={(data: IHeader) => (
+            <Button onClick={() => deleteHeader(data.id)} icon="delete" />
+          )}
+          footer={<Button onClick={addHeader} icon="add" />}
+        />
+      </Table>
+    </ScrollLayout>
   );
 }

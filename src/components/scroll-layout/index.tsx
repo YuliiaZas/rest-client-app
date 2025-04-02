@@ -4,13 +4,13 @@ import clsx from 'clsx';
 
 interface ScrollLayoutProps {
   headerChildren?: ReactNode;
-  contentChildren: ReactNode;
+  children: ReactNode;
   scrollOnWholeLayout?: boolean;
 }
 
 export const ScrollLayout = ({
   headerChildren,
-  contentChildren,
+  children,
   scrollOnWholeLayout = false,
 }: ScrollLayoutProps) => {
   return (
@@ -29,7 +29,7 @@ export const ScrollLayout = ({
           !scrollOnWholeLayout && styles.layout__scroll
         )}
       >
-        {contentChildren}
+        {children}
       </div>
     </div>
   );

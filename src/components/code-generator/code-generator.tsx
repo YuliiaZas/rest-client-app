@@ -93,16 +93,15 @@ export default function CodeGenerator({
           />
         </div>
       }
-      contentChildren={
-        <div className={styles.code__wrapper}>
-          <CodeBlock
-            text={code}
-            language={language}
-            theme={atomOneLight}
-            showLineNumbers={false}
-          />
-        </div>
-      }
-    />
+    >
+      <div className={styles.code__wrapper}>
+        <CodeBlock
+          text={code}
+          language={language}
+          theme={atomOneLight}
+          showLineNumbers={false}
+        />
+      </div>
+    </ScrollLayout>
   );
 }

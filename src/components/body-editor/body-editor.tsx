@@ -59,21 +59,20 @@ export default function BodyEditor({
           />
         )
       }
-      contentChildren={
-        <Editor
-          theme="customTheme"
-          beforeMount={handleEditorMount}
-          defaultLanguage={language}
-          value={formattedJson}
-          onChange={(value) => setBody(value as string)}
-          key={language}
-          options={{
-            readOnly,
-            selectOnLineNumbers: true,
-            automaticLayout: true,
-          }}
-        />
-      }
-    />
+    >
+      <Editor
+        theme="customTheme"
+        beforeMount={handleEditorMount}
+        defaultLanguage={language}
+        value={formattedJson}
+        onChange={(value) => setBody(value as string)}
+        key={language}
+        options={{
+          readOnly,
+          selectOnLineNumbers: true,
+          automaticLayout: true,
+        }}
+      />
+    </ScrollLayout>
   );
 }

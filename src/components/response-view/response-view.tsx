@@ -32,14 +32,13 @@ export default function ResponseView({
               </p>
             </>
           }
-          contentChildren={
-            <BodyEditor
-              body={response.body}
-              setBody={() => null}
-              readOnly={true}
-            />
-          }
-        />
+        >
+          <BodyEditor
+            body={response.body}
+            setBody={() => null}
+            readOnly={true}
+          />
+        </ScrollLayout>
       </div>
     );
   };
