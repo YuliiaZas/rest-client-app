@@ -85,6 +85,34 @@ export default function RestClient({ params }: RestClientProps) {
           },
         ]);
       }
+    const urlValidation = await isValidURL(updatedUrl);
+
+    if (!urlValidation) {
+      setAppError(ErrorType.app);
+      setResponse({ status: 0, body: 'URL is invalid' });
+      return;
+    }
+
+    const res = await fetchData(
+      method,
+      updatedUrl,
+      updatedBody,
+      updatedHeaders
+    );
+
+    if (res) {
+      setResponse({ status: res.status, body: res.body });
+      setHistory([
+        ...history,
+        {
+          id: uuidv4(),
+          method,
+          url: updatedUrl,
+          body: updatedBody,
+          headers: updatedHeaders,
+          date: Date.now(),
+        },
+      ]);
     }
   };
 
