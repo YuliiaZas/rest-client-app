@@ -11,4 +11,9 @@ export const defaultHeaders: IHeader[] = [
     key: 'Accept',
     value: 'application/json',
   },
+  {
+    id: 'alive',
+    key: 'Connection',
+    value: 'keep-alive',
+  },
 ];

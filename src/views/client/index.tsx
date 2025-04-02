@@ -19,6 +19,7 @@ import { Main } from '@/views';
 import { FormEvent, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './client.module.scss';
+import { ErrorType } from '@/entites';
 
 type RestClientProps = {
   params: Promise<{ params: string[] }>;
@@ -26,6 +27,7 @@ type RestClientProps = {
 
 export default function RestClient({ params }: RestClientProps) {
   const [response, setResponse] = useState<IResponse | null>(null);
+  const [appError, setAppError] = useState<ErrorType | null>(null);
   const {
     url,
     body,
@@ -57,6 +59,7 @@ export default function RestClient({ params }: RestClientProps) {
   }, [headers]);
 
   const handleRequest = async () => {
+    setAppError(null);
     const { updatedUrl, updatedBody, updatedHeaders } = replaceVariables(
       defaultAlProtocol(url),
       body,
@@ -64,27 +67,6 @@ export default function RestClient({ params }: RestClientProps) {
       variables
     );
 
-    if (isValidURL(updatedUrl)) {
-      const res = await fetchData(
-        method,
-        updatedUrl,
-        updatedBody,
-        updatedHeaders
-      );
-      if (res) {
-        setResponse({ status: res.status, body: res.body });
-        setHistory([
-          ...history,
-          {
-            id: uuidv4(),
-            method,
-            url: updatedUrl,
-            body: updatedBody,
-            headers: updatedHeaders,
-            date: Date.now(),
-          },
-        ]);
-      }
     const urlValidation = await isValidURL(updatedUrl);
 
     if (!urlValidation) {
@@ -147,44 +129,40 @@ export default function RestClient({ params }: RestClientProps) {
 
   return (
     <Main>
-      <div className={styles.wrapper}>
-        <div className={styles.container}>
-          <form onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.controls}>
-              <div className={styles.method}>
-                <MethodSelector value={method} onChange={handleChangeMethod} />
-              </div>
-              <InputWithVariables
-                value={url}
-                variables={variables}
-                typeClass={'primary'}
-                onValueChange={handleChangeUrl}
-              />
-              <Button text="Send" />
+      <div className={styles.container}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.controls}>
+            <div className={styles.method}>
+              <MethodSelector value={method} onChange={handleChangeMethod} />
             </div>
-          </form>
-          <section className={styles.section}>
-            <h2 className={styles.label}>Request</h2>
-            <div>
-              <RequestOptions
-                url={url}
-                method={method}
-                body={body}
-                setBody={handleChangeBody}
-                headers={headers}
-                setHeaders={handleChangeHeaders}
-              />
-            </div>
-          </section>
-          <section className={styles.section}>
-            <h2 className={styles.label}>Response</h2>
-            {response ? (
-              <ResponseView response={response} />
-            ) : (
-              <p>No response yet</p>
-            )}
-          </section>
-        </div>
+            <InputWithVariables
+              value={url}
+              variables={variables}
+              typeClass={'primary'}
+              onValueChange={handleChangeUrl}
+            />
+            <Button text="Send" />
+          </div>
+        </form>
+        <section className={styles.section}>
+          <h2 className={styles.label}>Request</h2>
+          <RequestOptions
+            url={url}
+            method={method}
+            body={body}
+            setBody={handleChangeBody}
+            headers={headers}
+            setHeaders={handleChangeHeaders}
+          />
+        </section>
+        <section className={styles.section}>
+          <h2 className={styles.label}>Response</h2>
+          {response ? (
+            <ResponseView response={response} errorType={appError} />
+          ) : (
+            <p>No response yet</p>
+          )}
+        </section>
       </div>
     </Main>
   );
