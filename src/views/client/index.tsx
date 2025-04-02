@@ -103,7 +103,7 @@ export default function RestClient({ params }: RestClientProps) {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
 
-    handleRequest();
+    await handleRequest();
   };
 
   const handleChangeUrl = (newUrl: string) => {
