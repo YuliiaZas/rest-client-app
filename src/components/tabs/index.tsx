@@ -7,7 +7,6 @@ import styles from './tabs.module.scss';
 type TabsProps = {
   tabs: TabsItem[];
   activeTab: TabsItem['value'];
-  contentHeaderChildren?: React.ReactNode;
   children: React.ReactNode;
   onTabChange: (tab: TabsItem['value']) => void;
 };
@@ -15,7 +14,6 @@ type TabsProps = {
 export default function Tabs({
   tabs,
   activeTab,
-  contentHeaderChildren,
   children,
   onTabChange,
 }: TabsProps) {
@@ -35,10 +33,7 @@ export default function Tabs({
           </button>
         ))}
       </div>
-      <div className={styles.tabs__content}>
-        {contentHeaderChildren && <div>{contentHeaderChildren}</div>}
-        {children}
-      </div>
+      <div className={styles.tabs__content}>{children}</div>
     </div>
   );
 }
