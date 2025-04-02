@@ -1,7 +1,6 @@
 @use '@/styles/utils/mixins' as *;
 
 .dropdown {
-  position: relative;
   display: inline-block;
   border-radius: var(--border-radius);
 }

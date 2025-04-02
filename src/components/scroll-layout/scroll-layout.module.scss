@@ -1,8 +1,11 @@
+@use '@/styles/utils/mixins' as *;
+
 .layout {
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow: hidden;
+  @include outline-visibility();
 
   &__header {
     margin-bottom: 0.25rem;

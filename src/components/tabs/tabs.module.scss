@@ -20,6 +20,7 @@
 .tabs__content {
   flex-grow: 1;
   overflow: hidden;
+  @include outline-visibility();
 }
 
 .tabs__tab {
