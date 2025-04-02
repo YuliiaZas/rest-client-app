@@ -25,9 +25,13 @@ export default function BodyEditor({
   ];
 
   useEffect(() => {
-    if (readOnly) {
-      const formatted = JSON.stringify(JSON.parse(body || '{}'), null, 2);
-      setFormattedJson(formatted);
+    try {
+      if (readOnly) {
+        const formatted = JSON.stringify(JSON.parse(body || '{}'), null, 2);
+        setFormattedJson(formatted);
+      }
+    } catch (err) {
+      console.error(err);
     }
   }, [body, readOnly]);
 

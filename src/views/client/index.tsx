@@ -60,6 +60,8 @@ export default function RestClient({ params }: RestClientProps) {
 
   const handleRequest = async () => {
     setAppError(null);
+    setResponse(null);
+
     const { updatedUrl, updatedBody, updatedHeaders } = replaceVariables(
       defaultAlProtocol(url),
       body,
