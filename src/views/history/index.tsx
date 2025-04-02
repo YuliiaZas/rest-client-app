@@ -35,15 +35,13 @@ export default function History() {
 
   const sortedHistory = history.sort((a, b) => b.date - a.date);
 
+  if (isLoading) return <Spinner />;
+
   return (
     <div className={styles.history}>
       <h1 className={styles.history__title}>History</h1>
 
-      {isLoading ? (
-        <div className={styles.wrapper}>
-          <Spinner />
-        </div>
-      ) : sortedHistory.length ? (
+      {sortedHistory.length ? (
         <Table data={sortedHistory}>
           <Column
             title="Method"
