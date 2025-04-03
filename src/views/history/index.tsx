@@ -33,9 +33,7 @@ export default function History() {
     router.push(updatedUrl);
   };
 
-  const sortedHistory = Array.isArray(history)
-    ? history.sort((a, b) => b.date - a.date)
-    : [];
+  const sortedHistory = history.sort((a, b) => b.date - a.date);
 
   if (isLoading) return <Spinner />;
 
