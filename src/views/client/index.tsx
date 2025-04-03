@@ -5,7 +5,7 @@ import { Button, InputWithVariables } from '@/components';
 import MethodSelector from '@/components/method-selector/method-selector';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
-import { Method } from '@/data';
+import { defaultHeaders, Method } from '@/data';
 import { useFormattedParams, useLocalStorage } from '@/hooks';
 import { IHeader, IHistory, IResponse, IVariable } from '@/types';
 import {
@@ -159,7 +159,7 @@ export default function RestClient({ params }: RestClientProps) {
             method={method}
             body={body}
             setBody={handleChangeBody}
-            headers={headers}
+            headers={[...headers, ...defaultHeaders]}
             setHeaders={handleChangeHeaders}
           />
         </section>
