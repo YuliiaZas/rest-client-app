@@ -48,7 +48,9 @@ export default function CodeGenerator({
         variables
       );
 
-      if (!isValidURL(updatedUrl)) {
+      const validUrl = await isValidURL(updatedUrl);
+
+      if (!validUrl) {
         setCode('URL is invalid');
         return;
       }
