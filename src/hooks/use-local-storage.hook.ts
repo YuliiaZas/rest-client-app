@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export type UseLocalStorageArgs<T> = {
   key: string;
@@ -9,23 +9,43 @@ export function useLocalStorage<T>({
   key,
   defaultValue,
 }: UseLocalStorageArgs<T>): [T, React.Dispatch<T>] {
+  const isTypeArray = useMemo(
+    () => Array.isArray(defaultValue),
+    [defaultValue]
+  );
+
   const [value, setValue] = useState<T>(() => {
     if (typeof window === 'undefined') return defaultValue;
 
     try {
       const value = window.localStorage.getItem(key);
-      return value ? JSON.parse(value) : defaultValue;
+
+      if (!value) return defaultValue;
+
+      const parsedValue = JSON.parse(value);
+
+      if (isTypeArray && !Array.isArray(parsedValue)) {
+        window.localStorage.removeItem(key);
+        return defaultValue;
+      }
+
+      return parsedValue;
     } catch (e) {
-      console.error('Error while getting value from localStorage', e);
+      console.warn('Error while getting value from localStorage', e);
       return defaultValue;
     }
   });
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const stringifiedValue = JSON.stringify(value);
+    if (window.localStorage.getItem(key) === stringifiedValue) return;
+
     try {
-      window.localStorage.setItem(key, JSON.stringify(value));
+      window.localStorage.setItem(key, stringifiedValue);
     } catch (error) {
-      console.error('Error while setting value to localStorage', error);
+      console.warn('Error while setting value to localStorage', error);
     }
   }, [key, value]);
 
