@@ -4,12 +4,12 @@ import { useLocalStorage } from '@/hooks';
 import { IHeader, IVariable } from '@/types';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Actions } from '..';
 import { Button } from '../button';
 import { Column } from '../column';
 import { Input } from '../input';
 import { InputWithVariables } from '../input-with-variables';
 import { Table } from '../table';
-import styles from './headers.module.scss';
 
 type HeadersProps = {
   headers: IHeader[];
@@ -118,14 +118,13 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
         title="Actions"
         type="actions"
         body={(data: IHeader) => (
-          <div className={styles.actions}>
-            {editableHeader?.id === data.id ? (
-              <Button onClick={saveEditableHeader} icon="save" />
-            ) : (
-              <Button onClick={() => setEditableHeader(data)} icon="edit" />
-            )}
-            <Button onClick={() => deleteHeader(data.id)} icon="delete" />
-          </div>
+          <Actions
+            isEdit={editableHeader?.id === data.id}
+            save={saveEditableHeader}
+            cancel={() => setEditableHeader(null)}
+            delete={() => deleteHeader(data.id)}
+            edit={() => setEditableHeader(data)}
+          />
         )}
         footer={<Button onClick={addHeader} icon="add" />}
       />

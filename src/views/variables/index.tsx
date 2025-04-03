@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Column, Input, Spinner, Table } from '@/components';
+import { Actions, Button, Column, Input, Spinner, Table } from '@/components';
 import { useLocalStorage } from '@/hooks';
 import { IVariable } from '@/types';
 import { useEffect, useState } from 'react';
@@ -123,17 +123,13 @@ export default function Variables() {
             title="Actions"
             type="actions"
             body={(data: IVariable) => (
-              <div className={styles.variables__actions}>
-                {editableVariable?.id === data.id ? (
-                  <Button onClick={saveEditableVariable} icon="save" />
-                ) : (
-                  <Button
-                    onClick={() => setEditableVariable(data)}
-                    icon="edit"
-                  />
-                )}
-                <Button onClick={() => deleteVariable(data.id)} icon="delete" />
-              </div>
+              <Actions
+                isEdit={editableVariable?.id === data.id}
+                delete={() => deleteVariable(data.id)}
+                save={saveEditableVariable}
+                edit={() => setEditableVariable(data)}
+                cancel={() => setEditableVariable(null)}
+              />
             )}
             footer={<Button onClick={addVariable} icon="add" />}
           />
