@@ -1,6 +1,6 @@
 'use client';
 
-import { defaultHeaders, Method } from '@/data';
+import { Method } from '@/data';
 import {
   SupportedLanguages,
   supportedLanguagesOptions,
@@ -21,6 +21,7 @@ type CodeGeneratorProps = {
   url: string;
   body: string;
   headers: IHeader[];
+  hiddenHeaders: IHeader[];
 };
 
 export default function CodeGenerator({
@@ -28,6 +29,7 @@ export default function CodeGenerator({
   url,
   body,
   headers,
+  hiddenHeaders,
 }: CodeGeneratorProps) {
   const [language, setLanguage] = useState<SupportedLanguages>('curl');
   const [code, setCode] = useState<string>('');
@@ -58,7 +60,7 @@ export default function CodeGenerator({
       const snippet = await generateCodeSnippet({
         method,
         url: updatedUrl,
-        headers: formatHeaders(updatedHeaders, defaultHeaders),
+        headers: formatHeaders(updatedHeaders, hiddenHeaders),
         body: updatedBody ? JSON.parse(updatedBody) : null,
         language,
       });

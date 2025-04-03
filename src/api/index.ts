@@ -1,4 +1,4 @@
-import { defaultHeaders, Method } from '@/data';
+import { Method } from '@/data';
 import { IHeader, IResponse } from '@/types';
 import { formatHeaders } from '@/utils';
 import { ApiError, AppError } from '@/entites/error';
@@ -13,7 +13,7 @@ export const fetchData = async (
     const requestOptions: RequestInit = {
       redirect: 'follow',
       method: method,
-      headers: formatHeaders(headers, defaultHeaders),
+      headers: formatHeaders(headers),
     };
 
     const isBodyAllowed = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method);

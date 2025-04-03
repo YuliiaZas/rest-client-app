@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Method } from '@/data';
+import { BodyLanguage, Method } from '@/data';
 import { IHeader } from '@/types';
 import { useMemo, useState } from 'react';
 import BodyEditor from '../body-editor/body-editor';
@@ -14,18 +14,22 @@ type RequestOptions = {
   body: string;
   setBody: (body: string) => void;
   headers: IHeader[];
+  hiddenHeaders: IHeader[];
   setHeaders: (headers: IHeader[]) => void;
   url: string;
   method: Method;
+  onLanguageChange?: (language: BodyLanguage) => void;
 };
 
 export default function RequestOptions({
   body,
   setBody,
   headers,
+  hiddenHeaders,
   setHeaders,
   url,
   method,
+  onLanguageChange,
 }: RequestOptions) {
   const tabs = ['body', 'headers', 'code'];
   const t = useTranslations('client');
@@ -41,7 +45,13 @@ export default function RequestOptions({
         {(() => {
           switch (activeTab) {
             case 'body':
-              return <BodyEditor body={body} setBody={setBody} />;
+              return (
+                <BodyEditor
+                  body={body}
+                  setBody={setBody}
+                  onLanguageChange={onLanguageChange}
+                />
+              );
             case 'headers':
               return <Headers headers={headers} setHeaders={setHeaders} />;
             case 'code':
@@ -51,6 +61,7 @@ export default function RequestOptions({
                   method={method}
                   body={body}
                   headers={headers}
+                  hiddenHeaders={hiddenHeaders}
                 />
               );
             default:

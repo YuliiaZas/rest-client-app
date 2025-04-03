@@ -5,7 +5,14 @@ import { Button, InputWithVariables } from '@/components';
 import MethodSelector from '@/components/method-selector/method-selector';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
-import { defaultHeaders, Method } from '@/data';
+import {
+  BodyLanguage,
+  bodyLanguages,
+  contentTypeHeaderJson,
+  contentTypeHeaderText,
+  defaultHeaders,
+  Method,
+} from '@/data';
 import { useFormattedParams, useLocalStorage } from '@/hooks';
 import { IHeader, IHistory, IResponse, IVariable } from '@/types';
 import {
@@ -26,6 +33,10 @@ type RestClientProps = {
 };
 
 export default function RestClient({ params }: RestClientProps) {
+  const [appDefaultHeaders, setAppDefaultHeaders] = useState<IHeader[]>([
+    ...defaultHeaders,
+    contentTypeHeaderJson,
+  ]);
   const [response, setResponse] = useState<IResponse | null>(null);
   const [error, setError] = useState<UnionErrorType | null>(null);
   const {
@@ -76,12 +87,10 @@ export default function RestClient({ params }: RestClientProps) {
         throw new AppError('URL is invalid');
       }
 
-      const res = await fetchData(
-        method,
-        updatedUrl,
-        updatedBody,
-        updatedHeaders
-      );
+      const res = await fetchData(method, updatedUrl, updatedBody, [
+        ...appDefaultHeaders,
+        ...updatedHeaders,
+      ]);
 
       if (!res) {
         throw new ApiError('No response from server');
@@ -138,6 +147,15 @@ export default function RestClient({ params }: RestClientProps) {
     setHeaderParams(searchParams);
   };
 
+  const onLanguageChange = (language: BodyLanguage) => {
+    setAppDefaultHeaders([
+      ...defaultHeaders,
+      language === bodyLanguages[0]
+        ? contentTypeHeaderJson
+        : contentTypeHeaderText,
+    ]);
+  };
+
   return (
     <Main>
       <div className={styles.container}>
@@ -162,8 +180,10 @@ export default function RestClient({ params }: RestClientProps) {
             method={method}
             body={body}
             setBody={handleChangeBody}
-            headers={[...headers, ...defaultHeaders]}
+            headers={headers}
+            hiddenHeaders={appDefaultHeaders}
             setHeaders={handleChangeHeaders}
+            onLanguageChange={onLanguageChange}
           />
         </section>
         <section className={styles.section}>
