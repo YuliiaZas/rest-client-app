@@ -7,6 +7,7 @@ export async function generateCodeSnippet(
   params: IRequestParams
 ): Promise<string> {
   const { method, url, headers, body, language } = params;
+
   if (!supportedLanguages[language]) {
     throw new Error(`Unsupported language: ${language}`);
   }
