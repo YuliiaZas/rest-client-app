@@ -1,6 +1,6 @@
 'use client';
 
-import { Method } from '@/data';
+import { defaultHeaders, Method } from '@/data';
 import {
   SupportedLanguages,
   supportedLanguagesOptions,
@@ -10,7 +10,7 @@ import { IHeader, IVariable } from '@/types';
 import { formatHeaders, isValidURL, replaceVariables } from '@/utils';
 import { generateCodeSnippet } from '@/utils/generate-code-snippet';
 import { useState } from 'react';
-import { CodeBlock, atomOneLight } from 'react-code-blocks';
+import { atomOneLight, CodeBlock } from 'react-code-blocks';
 import { Button } from '../button';
 import { Dropdown } from '../dropdown';
 import styles from './code-generator.module.scss';
@@ -56,9 +56,7 @@ export default function CodeGenerator({
       const snippet = await generateCodeSnippet({
         method,
         url: updatedUrl,
-        headers: formatHeaders(updatedHeaders, {
-          'Content-Type': 'application/json',
-        }),
+        headers: formatHeaders(updatedHeaders, defaultHeaders),
         body: updatedBody ? JSON.parse(updatedBody) : null,
         language,
       });
