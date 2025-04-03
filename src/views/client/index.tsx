@@ -19,7 +19,7 @@ import { Main } from '@/views';
 import { FormEvent, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './client.module.scss';
-import { ErrorType } from '@/entites';
+import { ApiError, AppError, UnionErrorType } from '@/entites';
 
 type RestClientProps = {
   params: Promise<{ params: string[] }>;
@@ -27,7 +27,7 @@ type RestClientProps = {
 
 export default function RestClient({ params }: RestClientProps) {
   const [response, setResponse] = useState<IResponse | null>(null);
-  const [appError, setAppError] = useState<ErrorType | null>(null);
+  const [error, setError] = useState<UnionErrorType | null>(null);
   const {
     url,
     body,
@@ -59,39 +59,36 @@ export default function RestClient({ params }: RestClientProps) {
   }, [headers]);
 
   const handleRequest = async () => {
-    setAppError(null);
+    setError(null);
     setResponse(null);
 
-    const { updatedUrl, updatedBody, updatedHeaders } = replaceVariables(
-      defaultAlProtocol(url),
-      body,
-      headers,
-      variables
-    );
+    try {
+      const { updatedUrl, updatedBody, updatedHeaders } = replaceVariables(
+        defaultAlProtocol(url),
+        body,
+        headers,
+        variables
+      );
 
-    const urlValidation = await isValidURL(updatedUrl);
+      const urlValidation = await isValidURL(updatedUrl);
 
-    if (!urlValidation) {
-      setAppError(ErrorType.app);
-      setResponse({ status: 0, body: 'URL is invalid' });
-      return;
-    }
+      if (!urlValidation) {
+        throw new AppError('URL is invalid');
+      }
 
-    const res = await fetchData(
-      method,
-      updatedUrl,
-      updatedBody,
-      updatedHeaders
-    );
+      const res = await fetchData(
+        method,
+        updatedUrl,
+        updatedBody,
+        updatedHeaders
+      );
 
-    if (res.status === 0) {
-      setAppError(ErrorType.app);
-      setResponse({ status: 0, body: 'Error fetching data' });
-      return;
-    }
+      if (!res) {
+        throw new ApiError('No response from server');
+      }
 
-    if (res) {
       setResponse({ status: res.status, body: res.body });
+
       setHistory([
         ...history,
         {
@@ -103,6 +100,12 @@ export default function RestClient({ params }: RestClientProps) {
           date: Date.now(),
         },
       ]);
+    } catch (error: unknown) {
+      if (error instanceof AppError || error instanceof ApiError) {
+        setError(error);
+        return;
+      }
+      throw error;
     }
   };
 
@@ -165,11 +168,7 @@ export default function RestClient({ params }: RestClientProps) {
         </section>
         <section className={styles.section}>
           <h2 className={styles.label}>Response</h2>
-          {response ? (
-            <ResponseView response={response} errorType={appError} />
-          ) : (
-            <p>No response yet</p>
-          )}
+          <ResponseView response={response} error={error} />
         </section>
       </div>
     </Main>

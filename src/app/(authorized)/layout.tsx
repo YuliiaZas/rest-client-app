@@ -14,7 +14,6 @@ export default async function ClientLayout({ children }: ClientLayoutProps) {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    // TODO: correct URL for redirect
     redirect('/');
   }
 

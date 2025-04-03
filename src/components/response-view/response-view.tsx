@@ -1,21 +1,18 @@
 import { IResponse } from '@/types';
 import BodyEditor from '../body-editor/body-editor';
-import { ErrorType } from '@/entites';
+import { UnionErrorType } from '@/entites';
 import { httpStatus } from '@/data';
 import { ScrollLayout } from '../scroll-layout';
 import styles from './response-view.module.scss';
 
 type ResponseViewProps = {
-  response?: IResponse;
-  errorType: ErrorType | null;
+  response: IResponse | null;
+  error: UnionErrorType | null;
 };
 
-export default function ResponseView({
-  response,
-  errorType,
-}: ResponseViewProps) {
+export default function ResponseView({ response, error }: ResponseViewProps) {
   const ApiResponse = () => {
-    if (!response) return null;
+    if (!response) return <p>No response yet</p>;
 
     const statusText = httpStatus?.[response.status];
 
@@ -43,14 +40,18 @@ export default function ResponseView({
     );
   };
 
-  const AppError = () => (
-    <>
-      <p className="p1">Could not send request</p>
-      <p>
-        <b>Reason:</b>
-        {response?.body}
-      </p>
-    </>
-  );
-  return <div>{!errorType && response ? <ApiResponse /> : <AppError />}</div>;
+  const ErrorResponse = () => {
+    if (!error) return null;
+    return (
+      <>
+        <p className="p1">Could not send request</p>
+        <p>
+          <b>Reason:</b>
+          {error.message}
+        </p>
+      </>
+    );
+  };
+
+  return error ? <ErrorResponse /> : <ApiResponse />;
 }
