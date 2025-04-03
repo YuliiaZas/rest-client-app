@@ -4,12 +4,13 @@ import { useLocalStorage } from '@/hooks';
 import { IHeader, IVariable } from '@/types';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Actions } from '..';
 import { Button } from '../button';
 import { Column } from '../column';
-import { InputWithVariables } from '../input-with-variables';
-import { Table } from '../table';
 import { Input } from '../input';
+import { InputWithVariables } from '../input-with-variables';
 import { ScrollLayout } from '../scroll-layout';
+import { Table } from '../table';
 
 type HeadersProps = {
   headers: IHeader[];
@@ -22,7 +23,7 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
     key: '',
     value: '',
   });
-
+  const [editableHeader, setEditableHeader] = useState<IHeader | null>(null);
   const [variables] = useLocalStorage<IVariable[]>({
     key: 'variables',
     defaultValue: [],
@@ -32,12 +33,28 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
     if (newHeader.key && newHeader.value) {
       setHeaders([...headers, newHeader]);
       setNewHeader({ id: uuidv4(), key: '', value: '' });
+      setEditableHeader(null);
     }
+  };
+
+  const editHeader = (key: string, value: string) => {
+    if (editableHeader) {
+      setEditableHeader({ ...editableHeader, [key]: value });
+    }
+  };
+
+  const saveEditableHeader = () => {
+    const editedHeaders = headers.map((header) =>
+      header.id === editableHeader?.id ? editableHeader : header
+    );
+    setHeaders(editedHeaders);
+    setEditableHeader(null);
   };
 
   const deleteHeader = (id: string) => {
     const filteredHeaders = headers.filter((header) => header.id !== id);
     setHeaders(filteredHeaders);
+    setEditableHeader(null);
   };
 
   return (
@@ -46,10 +63,23 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
         <Column
           title="Header Key"
           type="data"
-          body={(data: IHeader) => <span>{data.key}</span>}
+          body={(data: IHeader) =>
+            editableHeader?.id === data.id ? (
+              <Input
+                id={`${newHeader.id}-key-body`}
+                placeholder="Header Key"
+                defaultValue={data.key}
+                onValueChange={(key) => {
+                  editHeader('key', key);
+                }}
+              />
+            ) : (
+              <span>{data.key}</span>
+            )
+          }
           footer={
             <Input
-              id={newHeader.id}
+              id={`${newHeader.id}-key-footer`}
               defaultValue={newHeader.key}
               placeholder="Header Key"
               onValueChange={(key) => {
@@ -61,7 +91,20 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
         <Column
           title="Header Value"
           type="data"
-          body={(data: IHeader) => <span>{data.value}</span>}
+          body={(data: IHeader) =>
+            editableHeader?.id === data.id ? (
+              <InputWithVariables
+                placeholder="Header Value"
+                value={data.value}
+                variables={variables}
+                onValueChange={(value) => {
+                  editHeader('value', value);
+                }}
+              />
+            ) : (
+              <span>{data.value}</span>
+            )
+          }
           footer={
             <InputWithVariables
               placeholder="Header Value"
@@ -77,7 +120,13 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
           title="Actions"
           type="actions"
           body={(data: IHeader) => (
-            <Button onClick={() => deleteHeader(data.id)} icon="delete" />
+            <Actions
+              isEdit={editableHeader?.id === data.id}
+              save={saveEditableHeader}
+              cancel={() => setEditableHeader(null)}
+              delete={() => deleteHeader(data.id)}
+              edit={() => setEditableHeader(data)}
+            />
           )}
           footer={<Button onClick={addHeader} icon="add" />}
         />

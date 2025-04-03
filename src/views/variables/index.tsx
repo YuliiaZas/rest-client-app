@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Column, Input, Spinner, Table } from '@/components';
+import { Actions, Button, Column, Input, Spinner, Table } from '@/components';
 import { useLocalStorage } from '@/hooks';
 import { IVariable } from '@/types';
 import { useEffect, useState } from 'react';
@@ -14,6 +14,9 @@ export default function Variables() {
     value: '',
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [editableVariable, setEditableVariable] = useState<IVariable | null>(
+    null
+  );
   const [variables, setVariables] = useLocalStorage<IVariable[]>({
     key: 'variables',
     defaultValue: [],
@@ -27,7 +30,22 @@ export default function Variables() {
     if (newVariable.name && newVariable.value) {
       setVariables([...variables, newVariable]);
       setNewVariable({ id: uuidv4(), name: '', value: '' });
+      setEditableVariable(null);
     }
+  };
+
+  const editVariable = (key: string, value: string) => {
+    if (editableVariable) {
+      setEditableVariable({ ...editableVariable, [key]: value });
+    }
+  };
+
+  const saveEditableVariable = () => {
+    const editedVariables = variables.map((variable) =>
+      variable.id === editableVariable?.id ? editableVariable : variable
+    );
+    setVariables(editedVariables);
+    setEditableVariable(null);
   };
 
   const deleteVariable = (id: string) => {
@@ -35,21 +53,33 @@ export default function Variables() {
       (variable) => variable.id !== id
     );
     setVariables(filteredVariables);
+    setEditableVariable(null);
   };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div className={styles.variables}>
       <h1 className={styles.variables__title}>Variables</h1>
-      {isLoading ? (
-        <div className={styles.wrapper}>
-          <Spinner />
-        </div>
-      ) : (
+      {
         <Table data={variables} hasFooter={true}>
           <Column
             title="Variable Name"
             type="data"
-            body={(data: IVariable) => <span>{data.name}</span>}
+            body={(data: IVariable) =>
+              editableVariable?.id === data.id ? (
+                <Input
+                  id={`${newVariable.id}-name`}
+                  placeholder="Variable Name"
+                  defaultValue={data.name}
+                  onValueChange={(name) => {
+                    editVariable('name', name);
+                  }}
+                />
+              ) : (
+                <span>{data.name}</span>
+              )
+            }
             footer={
               <Input
                 id={`${newVariable.id}-name`}
@@ -64,7 +94,20 @@ export default function Variables() {
           <Column
             title="Variable Value"
             type="data"
-            body={(data: IVariable) => <span>{data.value}</span>}
+            body={(data: IVariable) =>
+              editableVariable?.id === data.id ? (
+                <Input
+                  id={`${newVariable.id}-value`}
+                  placeholder="Variable Value"
+                  defaultValue={data.value}
+                  onValueChange={(value) => {
+                    editVariable('value', value);
+                  }}
+                />
+              ) : (
+                <span>{data.value}</span>
+              )
+            }
             footer={
               <Input
                 id={`${newVariable.id}-value`}
@@ -80,12 +123,18 @@ export default function Variables() {
             title="Actions"
             type="actions"
             body={(data: IVariable) => (
-              <Button onClick={() => deleteVariable(data.id)} icon="delete" />
+              <Actions
+                isEdit={editableVariable?.id === data.id}
+                delete={() => deleteVariable(data.id)}
+                save={saveEditableVariable}
+                edit={() => setEditableVariable(data)}
+                cancel={() => setEditableVariable(null)}
+              />
             )}
             footer={<Button onClick={addVariable} icon="add" />}
           />
         </Table>
-      )}
+      }
     </div>
   );
 }

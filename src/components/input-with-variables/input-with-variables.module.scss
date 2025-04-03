@@ -17,7 +17,7 @@
 .input__field {
   z-index: 1;
   background: transparent;
-  
+
   /* For showing through placeholder */
   &:not([value='']) {
     -webkit-text-fill-color: transparent;

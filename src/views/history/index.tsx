@@ -33,17 +33,17 @@ export default function History() {
     router.push(updatedUrl);
   };
 
-  const sortedHistory = history.sort((a, b) => b.date - a.date);
+  const sortedHistory = Array.isArray(history)
+    ? history.sort((a, b) => b.date - a.date)
+    : [];
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div className={styles.history}>
       <h1 className={styles.history__title}>History</h1>
 
-      {isLoading ? (
-        <div className={styles.wrapper}>
-          <Spinner />
-        </div>
-      ) : sortedHistory.length ? (
+      {sortedHistory.length ? (
         <Table data={sortedHistory}>
           <Column
             title="Method"
