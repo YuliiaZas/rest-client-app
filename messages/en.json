@@ -28,5 +28,16 @@
     "delete": "Delete",
     "save": "Save",
     "cancel": "Cancel"
+  },
+  "client": {
+    "urlPlaceholder": "Enter URL",
+    "send": "Send",
+    "request": "Request",
+    "body": "Body",
+    "headers": "Headers",
+    "code": "Code",
+    "generate": "Generate",
+    "response": "Response",
+    "noResponse": "No response yet"
   }
 }

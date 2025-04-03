@@ -28,5 +28,16 @@
     "delete": "Удалить",
     "save": "Сохранить",
     "cancel": "Отмена"
+  },
+  "client": {
+    "urlPlaceholder": "Введите URL",
+    "send": "Отправить",
+    "request": "Запрос",
+    "body": "Тело",
+    "headers": "Заголовки",
+    "code": "Код",
+    "generate": "Сгенерировать",
+    "response": "Ответ",
+    "noResponse": "Ответа пока нет"
   }
 }

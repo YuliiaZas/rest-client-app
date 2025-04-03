@@ -1,0 +1,21 @@
+@use '@/styles/utils/mixins' as *;
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  @include outline-visibility();
+
+  &__header {
+    margin-bottom: 0.25rem;
+  }
+
+  &__content {
+    flex-grow: 1;
+  }
+  
+  &__scroll {
+    overflow: auto;
+  }
+}

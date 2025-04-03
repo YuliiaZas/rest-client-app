@@ -1,11 +1,13 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Method } from '@/data';
 import { IHeader } from '@/types';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import BodyEditor from '../body-editor/body-editor';
 import CodeGenerator from '../code-generator/code-generator';
 import Headers from '../headers/headers';
+import Tabs from '../tabs';
 import styles from './request-options.module.scss';
 
 type RequestOptions = {
@@ -25,52 +27,37 @@ export default function RequestOptions({
   url,
   method,
 }: RequestOptions) {
-  const [activeTab, setActiveTab] = useState('body');
+  const tabs = ['body', 'headers', 'code'];
+  const t = useTranslations('client');
+  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const tabsList = useMemo(
+    () => tabs.map((tab) => ({ value: tab, label: t(tab) })),
+    [t]
+  );
 
   return (
-    <div className={styles.tabContainer}>
-      <div className={styles.tabHeader}>
-        <button
-          className={
-            activeTab === 'body' ? `${styles.tab} ${styles.active}` : styles.tab
+    <div className={styles.request}>
+      <Tabs tabs={tabsList} activeTab={activeTab} onTabChange={setActiveTab}>
+        {(() => {
+          switch (activeTab) {
+            case 'body':
+              return <BodyEditor body={body} setBody={setBody} />;
+            case 'headers':
+              return <Headers headers={headers} setHeaders={setHeaders} />;
+            case 'code':
+              return (
+                <CodeGenerator
+                  url={url}
+                  method={method}
+                  body={body}
+                  headers={headers}
+                />
+              );
+            default:
+              return null;
           }
-          onClick={() => setActiveTab('body')}
-        >
-          Body
-        </button>
-        <button
-          className={
-            activeTab === 'headers'
-              ? `${styles.tab} ${styles.active}`
-              : styles.tab
-          }
-          onClick={() => setActiveTab('headers')}
-        >
-          Headers
-        </button>
-        <button
-          className={
-            activeTab === 'code' ? `${styles.tab} ${styles.active}` : styles.tab
-          }
-          onClick={() => setActiveTab('code')}
-        >
-          Code
-        </button>
-      </div>
-      <div className={styles.tabsContent}>
-        {activeTab === 'body' ? (
-          <BodyEditor body={body} setBody={setBody} />
-        ) : activeTab === 'headers' ? (
-          <Headers headers={headers} setHeaders={setHeaders} />
-        ) : (
-          <CodeGenerator
-            url={url}
-            method={method}
-            body={body}
-            headers={headers}
-          />
-        )}
-      </div>
+        })()}
+      </Tabs>
     </div>
   );
 }

@@ -1,13 +1,13 @@
 .code {
   &__controls {
     display: flex;
-    gap: 0.7rem;
-    margin-bottom: 0.5rem;
+    gap: 0.5rem;
   }
 
   &__wrapper {
-    height: 30vh;
-    overflow-y: auto;
-    background: #282a36;
+    &,
+    & span {
+      height: 100%;
+    }
   }
 }

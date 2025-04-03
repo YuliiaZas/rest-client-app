@@ -2,6 +2,8 @@ import { IResponse } from '@/types';
 import BodyEditor from '../body-editor/body-editor';
 import { ErrorType } from '@/entites';
 import { httpStatus } from '@/data';
+import { ScrollLayout } from '../scroll-layout';
+import styles from './response-view.module.scss';
 
 type ResponseViewProps = {
   response?: IResponse;
@@ -18,15 +20,26 @@ export default function ResponseView({
     const statusText = httpStatus?.[response.status];
 
     return (
-      <>
-        <p>
-          <b>Status:</b> {response.status} / {statusText}
-        </p>
-        <p>
-          <b>Body:</b>
-        </p>
-        <BodyEditor body={response.body} setBody={() => null} readOnly={true} />
-      </>
+      <div className={styles.response}>
+        <ScrollLayout
+          headerChildren={
+            <>
+              <p>
+                <b>Status:</b> {response.status} / {statusText}
+              </p>
+              <p>
+                <b>Body:</b>
+              </p>
+            </>
+          }
+        >
+          <BodyEditor
+            body={response.body}
+            setBody={() => null}
+            readOnly={true}
+          />
+        </ScrollLayout>
+      </div>
     );
   };
 
