@@ -34,12 +34,14 @@
 }
 
 .button_transparent {
-  --var-transparent-main: transparent;
-  --var-transparent-contrast-text: var(--text-main);
-  --var-transparent-dark: var(--background-dark);
-  --var-transparent-light: var(--background-disabled);
+  @include border-secondary(transparent);
+  background-color: transparent;
+  color: var(--text-main);
 
-  @include button-styles('transparent');
+  &:hover,
+  &:focus {
+    border-color: var(--text-main);
+  }
 }
 
 .button_icon {

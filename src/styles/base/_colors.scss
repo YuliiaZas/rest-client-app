@@ -9,7 +9,8 @@ $colors-shema: 'main', 'content', 'dark', 'light';
     &-state {
       @include colors-state($color);
 
-      &:hover {
+      &:hover,
+      &.highlighted {
         background-color: var(--hover-color);
       }
 

@@ -14,7 +14,6 @@ export { LocaleSwitcher } from './locale-switcher';
 export { LoginForm } from './login-form';
 export { Modal } from './modal';
 export { Nav } from './nav';
-export { Select } from './select';
 export { Spinner } from './spinner';
 export { Table } from './table/table';
 export { ThemeSwitcher } from './theme-switcher';

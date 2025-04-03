@@ -9,6 +9,7 @@ import { Button } from '../button';
 import { Column } from '../column';
 import { Input } from '../input';
 import { InputWithVariables } from '../input-with-variables';
+import { ScrollLayout } from '../scroll-layout';
 import { Table } from '../table';
 
 type HeadersProps = {
@@ -57,77 +58,79 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
   };
 
   return (
-    <Table data={headers} hasFooter={true}>
-      <Column
-        title="Header Key"
-        type="data"
-        body={(data: IHeader) =>
-          editableHeader?.id === data.id ? (
+    <ScrollLayout>
+      <Table data={headers} hasFooter={true}>
+        <Column
+          title="Header Key"
+          type="data"
+          body={(data: IHeader) =>
+            editableHeader?.id === data.id ? (
+              <Input
+                id={`${newHeader.id}-key-body`}
+                placeholder="Header Key"
+                defaultValue={data.key}
+                onValueChange={(key) => {
+                  editHeader('key', key);
+                }}
+              />
+            ) : (
+              <span>{data.key}</span>
+            )
+          }
+          footer={
             <Input
-              id={`${newHeader.id}-key-body`}
+              id={`${newHeader.id}-key-footer`}
+              defaultValue={newHeader.key}
               placeholder="Header Key"
-              defaultValue={data.key}
               onValueChange={(key) => {
-                editHeader('key', key);
+                setNewHeader((prevHeader) => ({ ...prevHeader, key }));
               }}
             />
-          ) : (
-            <span>{data.key}</span>
-          )
-        }
-        footer={
-          <Input
-            id={`${newHeader.id}-key-footer`}
-            defaultValue={newHeader.key}
-            placeholder="Header Key"
-            onValueChange={(key) => {
-              setNewHeader((prevHeader) => ({ ...prevHeader, key }));
-            }}
-          />
-        }
-      />
-      <Column
-        title="Header Value"
-        type="data"
-        body={(data: IHeader) =>
-          editableHeader?.id === data.id ? (
+          }
+        />
+        <Column
+          title="Header Value"
+          type="data"
+          body={(data: IHeader) =>
+            editableHeader?.id === data.id ? (
+              <InputWithVariables
+                placeholder="Header Value"
+                value={data.value}
+                variables={variables}
+                onValueChange={(value) => {
+                  editHeader('value', value);
+                }}
+              />
+            ) : (
+              <span>{data.value}</span>
+            )
+          }
+          footer={
             <InputWithVariables
               placeholder="Header Value"
-              value={data.value}
+              value={newHeader.value}
               variables={variables}
-              onValueChange={(value) => {
-                editHeader('value', value);
-              }}
+              onValueChange={(value) =>
+                setNewHeader((prevHeader) => ({ ...prevHeader, value }))
+              }
             />
-          ) : (
-            <span>{data.value}</span>
-          )
-        }
-        footer={
-          <InputWithVariables
-            placeholder="Header Value"
-            value={newHeader.value}
-            variables={variables}
-            onValueChange={(value) =>
-              setNewHeader((prevHeader) => ({ ...prevHeader, value }))
-            }
-          />
-        }
-      />
-      <Column
-        title="Actions"
-        type="actions"
-        body={(data: IHeader) => (
-          <Actions
-            isEdit={editableHeader?.id === data.id}
-            save={saveEditableHeader}
-            cancel={() => setEditableHeader(null)}
-            delete={() => deleteHeader(data.id)}
-            edit={() => setEditableHeader(data)}
-          />
-        )}
-        footer={<Button onClick={addHeader} icon="add" />}
-      />
-    </Table>
+          }
+        />
+        <Column
+          title="Actions"
+          type="actions"
+          body={(data: IHeader) => (
+            <Actions
+              isEdit={editableHeader?.id === data.id}
+              save={saveEditableHeader}
+              cancel={() => setEditableHeader(null)}
+              delete={() => deleteHeader(data.id)}
+              edit={() => setEditableHeader(data)}
+            />
+          )}
+          footer={<Button onClick={addHeader} icon="add" />}
+        />
+      </Table>
+    </ScrollLayout>
   );
 }

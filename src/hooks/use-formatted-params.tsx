@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const useFormattedParams = (params: Promise<{ params: string[] }>) => {
   const [defaultMethod, encodedUrl, encodedBody] = use(params).params;
   const [method, setMethod] = useState<Method>(
-    (defaultMethod as Method) ?? 'GET'
+    (defaultMethod.toUpperCase() as Method) ?? 'GET'
   );
   const decodedUrl = useMemo(
     () => decodeBase64(encodedUrl ?? ''),

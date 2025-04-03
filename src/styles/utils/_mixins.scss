@@ -43,3 +43,8 @@
     --hover-color: var(--background-brightened);
   }
 }
+
+@mixin outline-visibility {
+  margin-top: -0.25rem;
+  padding-top: 0.25rem;
+}
