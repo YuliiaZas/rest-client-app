@@ -1,6 +1,7 @@
 import { defaultHeaders, Method } from '@/data';
 import { IHeader, IResponse } from '@/types';
 import { formatHeaders } from '@/utils';
+import { ApiError, AppError } from '@/entites/error';
 
 export const fetchData = async (
   method: Method,
@@ -21,10 +22,16 @@ export const fetchData = async (
       requestOptions.body = body;
     }
 
-    const response = await fetch(
-      url,
-      method !== 'OPTIONS' ? requestOptions : undefined
-    );
+    let response: Response;
+
+    try {
+      response = await fetch(
+        url,
+        method !== 'OPTIONS' ? requestOptions : undefined
+      );
+    } catch {
+      throw new ApiError('Failed to fetch data');
+    }
 
     if (method === 'HEAD') {
       return { status: response.status, body: JSON.stringify({}) };
@@ -34,30 +41,31 @@ export const fetchData = async (
 
     const contentType = response.headers.get('content-type');
 
-    if (contentType?.includes('application/json')) {
-      const json = await response.json();
-      jsonString = JSON.stringify(json);
+    try {
+      if (contentType?.includes('application/json')) {
+        const json = await response.json();
+        jsonString = JSON.stringify(json);
+      }
+    } catch {
+      throw new AppError('Failed to parse response as a JSON');
     }
 
-    if (contentType?.includes('text')) {
-      const text = await response.text();
-      jsonString = JSON.stringify({ text });
+    try {
+      if (contentType?.includes('text')) {
+        const text = await response.text();
+        jsonString = JSON.stringify({ text });
+      }
+    } catch {
+      throw new AppError('Failed to parse response as a TEXT');
     }
 
     return { status: response.status, body: jsonString };
   } catch (error: unknown) {
-    if (error instanceof TypeError) {
-      return {
-        status: 0,
-        body: 'Failed to fetch',
-      };
+    if (error instanceof ApiError) {
+      throw error;
     }
 
-    return {
-      status: 500,
-      body: JSON.stringify({
-        error: error instanceof Error ? error.message : String(error),
-      }),
-    };
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    throw new AppError(message);
   }
 };

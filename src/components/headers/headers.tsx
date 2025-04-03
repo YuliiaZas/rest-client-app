@@ -8,7 +8,7 @@ import { Actions } from '..';
 import { Button } from '../button';
 import { Column } from '../column';
 import { Input } from '../input';
-import { InputWithVariables } from '../input-with-variables';
+import { InputWithVariables } from '@/components';
 import { ScrollLayout } from '../scroll-layout';
 import { Table } from '../table';
 

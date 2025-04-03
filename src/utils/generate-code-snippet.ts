@@ -1,12 +1,12 @@
 import { supportedLanguages } from '@/data/supported-languages';
 import { IRequestParams } from '@/types';
 import codegen from 'postman-code-generators';
-import { Header, Request, RequestBody } from 'postman-collection';
+import { HeaderDefinition, Request, RequestBody } from 'postman-collection';
 
 export async function generateCodeSnippet(
   params: IRequestParams
 ): Promise<string> {
-  const { method, url, headers = {}, body, language } = params;
+  const { method, url, headers, body, language } = params;
 
   if (!supportedLanguages[language]) {
     throw new Error(`Unsupported language: ${language}`);
@@ -14,9 +14,11 @@ export async function generateCodeSnippet(
 
   const { name, variant } = supportedLanguages[language];
 
-  const postmanHeaders = Object.entries(headers).map(
-    ([key, value]) => new Header({ key, value })
-  );
+  const postmanHeaders: HeaderDefinition[] = [];
+
+  headers.forEach((key: string, value: string) => {
+    postmanHeaders.push({ key, value });
+  });
 
   const request = new Request({
     method,
