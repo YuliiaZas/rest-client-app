@@ -7,47 +7,30 @@ import { v4 as uuidv4 } from 'uuid';
 import { useTranslations } from 'next-intl';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { object, string } from 'yup';
 import styles from './variables.module.scss';
 import { useAppContext } from '@/context/app-context';
-
-//TODO: refactor ang check
-type VariableForm = {
-  variableName: string;
-  variableValue: string;
-};
+import { getFormScehma, VariableForm } from './variables.entities';
 
 export default function Variables() {
   const { variables, variablesStore, setVariablesStore } = useAppContext();
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [editableVariable, setEditableVariable] = useState<IVariable | null>(
+    null
+  );
   const t = useTranslations('variables');
 
-  const addFormSchema = object({
-    variableName: string()
-      .trim()
-      .required('variableNameRequired')
-      .test('duplication', 'variableDuplicate', (name) => {
-        return !(name in variables);
-      }),
-    variableValue: string().trim().required('variableValueRequired'),
-  });
+  useEffect(() => {
+    setIsLoading(false);
+  }, [variables]);
 
-  //TODO: change validation for existing name
-  const editFormSchema = object({
-    variableName: string()
-      .trim()
-      .required('variableNameRequired')
-      .test('duplication', 'variableDuplicate', (name) => {
-        return !(name in variables) || name === editableVariable?.name;
-      }),
-    variableValue: string().trim().required('variableValueRequired'),
-  });
+  const addFormSchema = getFormScehma(variables);
+  const editFormSchema = getFormScehma(variables, editableVariable?.name);
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    trigger,
+    register: registerAdd,
+    handleSubmit: handleSubmitAdd,
+    formState: { errors: errorsAdd, isValid: isValidAdd },
+    trigger: triggerAdd,
   } = useForm<VariableForm>({
     resolver: yupResolver(addFormSchema),
   });
@@ -60,15 +43,6 @@ export default function Variables() {
   } = useForm<VariableForm>({
     resolver: yupResolver(editFormSchema),
   });
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [editableVariable, setEditableVariable] = useState<IVariable | null>(
-    null
-  );
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, [variables]);
 
   const setVariable = (variableForm: VariableForm, id?: string) => {
     const variableId = id || uuidv4();
@@ -101,6 +75,20 @@ export default function Variables() {
 
   if (isLoading) return <Spinner />;
 
+  const getInput = (
+    field: keyof VariableForm,
+    type: 'edit' | 'add' = 'add'
+  ) => (
+    <Input
+      id={field}
+      placeholder={t(field)}
+      withValidation={true}
+      register={type === 'edit' ? registerEdit : registerAdd}
+      error={getErrorMessages(field, type === 'edit' ? errorsEdit : errorsAdd)}
+      trigger={type === 'edit' ? triggerEdit : triggerAdd}
+    />
+  );
+
   //TODO: fix height
   return (
     <div className={styles.variables}>
@@ -108,62 +96,28 @@ export default function Variables() {
       {
         <Table data={Object.values(variablesStore)} hasFooter={true}>
           <Column
-            title={t('name')}
+            title={t('variableName')}
             type="data"
             body={(data: IVariable) =>
               editableVariable?.id === data.id ? (
-                <Input
-                  id={'variableName'}
-                  placeholder={t('name')}
-                  defaultValue={data.name}
-                  withValidation={true}
-                  register={registerEdit}
-                  error={getErrorMessages('variableName', errorsEdit)}
-                  trigger={triggerEdit}
-                />
+                getInput('variableName', 'edit')
               ) : (
                 <span>{data.name}</span>
               )
             }
-            footer={
-              <Input
-                id={'variableName'}
-                placeholder={t('name')}
-                withValidation={true}
-                register={register}
-                error={getErrorMessages('variableName', errors)}
-                trigger={trigger}
-              />
-            }
+            footer={getInput('variableName', 'add')}
           />
           <Column
-            title={t('value')}
+            title={t('variableValue')}
             type="data"
             body={(data: IVariable) =>
               editableVariable?.id === data.id ? (
-                <Input
-                  id={'variableValue'}
-                  placeholder={t('value')}
-                  defaultValue={data.value}
-                  withValidation={true}
-                  register={registerEdit}
-                  error={getErrorMessages('variableValue', errorsEdit)}
-                  trigger={triggerEdit}
-                />
+                getInput('variableValue', 'edit')
               ) : (
                 <span>{data.value}</span>
               )
             }
-            footer={
-              <Input
-                id={'variableValue'}
-                placeholder={t('value')}
-                withValidation={true}
-                register={register}
-                error={getErrorMessages('variableValue', errors)}
-                trigger={trigger}
-              />
-            }
+            footer={getInput('variableValue', 'add')}
           />
           {/* //TODO: translation */}
           <Column
@@ -183,11 +137,11 @@ export default function Variables() {
             )}
             footer={
               <Button
-                onClick={handleSubmit((formValue: VariableForm) =>
+                onClick={handleSubmitAdd((formValue: VariableForm) =>
                   setVariable(formValue)
                 )}
                 icon="add"
-                isDisabled={!isValid}
+                isDisabled={!isValidAdd}
               />
             }
           />

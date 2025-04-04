@@ -42,8 +42,8 @@
   },
   "variables": {
     "title": "Variables",
-    "name": "Variable Name",
-    "value": "Variable Value",
+    "variableName": "Variable Name",
+    "variableValue": "Variable Value",
     "variableDuplicate": "Variable name already exists",
     "variableNameRequired": "Variable name is required",
     "variableValueRequired": "Variable value is required"
