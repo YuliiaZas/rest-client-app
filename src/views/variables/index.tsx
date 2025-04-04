@@ -99,7 +99,6 @@ export default function Variables() {
     );
   };
 
-  //TODO: fix height
   return (
     <div className={styles.variables}>
       <h1 className={styles.variables__title}>{t('title')}</h1>
