@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocalStorage } from '@/hooks';
-import { IHeader, IVariable } from '@/types';
+import { IHeader, Variables } from '@/types';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Actions } from '..';
@@ -11,6 +11,7 @@ import { Input } from '../input';
 import { InputWithVariables } from '@/components';
 import { ScrollLayout } from '../scroll-layout';
 import { Table } from '../table';
+import { localStorageKeys } from '@/data';
 
 type HeadersProps = {
   headers: IHeader[];
@@ -24,9 +25,9 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
     value: '',
   });
   const [editableHeader, setEditableHeader] = useState<IHeader | null>(null);
-  const [variables] = useLocalStorage<IVariable[]>({
-    key: 'variables',
-    defaultValue: [],
+  const [variables] = useLocalStorage<Variables>({
+    key: localStorageKeys.variables,
+    defaultValue: {},
   });
 
   const addHeader = () => {

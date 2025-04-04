@@ -39,5 +39,13 @@
     "generate": "Сгенерировать",
     "response": "Ответ",
     "noResponse": "Ответа пока нет"
+  },
+  "variables": {
+    "title": "Переменные",
+    "name": "Имя переменной",
+    "value": "Значение переменной",
+    "variableDuplicate": "Имя переменной уже существует",
+    "variableNameRequired": "Имя переменной обязательно",
+    "variableValueRequired": "Значение переменной обязательно"
   }
 }

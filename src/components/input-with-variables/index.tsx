@@ -1,6 +1,6 @@
 'use client';
 
-import { IVariable } from '@/types';
+import { Variables } from '@/types';
 import { isVariableDefined, variableRegExp } from '@/utils';
 import clsx from 'clsx';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -9,7 +9,7 @@ import { ColorsSchema } from '@/entites';
 
 type InputWithVariablesProps = {
   value: string;
-  variables?: IVariable[];
+  variables?: Variables;
   placeholder?: string;
   typeClass?: 'primary' | 'secondary';
   colors?: ColorsSchema;
@@ -18,7 +18,7 @@ type InputWithVariablesProps = {
 
 export const InputWithVariables = ({
   value,
-  variables = [],
+  variables = {},
   placeholder = 'Type the URL here',
   typeClass = 'secondary',
   colors = 'content',

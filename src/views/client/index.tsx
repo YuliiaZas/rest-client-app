@@ -5,9 +5,9 @@ import { Button, InputWithVariables } from '@/components';
 import MethodSelector from '@/components/method-selector/method-selector';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
-import { defaultHeaders, Method } from '@/data';
+import { defaultHeaders, localStorageKeys, Method } from '@/data';
 import { useFormattedParams, useLocalStorage } from '@/hooks';
-import { IHeader, IHistory, IResponse, IVariable } from '@/types';
+import { IHeader, IHistory, IResponse, Variables } from '@/types';
 import {
   defaultAlProtocol,
   getSearchParams,
@@ -41,9 +41,9 @@ export default function RestClient({ params }: RestClientProps) {
     setHeaderParams,
   } = useFormattedParams(params);
 
-  const [variables] = useLocalStorage<IVariable[]>({
-    key: 'variables',
-    defaultValue: [],
+  const [variables] = useLocalStorage<Variables>({
+    key: localStorageKeys.variables,
+    defaultValue: {},
   });
 
   const [history, setHistory] = useLocalStorage<IHistory[]>({

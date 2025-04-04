@@ -1,12 +1,12 @@
 'use client';
 
-import { defaultHeaders, Method } from '@/data';
+import { defaultHeaders, localStorageKeys, Method } from '@/data';
 import {
   SupportedLanguages,
   supportedLanguagesOptions,
 } from '@/data/supported-languages';
 import { useLocalStorage } from '@/hooks';
-import { IHeader, IVariable } from '@/types';
+import { IHeader, Variables } from '@/types';
 import { formatHeaders, isValidURL, replaceVariables } from '@/utils';
 import { generateCodeSnippet } from '@/utils/generate-code-snippet';
 import { useState } from 'react';
@@ -33,9 +33,9 @@ export default function CodeGenerator({
   const [code, setCode] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [variables] = useLocalStorage<IVariable[]>({
-    key: 'variables',
-    defaultValue: [],
+  const [variables] = useLocalStorage<Variables>({
+    key: localStorageKeys.variables,
+    defaultValue: {},
   });
 
   const generateSnippet = async () => {

@@ -39,5 +39,13 @@
     "generate": "Generate",
     "response": "Response",
     "noResponse": "No response yet"
+  },
+  "variables": {
+    "title": "Variables",
+    "name": "Variable Name",
+    "value": "Variable Value",
+    "variableDuplicate": "Variable name already exists",
+    "variableNameRequired": "Variable name is required",
+    "variableValueRequired": "Variable value is required"
   }
 }
