@@ -16,7 +16,7 @@ export async function generateCodeSnippet(
 
   const postmanHeaders: HeaderDefinition[] = [];
 
-  headers.forEach((key: string, value: string) => {
+  headers.forEach((value: string, key: string) => {
     postmanHeaders.push({ key, value });
   });
 

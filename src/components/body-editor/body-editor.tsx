@@ -1,5 +1,6 @@
 import Editor, { Monaco } from '@monaco-editor/react';
 import { useEffect, useState } from 'react';
+import { BodyLanguage, bodyLanguages } from '@/data';
 import { DropdownItem } from '@/entites';
 import { Dropdown } from '../dropdown';
 import { ScrollLayout } from '../scroll-layout';
@@ -8,21 +9,25 @@ type RequestOptions = {
   body: string;
   setBody: (body: string) => void;
   readOnly?: boolean;
+  onLanguageChange?: (language: BodyLanguage) => void;
 };
-
-type Language = 'json' | 'plaintext';
 
 export default function BodyEditor({
   body,
   setBody,
   readOnly,
+  onLanguageChange,
 }: RequestOptions) {
   const [formattedJson, setFormattedJson] = useState(body);
-  const [language, setLanguage] = useState<Language>('json');
+  const [language, setLanguage] = useState<BodyLanguage>(bodyLanguages[0]);
   const languageOptions: DropdownItem[] = [
-    { value: 'json', label: 'JSON' },
-    { value: 'plaintext', label: 'String' },
+    { value: bodyLanguages[0], label: 'JSON' },
+    { value: bodyLanguages[1], label: 'String' },
   ];
+
+  useEffect(() => {
+    if (onLanguageChange) onLanguageChange(language);
+  }, [language]);
 
   useEffect(() => {
     try {
@@ -55,7 +60,7 @@ export default function BodyEditor({
             selectedItem={language}
             showButtonBorder={false}
             colors="content"
-            selectOption={(value) => setLanguage(value as Language)}
+            selectOption={(value) => setLanguage(value as BodyLanguage)}
           />
         )
       }
