@@ -2,7 +2,7 @@ import { Children, isValidElement, ReactNode } from 'react';
 import styles from './table.module.scss';
 
 type TableProps<T extends { id: string }> = {
-  data: T[] | Record<string, T>;
+  data: T[];
   children: ReactNode;
   hasFooter?: boolean;
 };
@@ -19,7 +19,6 @@ export function Table<T extends { id: string }>({
   children,
   hasFooter = false,
 }: TableProps<T>) {
-  const dataArray = Array.isArray(data) ? data : Object.values(data);
   const columns = Children.toArray(children)
     .filter(isValidElement)
     .map((child) => {
@@ -47,7 +46,7 @@ export function Table<T extends { id: string }>({
         </tr>
       </thead>
       <tbody>
-        {dataArray.map((row) => (
+        {data.map((row) => (
           <tr key={row.id} className={styles.table__row}>
             {columns.map((column, index) => (
               <td key={index} className={styles[`table__row-${column.type}`]}>

@@ -1,15 +1,15 @@
 'use client';
 
 import { Actions, Button, Column, Input, Spinner, Table } from '@/components';
-import { useLocalStorage } from '@/hooks';
 import type { IVariable, Variables } from '@/types';
 import { useEffect, useState } from 'react';
-import { localStorageKeys } from '@/data';
+import { v4 as uuidv4 } from 'uuid';
 import { useTranslations } from 'next-intl';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string } from 'yup';
 import styles from './variables.module.scss';
+import { useAppContext } from '@/context/app-context';
 
 //TODO: refactor ang check
 type VariableForm = {
@@ -18,18 +18,16 @@ type VariableForm = {
 };
 
 export default function Variables() {
+  const { variables, variablesStore, setVariablesStore } = useAppContext();
+
   const t = useTranslations('variables');
-  const [variables, setVariables] = useLocalStorage<Variables>({
-    key: localStorageKeys.variables,
-    defaultValue: {},
-  });
 
   const addFormSchema = object({
     variableName: string()
       .trim()
       .required('variableNameRequired')
-      .test('duplication', 'variableDuplicate', (value) => {
-        return !variables[value];
+      .test('duplication', 'variableDuplicate', (name) => {
+        return !(name in variables);
       }),
     variableValue: string().trim().required('variableValueRequired'),
   });
@@ -39,8 +37,8 @@ export default function Variables() {
     variableName: string()
       .trim()
       .required('variableNameRequired')
-      .test('duplication', 'variableDuplicate', (value) => {
-        return !variables[value];
+      .test('duplication', 'variableDuplicate', (name) => {
+        return !(name in variables) || name === editableVariable?.name;
       }),
     variableValue: string().trim().required('variableValueRequired'),
   });
@@ -72,27 +70,26 @@ export default function Variables() {
     setIsLoading(false);
   }, [variables]);
 
-  const setVariable = (variableForm: VariableForm) => {
-    setVariables({
-      ...variables,
-      [variableForm.variableName]: getVariable(variableForm),
+  const setVariable = (variableForm: VariableForm, id?: string) => {
+    const variableId = id || uuidv4();
+
+    setVariablesStore({
+      ...variablesStore,
+      [variableId]: {
+        id: variableId,
+        name: variableForm.variableName,
+        value: variableForm.variableValue,
+      },
     });
+
     setEditableVariable(null);
   };
 
-  const deleteVariable = (variableName: string) => {
+  const deleteVariable = (variableId: string) => {
     //TODO:change rule
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { [variableName]: _, ...updatedVariables } = variables;
-    setVariables(updatedVariables);
-  };
-
-  const getVariable = (variableForm: VariableForm): IVariable => {
-    return {
-      id: variableForm.variableName,
-      name: variableForm.variableName,
-      value: variableForm.variableValue,
-    };
+    const { [variableId]: _, ...updatedVariables } = variablesStore;
+    setVariablesStore(updatedVariables);
   };
 
   const getErrorMessages = (
@@ -109,7 +106,7 @@ export default function Variables() {
     <div className={styles.variables}>
       <h1 className={styles.variables__title}>{t('title')}</h1>
       {
-        <Table data={variables} hasFooter={true}>
+        <Table data={Object.values(variablesStore)} hasFooter={true}>
           <Column
             title={t('name')}
             type="data"
@@ -176,7 +173,9 @@ export default function Variables() {
               <Actions
                 isEdit={editableVariable?.id === data.id}
                 delete={() => deleteVariable(data.id)}
-                save={handleSubmitEdit(setVariable)}
+                save={handleSubmitEdit((formValue: VariableForm) =>
+                  setVariable(formValue, data.id)
+                )}
                 edit={() => setEditableVariable(data)}
                 cancel={() => setEditableVariable(null)}
                 isSaveDisabled={!isValidEdit}
@@ -184,7 +183,9 @@ export default function Variables() {
             )}
             footer={
               <Button
-                onClick={handleSubmit(setVariable)}
+                onClick={handleSubmit((formValue: VariableForm) =>
+                  setVariable(formValue)
+                )}
                 icon="add"
                 isDisabled={!isValid}
               />

@@ -5,4 +5,3 @@ export {
 } from './supported-languages';
 export { defaultHeaders } from './http-headers';
 export { httpStatus } from './http-status';
-export * from './local-storage-keys';

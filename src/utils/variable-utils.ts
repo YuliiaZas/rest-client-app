@@ -21,8 +21,6 @@ export const getParamWithVariableValues = (
 ): string => {
   return url.replace(variableRegExp, (part) => {
     const name = getVariableName(part);
-    const variable = variables[name];
-
-    return name && variable ? variable.value : part;
+    return variables[name] ?? part;
   });
 };

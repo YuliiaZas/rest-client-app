@@ -4,6 +4,7 @@ import { getLocale } from 'next-intl/server';
 import '../styles/global.scss';
 import { Spinner } from '@/components';
 import { NextAuthProvider } from '@/app/providers';
+import { AppProvider } from '@/context/app-context';
 
 export const metadata = {
   title: 'REST client app',
@@ -21,7 +22,9 @@ export default async function RootLayout({
       <body className="light-theme">
         <NextIntlClientProvider>
           <Suspense fallback={<Spinner />}>
-            <NextAuthProvider>{children}</NextAuthProvider>
+            <NextAuthProvider>
+              <AppProvider>{children}</AppProvider>
+            </NextAuthProvider>
           </Suspense>
         </NextIntlClientProvider>
       </body>
