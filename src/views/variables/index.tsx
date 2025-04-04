@@ -77,16 +77,27 @@ export default function Variables() {
   const getInput = (
     field: keyof VariableForm,
     type: 'edit' | 'add' = 'add'
-  ) => (
-    <Input
-      id={field}
-      placeholder={t(field)}
-      withValidation={true}
-      register={type === 'edit' ? registerEdit : registerAdd}
-      error={getErrorMessages(field, type === 'edit' ? errorsEdit : errorsAdd)}
-      trigger={type === 'edit' ? triggerEdit : triggerAdd}
-    />
-  );
+  ) => {
+    const defaultValue =
+      editableVariable && type === 'edit'
+        ? editableVariable[field === 'variableName' ? 'name' : 'value']
+        : undefined;
+
+    return (
+      <Input
+        id={field}
+        placeholder={t(field)}
+        withValidation={true}
+        defaultValue={defaultValue}
+        register={type === 'edit' ? registerEdit : registerAdd}
+        error={getErrorMessages(
+          field,
+          type === 'edit' ? errorsEdit : errorsAdd
+        )}
+        trigger={type === 'edit' ? triggerEdit : triggerAdd}
+      />
+    );
+  };
 
   //TODO: fix height
   return (
