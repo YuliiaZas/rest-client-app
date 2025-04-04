@@ -18,6 +18,7 @@ export default function Variables() {
     null
   );
   const t = useTranslations('variables');
+  const tActions = useTranslations('actions');
 
   useEffect(() => {
     setIsLoading(false);
@@ -60,8 +61,6 @@ export default function Variables() {
   };
 
   const deleteVariable = (variableId: string) => {
-    //TODO:change rule
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { [variableId]: _, ...updatedVariables } = variablesStore;
     setVariablesStore(updatedVariables);
   };
@@ -119,9 +118,8 @@ export default function Variables() {
             }
             footer={getInput('variableValue', 'add')}
           />
-          {/* //TODO: translation */}
           <Column
-            title="Actions"
+            title={tActions('actions')}
             type="actions"
             body={(data: IVariable) => (
               <Actions

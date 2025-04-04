@@ -23,6 +23,7 @@
     "signUpError": "Error during signup"
   },
   "actions": {
+    "actions": "Actions",
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
