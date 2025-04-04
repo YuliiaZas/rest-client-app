@@ -1,137 +1,157 @@
 'use client';
 
 import { Actions, Button, Column, Input, Spinner, Table } from '@/components';
-import { useLocalStorage } from '@/hooks';
-import { IVariable } from '@/types';
+import type { IVariable, Variables } from '@/types';
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslations } from 'next-intl';
+import { FieldErrors, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import styles from './variables.module.scss';
+import { useAppContext } from '@/context/app-context';
+import { getFormScehma, VariableForm } from './variables.entities';
 
 export default function Variables() {
-  const [newVariable, setNewVariable] = useState({
-    id: uuidv4(),
-    name: '',
-    value: '',
-  });
+  const { variables, variablesStore, setVariablesStore } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
   const [editableVariable, setEditableVariable] = useState<IVariable | null>(
     null
   );
-  const [variables, setVariables] = useLocalStorage<IVariable[]>({
-    key: 'variables',
-    defaultValue: [],
-  });
+  const t = useTranslations('variables');
+  const tActions = useTranslations('actions');
 
   useEffect(() => {
     setIsLoading(false);
   }, [variables]);
 
-  const addVariable = () => {
-    if (newVariable.name && newVariable.value) {
-      setVariables([...variables, newVariable]);
-      setNewVariable({ id: uuidv4(), name: '', value: '' });
-      setEditableVariable(null);
-    }
-  };
+  const addFormSchema = getFormScehma(variables);
+  const editFormSchema = getFormScehma(variables, editableVariable?.name);
 
-  const editVariable = (key: string, value: string) => {
-    if (editableVariable) {
-      setEditableVariable({ ...editableVariable, [key]: value });
-    }
-  };
+  const {
+    register: registerAdd,
+    handleSubmit: handleSubmitAdd,
+    formState: { errors: errorsAdd, isValid: isValidAdd },
+    trigger: triggerAdd,
+  } = useForm<VariableForm>({
+    resolver: yupResolver(addFormSchema),
+  });
 
-  const saveEditableVariable = () => {
-    const editedVariables = variables.map((variable) =>
-      variable.id === editableVariable?.id ? editableVariable : variable
-    );
-    setVariables(editedVariables);
+  const {
+    register: registerEdit,
+    handleSubmit: handleSubmitEdit,
+    formState: { errors: errorsEdit, isValid: isValidEdit },
+    trigger: triggerEdit,
+  } = useForm<VariableForm>({
+    resolver: yupResolver(editFormSchema),
+  });
+
+  const setVariable = (variableForm: VariableForm, id?: string) => {
+    const variableId = id || uuidv4();
+
+    setVariablesStore({
+      ...variablesStore,
+      [variableId]: {
+        id: variableId,
+        name: variableForm.variableName,
+        value: variableForm.variableValue,
+      },
+    });
+
     setEditableVariable(null);
   };
 
-  const deleteVariable = (id: string) => {
-    const filteredVariables = variables.filter(
-      (variable) => variable.id !== id
-    );
-    setVariables(filteredVariables);
-    setEditableVariable(null);
+  const deleteVariable = (variableId: string) => {
+    const { [variableId]: _, ...updatedVariables } = variablesStore;
+    setVariablesStore(updatedVariables);
+  };
+
+  const getErrorMessages = (
+    field: keyof VariableForm,
+    errorsObject: FieldErrors<VariableForm>
+  ) => {
+    return errorsObject[field]?.message ? t(errorsObject[field].message) : '';
   };
 
   if (isLoading) return <Spinner />;
 
+  const getInput = (
+    field: keyof VariableForm,
+    type: 'edit' | 'add' = 'add'
+  ) => {
+    const defaultValue =
+      editableVariable && type === 'edit'
+        ? editableVariable[field === 'variableName' ? 'name' : 'value']
+        : undefined;
+
+    return (
+      <Input
+        id={field}
+        placeholder={t(field)}
+        withValidation={true}
+        defaultValue={defaultValue}
+        register={type === 'edit' ? registerEdit : registerAdd}
+        error={getErrorMessages(
+          field,
+          type === 'edit' ? errorsEdit : errorsAdd
+        )}
+        trigger={type === 'edit' ? triggerEdit : triggerAdd}
+      />
+    );
+  };
+
   return (
     <div className={styles.variables}>
-      <h1 className={styles.variables__title}>Variables</h1>
+      <h1 className={styles.variables__title}>{t('title')}</h1>
       {
-        <Table data={variables} hasFooter={true}>
+        <Table data={Object.values(variablesStore)} hasFooter={true}>
           <Column
-            title="Variable Name"
+            title={t('variableName')}
             type="data"
             body={(data: IVariable) =>
               editableVariable?.id === data.id ? (
-                <Input
-                  id={`${newVariable.id}-name`}
-                  placeholder="Variable Name"
-                  defaultValue={data.name}
-                  onValueChange={(name) => {
-                    editVariable('name', name);
-                  }}
-                />
+                getInput('variableName', 'edit')
               ) : (
                 <span>{data.name}</span>
               )
             }
-            footer={
-              <Input
-                id={`${newVariable.id}-name`}
-                placeholder="Variable Name"
-                defaultValue={newVariable.name}
-                onValueChange={(name) => {
-                  setNewVariable((prev: IVariable) => ({ ...prev, name }));
-                }}
-              />
-            }
+            footer={getInput('variableName', 'add')}
           />
           <Column
-            title="Variable Value"
+            title={t('variableValue')}
             type="data"
             body={(data: IVariable) =>
               editableVariable?.id === data.id ? (
-                <Input
-                  id={`${newVariable.id}-value`}
-                  placeholder="Variable Value"
-                  defaultValue={data.value}
-                  onValueChange={(value) => {
-                    editVariable('value', value);
-                  }}
-                />
+                getInput('variableValue', 'edit')
               ) : (
                 <span>{data.value}</span>
               )
             }
-            footer={
-              <Input
-                id={`${newVariable.id}-value`}
-                placeholder="Variable Value"
-                defaultValue={newVariable.value}
-                onValueChange={(value) => {
-                  setNewVariable((prev: IVariable) => ({ ...prev, value }));
-                }}
-              />
-            }
+            footer={getInput('variableValue', 'add')}
           />
           <Column
-            title="Actions"
+            title={tActions('actions')}
             type="actions"
             body={(data: IVariable) => (
               <Actions
                 isEdit={editableVariable?.id === data.id}
                 delete={() => deleteVariable(data.id)}
-                save={saveEditableVariable}
+                save={handleSubmitEdit((formValue: VariableForm) =>
+                  setVariable(formValue, data.id)
+                )}
                 edit={() => setEditableVariable(data)}
                 cancel={() => setEditableVariable(null)}
+                isSaveDisabled={!isValidEdit}
               />
             )}
-            footer={<Button onClick={addVariable} icon="add" />}
+            footer={
+              <Button
+                onClick={handleSubmitAdd((formValue: VariableForm) =>
+                  setVariable(formValue)
+                )}
+                icon="add"
+                isDisabled={!isValidAdd}
+              />
+            }
           />
         </Table>
       }

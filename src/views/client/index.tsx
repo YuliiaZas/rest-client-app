@@ -7,7 +7,8 @@ import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
 import { defaultHeaders, Method } from '@/data';
 import { useFormattedParams, useLocalStorage } from '@/hooks';
-import { IHeader, IHistory, IResponse, IVariable } from '@/types';
+import { useAppContext } from '@/context/app-context';
+import { IHeader, IHistory, IResponse } from '@/types';
 import {
   defaultAlProtocol,
   getSearchParams,
@@ -41,10 +42,7 @@ export default function RestClient({ params }: RestClientProps) {
     setHeaderParams,
   } = useFormattedParams(params);
 
-  const [variables] = useLocalStorage<IVariable[]>({
-    key: 'variables',
-    defaultValue: [],
-  });
+  const { variables } = useAppContext();
 
   const [history, setHistory] = useLocalStorage<IHistory[]>({
     key: 'history',
@@ -63,12 +61,12 @@ export default function RestClient({ params }: RestClientProps) {
     setResponse(null);
 
     try {
-      const { updatedUrl, updatedBody, updatedHeaders } = replaceVariables(
-        defaultAlProtocol(url),
-        body,
-        headers,
-        variables
-      );
+      const {
+        updatedUrl: urlWithReplacedVariables,
+        updatedBody,
+        updatedHeaders,
+      } = replaceVariables(url, body, headers, variables);
+      const updatedUrl = defaultAlProtocol(urlWithReplacedVariables);
 
       const urlValidation = await isValidURL(updatedUrl);
 

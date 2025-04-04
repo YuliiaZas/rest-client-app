@@ -5,8 +5,8 @@ import {
   SupportedLanguages,
   supportedLanguagesOptions,
 } from '@/data/supported-languages';
-import { useLocalStorage } from '@/hooks';
-import { IHeader, IVariable } from '@/types';
+import { useAppContext } from '@/context/app-context';
+import { IHeader } from '@/types';
 import { formatHeaders, isValidURL, replaceVariables } from '@/utils';
 import { generateCodeSnippet } from '@/utils/generate-code-snippet';
 import { useState } from 'react';
@@ -33,10 +33,7 @@ export default function CodeGenerator({
   const [code, setCode] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [variables] = useLocalStorage<IVariable[]>({
-    key: 'variables',
-    defaultValue: [],
-  });
+  const { variables } = useAppContext();
 
   const generateSnippet = async () => {
     try {

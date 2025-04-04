@@ -3,3 +3,5 @@ export interface IVariable {
   name: string;
   value: string;
 }
+export type VariablesStore = Record<string, IVariable>;
+export type Variables = Record<string, string>;

@@ -1,11 +1,11 @@
-import { IHeader, IVariable } from '@/types';
+import { IHeader, Variables } from '@/types';
 import { getParamWithVariableValues } from './variable-utils';
 
 export function replaceVariables(
   url: string,
   body: string,
   headers: IHeader[],
-  variables: IVariable[]
+  variables: Variables
 ) {
   return {
     updatedUrl: getParamWithVariableValues(url, variables),

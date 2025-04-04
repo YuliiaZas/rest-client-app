@@ -23,6 +23,7 @@
     "signUpError": "Error during signup"
   },
   "actions": {
+    "actions": "Actions",
     "add": "Add",
     "edit": "Edit",
     "delete": "Delete",
@@ -39,5 +40,13 @@
     "generate": "Generate",
     "response": "Response",
     "noResponse": "No response yet"
+  },
+  "variables": {
+    "title": "Variables",
+    "variableName": "Variable Name",
+    "variableValue": "Variable Value",
+    "variableDuplicate": "Variable name already exists",
+    "variableNameRequired": "Variable name is required",
+    "variableValueRequired": "Variable value is required"
   }
 }

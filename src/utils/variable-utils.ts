@@ -1,27 +1,26 @@
-import { IVariable } from '@/types';
+import { Variables } from '@/types/variable.type';
 
 export const variableRegExp = /({{.*?}})/g;
 
-export const getVariableName = (part: string) => {
+export const getVariableName = (part: string): string => {
   const match = part.match(/{{\s*(.*?)\s*}}/);
-  return match ? match[1] : null;
+  return match ? match[1] : '';
 };
 
-export const isVariableDefined = (part: string, variables: IVariable[]) => {
+export const isVariableDefined = (
+  part: string,
+  variables: Variables
+): boolean => {
   const name = getVariableName(part);
-  const variable = variables.find((variable) => variable.name === name);
-
-  return name && variable;
+  return !!name && name in variables;
 };
 
 export const getParamWithVariableValues = (
   url: string,
-  variables: IVariable[]
-) => {
+  variables: Variables
+): string => {
   return url.replace(variableRegExp, (part) => {
     const name = getVariableName(part);
-    const variable = variables.find((variable) => variable.name === name);
-
-    return name && variable ? variable.value : part;
+    return variables[name] ?? part;
   });
 };

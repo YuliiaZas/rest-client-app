@@ -7,6 +7,7 @@ type ActionsProps = {
   cancel: () => void;
   delete: () => void;
   edit: () => void;
+  isSaveDisabled?: boolean;
 };
 
 export function Actions({
@@ -15,12 +16,13 @@ export function Actions({
   edit,
   delete: deleteItem,
   cancel,
+  isSaveDisabled = false,
 }: ActionsProps) {
   return (
     <div className={styles.actions}>
       {isEdit ? (
         <>
-          <Button onClick={save} icon="save" />
+          <Button onClick={save} icon="save" isDisabled={isSaveDisabled} />
           <Button onClick={cancel} icon="cancel" />
         </>
       ) : (

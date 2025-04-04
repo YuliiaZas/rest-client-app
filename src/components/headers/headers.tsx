@@ -1,7 +1,7 @@
 'use client';
 
-import { useLocalStorage } from '@/hooks';
-import { IHeader, IVariable } from '@/types';
+import { useAppContext } from '@/context/app-context';
+import { IHeader } from '@/types';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Actions } from '..';
@@ -24,10 +24,7 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
     value: '',
   });
   const [editableHeader, setEditableHeader] = useState<IHeader | null>(null);
-  const [variables] = useLocalStorage<IVariable[]>({
-    key: 'variables',
-    defaultValue: [],
-  });
+  const { variables } = useAppContext();
 
   const addHeader = () => {
     if (newHeader.key && newHeader.value) {
