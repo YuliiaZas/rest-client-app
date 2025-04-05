@@ -1,6 +1,6 @@
 'use client';
 
-import { Icon, LocaleSwitcher, Nav, ThemeSwitcher } from '@/components';
+import { LocaleSwitcher, Logo, Nav, ThemeSwitcher } from '@/components';
 import styles from './header.module.scss';
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
@@ -33,7 +33,7 @@ export function Header() {
       className={clsx(styles.header, isScrolled && styles.header_scrolled)}
       ref={headerRef}
     >
-      <Icon iconName="planet" size="2rem" />
+      <Logo size="2rem" />
       <div className={styles.buttons}>
         <ThemeSwitcher />
         <LocaleSwitcher />
