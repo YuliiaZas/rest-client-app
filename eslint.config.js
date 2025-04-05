@@ -32,13 +32,13 @@ export default tseslint.config(
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
       'react-hooks/exhaustive-deps': 'off',
-      "@typescript-eslint/no-unused-vars": [
-        "error",
+      '@typescript-eslint/no-unused-vars': [
+        'error',
         {
-          "argsIgnorePattern": "^_",
-          "varsIgnorePattern": '^_',
-        }
-      ]
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
     },
     settings: {
       react: {
