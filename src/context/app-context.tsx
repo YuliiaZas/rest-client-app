@@ -1,5 +1,7 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
+import { Spinner } from '@/components';
 import { useLocalStorage } from '@/hooks';
 import { Variables } from '@/types';
 import { VariablesStore } from '@/types/variable.type';
@@ -20,6 +22,8 @@ interface AppContextProps {
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
+  const { status } = useSession();
+
   const [variablesStore, setVariablesStore] = useLocalStorage<VariablesStore>({
     key: 'variables',
     defaultValue: {},
@@ -33,6 +37,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     });
     setVariables(updatedVariables);
   }, [variablesStore]);
+
+  if (status === 'loading') {
+    return <Spinner />;
+  }
 
   return (
     <AppContext.Provider
