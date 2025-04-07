@@ -32,8 +32,13 @@ export default function Variables() {
     handleSubmit: handleSubmitAdd,
     formState: { errors: errorsAdd, isValid: isValidAdd },
     trigger: triggerAdd,
+    reset: resetAdd,
   } = useForm<VariableForm>({
     resolver: yupResolver(addFormSchema),
+    defaultValues: {
+      variableName: '',
+      variableValue: '',
+    },
   });
 
   const {
@@ -41,9 +46,22 @@ export default function Variables() {
     handleSubmit: handleSubmitEdit,
     formState: { errors: errorsEdit, isValid: isValidEdit },
     trigger: triggerEdit,
+    reset: resetEdit,
   } = useForm<VariableForm>({
     resolver: yupResolver(editFormSchema),
   });
+
+  const startEdit = (variable: IVariable) => {
+    if (editableVariable) {
+      resetEdit();
+    }
+    setEditableVariable(variable);
+  };
+
+  const cancelEdit = () => {
+    setEditableVariable(null);
+    resetEdit();
+  };
 
   const setVariable = (variableForm: VariableForm, id?: string) => {
     const variableId = id || uuidv4();
@@ -57,7 +75,12 @@ export default function Variables() {
       },
     });
 
-    setEditableVariable(null);
+    if (id) {
+      setEditableVariable(null);
+      resetEdit();
+    } else {
+      resetAdd();
+    }
   };
 
   const deleteVariable = (variableId: string) => {
@@ -81,7 +104,7 @@ export default function Variables() {
     const defaultValue =
       editableVariable && type === 'edit'
         ? editableVariable[field === 'variableName' ? 'name' : 'value']
-        : undefined;
+        : '';
 
     return (
       <Input
@@ -138,8 +161,8 @@ export default function Variables() {
                 save={handleSubmitEdit((formValue: VariableForm) =>
                   setVariable(formValue, data.id)
                 )}
-                edit={() => setEditableVariable(data)}
-                cancel={() => setEditableVariable(null)}
+                edit={() => startEdit(data)}
+                cancel={cancelEdit}
                 isSaveDisabled={!isValidEdit}
               />
             )}
