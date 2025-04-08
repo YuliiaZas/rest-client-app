@@ -1,8 +1,8 @@
 'use client';
 
 import { Actions, Button, Column, Input, Spinner, Table } from '@/components';
-import type { IVariable } from '@/types';
-import { useContext, useEffect, useState } from 'react';
+import type { IVariable, Variables } from '@/types';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslations } from 'next-intl';
 import { FieldErrors, useForm } from 'react-hook-form';
@@ -10,7 +10,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import styles from './variables.module.scss';
 import { useAppContext } from '@/context/app-context';
 import { getFormScehma, VariableForm } from './variables.entities';
-import { NotificationsContext } from '@/context';
 
 export default function Variables() {
   const { variables, variablesStore, setVariablesStore } = useAppContext();
@@ -20,7 +19,6 @@ export default function Variables() {
   );
   const t = useTranslations('variables');
   const tActions = useTranslations('actions');
-  const { addNotification } = useContext(NotificationsContext);
 
   useEffect(() => {
     setIsLoading(false);
@@ -34,8 +32,13 @@ export default function Variables() {
     handleSubmit: handleSubmitAdd,
     formState: { errors: errorsAdd, isValid: isValidAdd },
     trigger: triggerAdd,
+    reset: resetAdd,
   } = useForm<VariableForm>({
     resolver: yupResolver(addFormSchema),
+    defaultValues: {
+      variableName: '',
+      variableValue: '',
+    },
   });
 
   const {
@@ -43,36 +46,46 @@ export default function Variables() {
     handleSubmit: handleSubmitEdit,
     formState: { errors: errorsEdit, isValid: isValidEdit },
     trigger: triggerEdit,
+    reset: resetEdit,
   } = useForm<VariableForm>({
     resolver: yupResolver(editFormSchema),
   });
 
+  const startEdit = (variable: IVariable) => {
+    if (editableVariable) {
+      resetEdit();
+    }
+    setEditableVariable(variable);
+  };
+
+  const cancelEdit = () => {
+    setEditableVariable(null);
+    resetEdit();
+  };
+
   const setVariable = (variableForm: VariableForm, id?: string) => {
-    try {
-      const variableId = id || uuidv4();
+    const variableId = id || uuidv4();
 
-      setVariablesStore({
-        ...variablesStore,
-        [variableId]: {
-          id: variableId,
-          name: variableForm.variableName,
-          value: variableForm.variableValue,
-        },
-      });
+    setVariablesStore({
+      ...variablesStore,
+      [variableId]: {
+        id: variableId,
+        name: variableForm.variableName,
+        value: variableForm.variableValue,
+      },
+    });
 
+    if (id) {
       setEditableVariable(null);
-    } catch {
-      addNotification({ message: 'Invalid variable name or value.' });
+      resetEdit();
+    } else {
+      resetAdd();
     }
   };
 
   const deleteVariable = (variableId: string) => {
-    try {
-      const { [variableId]: _, ...updatedVariables } = variablesStore;
-      setVariablesStore(updatedVariables);
-    } catch {
-      addNotification({ message: "Couldn't delete variable." });
-    }
+    const { [variableId]: _, ...updatedVariables } = variablesStore;
+    setVariablesStore(updatedVariables);
   };
 
   const getErrorMessages = (
@@ -91,7 +104,7 @@ export default function Variables() {
     const defaultValue =
       editableVariable && type === 'edit'
         ? editableVariable[field === 'variableName' ? 'name' : 'value']
-        : undefined;
+        : '';
 
     return (
       <Input
@@ -148,8 +161,8 @@ export default function Variables() {
                 save={handleSubmitEdit((formValue: VariableForm) =>
                   setVariable(formValue, data.id)
                 )}
-                edit={() => setEditableVariable(data)}
-                cancel={() => setEditableVariable(null)}
+                edit={() => startEdit(data)}
+                cancel={cancelEdit}
                 isSaveDisabled={!isValidEdit}
               />
             )}
