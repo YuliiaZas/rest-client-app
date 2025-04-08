@@ -24,7 +24,9 @@ describe('Footer', () => {
     render(<Footer />);
     const rsSchoolLink = screen.getByRole('link', { name: /RS School logo/i });
     expect(rsSchoolLink).toBeDefined();
-    expect(rsSchoolLink.getAttribute('href')).toBe('https://rs.school/courses/reactjs')
+    expect(rsSchoolLink.getAttribute('href')).toBe(
+      'https://rs.school/courses/reactjs'
+    );
     const logo = screen.getByAltText('RS School logo');
     expect(logo.getAttribute('src')).toBe('/assets/rss-logo.svg');
   });
