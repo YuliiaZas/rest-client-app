@@ -5,14 +5,22 @@ import { Locale, locales } from '@/i18n';
 import { setUserLocale } from '@/services/locale';
 import { Dropdown, Icon } from '@/components';
 import styles from './locale-switcher.module.scss';
+import { AppError } from '@/entites';
+import { NotificationsContext } from '@/context';
+import { useContext } from 'react';
 
 export function LocaleSwitcher() {
   const locale = useLocale();
   const t = useTranslations('root');
+  const { addNotification } = useContext(NotificationsContext);
 
   async function onLocaleChange(value: string) {
-    const locale = value as Locale;
-    await setUserLocale(locale);
+    try {
+      const locale = value as Locale;
+      await setUserLocale(locale);
+    } catch {
+      addNotification(new AppError('Failed to change locale'));
+    }
   }
 
   return (

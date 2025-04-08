@@ -2,7 +2,7 @@
 
 import { useAppContext } from '@/context/app-context';
 import { IHeader } from '@/types';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Actions } from '..';
 import { Button } from '../button';
@@ -11,6 +11,7 @@ import { Input } from '../input';
 import { InputWithVariables } from '@/components';
 import { ScrollLayout } from '../scroll-layout';
 import { Table } from '../table';
+import { NotificationsContext } from '@/context';
 
 type HeadersProps = {
   headers: IHeader[];
@@ -25,33 +26,50 @@ export default function Headers({ headers, setHeaders }: HeadersProps) {
   });
   const [editableHeader, setEditableHeader] = useState<IHeader | null>(null);
   const { variables } = useAppContext();
+  const { addNotification } = useContext(NotificationsContext);
 
   const addHeader = () => {
-    if (newHeader.key && newHeader.value) {
-      setHeaders([...headers, newHeader]);
-      setNewHeader({ id: uuidv4(), key: '', value: '' });
-      setEditableHeader(null);
+    try {
+      if (newHeader.key && newHeader.value) {
+        setHeaders([...headers, newHeader]);
+        setNewHeader({ id: uuidv4(), key: '', value: '' });
+        setEditableHeader(null);
+      }
+    } catch {
+      addNotification({ message: 'Error adding header' });
     }
   };
 
   const editHeader = (key: string, value: string) => {
-    if (editableHeader) {
-      setEditableHeader({ ...editableHeader, [key]: value });
+    try {
+      if (editableHeader) {
+        setEditableHeader({ ...editableHeader, [key]: value });
+      }
+    } catch {
+      addNotification({ message: 'Error editing header' });
     }
   };
 
   const saveEditableHeader = () => {
-    const editedHeaders = headers.map((header) =>
-      header.id === editableHeader?.id ? editableHeader : header
-    );
-    setHeaders(editedHeaders);
-    setEditableHeader(null);
+    try {
+      const editedHeaders = headers.map((header) =>
+        header.id === editableHeader?.id ? editableHeader : header
+      );
+      setHeaders(editedHeaders);
+      setEditableHeader(null);
+    } catch {
+      addNotification({ message: 'Error saving header' });
+    }
   };
 
   const deleteHeader = (id: string) => {
-    const filteredHeaders = headers.filter((header) => header.id !== id);
-    setHeaders(filteredHeaders);
-    setEditableHeader(null);
+    try {
+      const filteredHeaders = headers.filter((header) => header.id !== id);
+      setHeaders(filteredHeaders);
+      setEditableHeader(null);
+    } catch {
+      addNotification({ message: 'Error deleting header' });
+    }
   };
 
   return (

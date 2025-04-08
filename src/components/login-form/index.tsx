@@ -1,6 +1,12 @@
 'use client';
 import { useTranslations } from 'next-intl';
-import { useCallback, useMemo, useState, useTransition } from 'react';
+import {
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  useTransition,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, ErrorMessage, Input, Spinner } from '@/components';
@@ -19,6 +25,8 @@ import {
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { firebaseSignup } from '@/utils';
+import { AppError } from '@/entites';
+import { NotificationsContext } from '@/context';
 
 interface LoginFormProps {
   isSignUp?: boolean;
@@ -29,6 +37,7 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
   const [loginError, setLoginError] = useState<string>('');
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const { addNotification } = useContext(NotificationsContext);
 
   const fields = useMemo(
     () =>
@@ -53,34 +62,43 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
   });
 
   const login = async (email: string, password: string) => {
-    const response = await signIn('credentials', {
-      redirect: false,
-      email,
-      password,
-    });
+    try {
+      const response = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
 
-    if (response?.error) {
-      setLoginError(response.error);
-      return;
+      if (response?.error) {
+        setLoginError(response.error);
+        return;
+      }
+
+      router.push('/client/GET');
+    } catch {
+      addNotification(new AppError('Failed to login'));
     }
-
-    // TODO: correct URL for redirect
-    router.push('/client/GET');
   };
 
   const onSubmit = async (data: ILoginForm) => {
-    if (isSignUp) {
-      startTransition(async () => {
-        const firebaseUser = await firebaseSignup(data.email, data.password);
-        if (!firebaseUser) {
-          setLoginError('signUpError');
-          return;
-        }
-        await login(data.email, data.password);
-      });
-    } else {
-      startTransition(async () => {
-        await login(data.email, data.password);
+    try {
+      if (isSignUp) {
+        startTransition(async () => {
+          const firebaseUser = await firebaseSignup(data.email, data.password);
+          if (!firebaseUser) {
+            setLoginError('signUpError');
+            return;
+          }
+          await login(data.email, data.password);
+        });
+      } else {
+        startTransition(async () => {
+          await login(data.email, data.password);
+        });
+      }
+    } catch {
+      addNotification({
+        message: `Failed to ${isSignUp ? 'sign up' : 'login'}`,
       });
     }
   };

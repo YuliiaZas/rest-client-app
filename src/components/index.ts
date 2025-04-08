@@ -19,3 +19,4 @@ export { Table } from './table/table';
 export { ThemeSwitcher } from './theme-switcher';
 export { Translated } from './translated';
 export { Logo } from './logo';
+export { Notification } from './notification';
