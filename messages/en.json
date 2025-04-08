@@ -31,6 +31,7 @@
     "cancel": "Cancel"
   },
   "client": {
+    "title": "REST Client",
     "urlPlaceholder": "Enter URL",
     "send": "Send",
     "request": "Request",
@@ -39,7 +40,10 @@
     "code": "Code",
     "generate": "Generate",
     "response": "Response",
-    "noResponse": "No response yet"
+    "noResponse": "No response yet",
+    "status": "Status",
+    "notSendRequest": "Could not send request",
+    "reason": "Reason"
   },
   "variables": {
     "title": "Variables",
@@ -48,5 +52,17 @@
     "variableDuplicate": "Variable name already exists",
     "variableNameRequired": "Variable name is required",
     "variableValueRequired": "Variable value is required"
+  },
+  "headers": {
+    "key": "Header Key",
+    "value": "Header Value"
+  },
+  "history": {
+    "title": "History",
+    "empty": "You haven't executed any requests",
+    "emptyAction": "It's empty here. Try",
+    "method": "Method",
+    "url": "URL",
+    "date": "Date"
   }
 }
