@@ -24,10 +24,11 @@ import {
   updateUrl,
 } from '@/utils';
 import { Main } from '@/views';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './client.module.scss';
 import { ApiError, AppError, UnionErrorType } from '@/entites';
+import { NotificationsContext } from '@/context';
 
 type RestClientProps = {
   params: Promise<{ params: string[] }>;
@@ -59,6 +60,8 @@ export default function RestClient({ params }: RestClientProps) {
     key: 'history',
     defaultValue: [],
   });
+
+  const { addNotification } = useContext(NotificationsContext);
 
   useEffect(() => {
     if (headers.length) {
@@ -110,6 +113,7 @@ export default function RestClient({ params }: RestClientProps) {
     } catch (error: unknown) {
       if (error instanceof AppError || error instanceof ApiError) {
         setError(error);
+        addNotification({ message: error.message });
         return;
       }
       throw error;
