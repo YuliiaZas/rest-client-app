@@ -65,6 +65,18 @@
     "url": "URL",
     "date": "Date"
   },
+  "ufo": {
+    "title": "Page not found",
+    "redirect": "Back to the start page"
+  },
+  "error": {
+    "title": "Oops! Something went wrong",
+    "appologize": "We apologize for the inconvenience",
+    "message": "Error message",
+    "restart": "Restart",
+    "restartTitle": "Restart the app",
+    "restartMessage": "After restart the app local storage will be cleared"
+  },
   "errors": {
     "parseLS": "Failed to parse value from local storage",
     "saveLS": "Failed to save value to local storage",
