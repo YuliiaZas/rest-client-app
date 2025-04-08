@@ -6,10 +6,26 @@ import { Notification, Spinner } from '@/components';
 import { NextAuthProvider } from '@/app/providers';
 import { AppProvider } from '@/context/app-context';
 
-export const metadata = {
-  title: 'REST client app',
-  description: 'RS School React course 2025 Q1 final task',
-};
+export async function generateMetadata() {
+  const metadataTranslations: Record<string, Record<string, string>> = {
+    en: {
+      title: 'REST client app',
+      description: 'RS School React course 2025 Q1 final task',
+    },
+    ru: {
+      title: 'REST клиент приложение',
+      description: 'Финальное задание курса React RS School 2025 Q1',
+    },
+  };
+
+  const locale = await getLocale();
+  const metadata = metadataTranslations[locale || 'en'];
+
+  return {
+    title: metadata.title,
+    description: metadata.description,
+  };
+}
 
 export default async function RootLayout({
   children,

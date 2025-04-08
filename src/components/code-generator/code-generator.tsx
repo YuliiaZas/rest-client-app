@@ -16,6 +16,7 @@ import { Dropdown } from '../dropdown';
 import styles from './code-generator.module.scss';
 import { ScrollLayout } from '../scroll-layout';
 import { NotificationsContext } from '@/context';
+import { useTranslations } from 'next-intl';
 
 type CodeGeneratorProps = {
   method: Method;
@@ -36,6 +37,7 @@ export default function CodeGenerator({
   const [code, setCode] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const { addNotification } = useContext(NotificationsContext);
+  const t = useTranslations('client');
 
   const { variables } = useAppContext();
 
@@ -95,9 +97,10 @@ export default function CodeGenerator({
           />
           <Button
             onClick={generateSnippet}
-            isDisabled={loading}
-            text={loading ? 'Generating...' : 'Generate'}
+            text={t('generate')}
             buttonType="secondary"
+            isDisabled={loading}
+            showSpinner={loading}
           />
         </div>
       }
