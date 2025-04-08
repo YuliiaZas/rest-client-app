@@ -1,196 +1,23 @@
 'use client';
 
-import { fetchData } from '@/api';
-import { Button, InputWithVariables } from '@/components';
-import MethodSelector from '@/components/method-selector/method-selector';
+import { RequestForm } from '@/components';
 import RequestOptions from '@/components/request-options/request-options';
 import ResponseView from '@/components/response-view/response-view';
-import {
-  BodyLanguage,
-  bodyLanguages,
-  contentTypeHeaderJson,
-  contentTypeHeaderText,
-  defaultHeaders,
-  Method,
-} from '@/data';
-import { useFormattedParams, useLocalStorage } from '@/hooks';
-import { useAppContext } from '@/context/app-context';
-import { IHeader, IHistory, IResponse } from '@/types';
-import {
-  defaultAlProtocol,
-  getSearchParams,
-  isValidURL,
-  replaceVariables,
-  updateUrl,
-} from '@/utils';
 import { Main } from '@/views';
-import { FormEvent, useContext, useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import styles from './client.module.scss';
-import { ApiError, AppError, UnionErrorType } from '@/entites';
-import { NotificationsContext } from '@/context';
 
-type RestClientProps = {
-  params: Promise<{ params: string[] }>;
-};
-
-export default function RestClient({ params }: RestClientProps) {
-  const [appDefaultHeaders, setAppDefaultHeaders] = useState<IHeader[]>([
-    ...defaultHeaders,
-    contentTypeHeaderJson,
-  ]);
-  const [response, setResponse] = useState<IResponse | null>(null);
-  const [error, setError] = useState<UnionErrorType | null>(null);
-  const {
-    url,
-    body,
-    method,
-    headers,
-    headerParams,
-    setUrl,
-    setBody,
-    setMethod,
-    setHeaders,
-    setHeaderParams,
-  } = useFormattedParams(params);
-
-  const { variables } = useAppContext();
-
-  const [history, setHistory] = useLocalStorage<IHistory[]>({
-    key: 'history',
-    defaultValue: [],
-  });
-
-  const { addNotification } = useContext(NotificationsContext);
-
-  useEffect(() => {
-    if (headers.length) {
-      const searchParams = getSearchParams(headers);
-      setHeaderParams(searchParams);
-    }
-  }, [headers]);
-
-  const handleRequest = async () => {
-    setError(null);
-    setResponse(null);
-
-    try {
-      const {
-        updatedUrl: urlWithReplacedVariables,
-        updatedBody,
-        updatedHeaders,
-      } = replaceVariables(url, body, headers, variables);
-      const updatedUrl = defaultAlProtocol(urlWithReplacedVariables);
-
-      const urlValidation = await isValidURL(updatedUrl);
-
-      if (!urlValidation) {
-        throw new AppError('URL is invalid');
-      }
-
-      const res = await fetchData(method, updatedUrl, updatedBody, [
-        ...appDefaultHeaders,
-        ...updatedHeaders,
-      ]);
-
-      if (!res) {
-        throw new ApiError('No response from server');
-      }
-
-      setResponse({ status: res.status, body: res.body });
-
-      setHistory([
-        ...history,
-        {
-          id: uuidv4(),
-          method,
-          url: updatedUrl,
-          body: updatedBody,
-          headers: updatedHeaders,
-          date: Date.now(),
-        },
-      ]);
-    } catch (error: unknown) {
-      if (error instanceof AppError || error instanceof ApiError) {
-        setError(error);
-        addNotification({ message: error.message });
-        return;
-      }
-      throw error;
-    }
-  };
-
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
-
-    await handleRequest();
-  };
-
-  const handleChangeUrl = (newUrl: string) => {
-    updateUrl(method, newUrl, body, headerParams);
-    setUrl(newUrl);
-  };
-
-  const handleChangeMethod = (newMethod: string) => {
-    updateUrl(newMethod as Method, url, body, headerParams);
-    setMethod(newMethod as Method);
-  };
-
-  const handleChangeBody = (newBody: string) => {
-    updateUrl(method, url, newBody, headerParams);
-    setBody(newBody);
-  };
-
-  const handleChangeHeaders = (headers: IHeader[]) => {
-    const searchParams = getSearchParams(headers);
-
-    updateUrl(method, url, body, searchParams);
-    setHeaders(headers);
-    setHeaderParams(searchParams);
-  };
-
-  const onLanguageChange = (language: BodyLanguage) => {
-    setAppDefaultHeaders([
-      ...defaultHeaders,
-      language === bodyLanguages[0]
-        ? contentTypeHeaderJson
-        : contentTypeHeaderText,
-    ]);
-  };
-
+export default function RestClient() {
   return (
     <Main>
       <div className={styles.container}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.controls}>
-            <div className={styles.method}>
-              <MethodSelector value={method} onChange={handleChangeMethod} />
-            </div>
-            <InputWithVariables
-              value={url}
-              variables={variables}
-              typeClass={'primary'}
-              onValueChange={handleChangeUrl}
-            />
-            <Button text="Send" />
-          </div>
-        </form>
+        <RequestForm />
         <section className={styles.section}>
           <h2 className={styles.label}>Request</h2>
-          <RequestOptions
-            url={url}
-            method={method}
-            body={body}
-            setBody={handleChangeBody}
-            headers={headers}
-            hiddenHeaders={appDefaultHeaders}
-            setHeaders={handleChangeHeaders}
-            onLanguageChange={onLanguageChange}
-          />
+          <RequestOptions />
         </section>
         <section className={styles.section}>
           <h2 className={styles.label}>Response</h2>
-          <ResponseView response={response} error={error} />
+          <ResponseView />
         </section>
       </div>
     </Main>

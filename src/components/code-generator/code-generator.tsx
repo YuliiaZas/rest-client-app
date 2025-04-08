@@ -1,38 +1,23 @@
 'use client';
 
-import { Method } from '@/data';
+import { NotificationsContext, useClientContext } from '@/context';
+import { useAppContext } from '@/context/app-context';
 import {
   SupportedLanguages,
   supportedLanguagesOptions,
 } from '@/data/supported-languages';
-import { useAppContext } from '@/context/app-context';
-import { IHeader } from '@/types';
 import { formatHeaders, isValidURL, replaceVariables } from '@/utils';
 import { generateCodeSnippet } from '@/utils/generate-code-snippet';
+import { useTranslations } from 'next-intl';
 import { useContext, useState } from 'react';
 import { atomOneLight, CodeBlock } from 'react-code-blocks';
 import { Button } from '../button';
 import { Dropdown } from '../dropdown';
-import styles from './code-generator.module.scss';
 import { ScrollLayout } from '../scroll-layout';
-import { NotificationsContext } from '@/context';
-import { useTranslations } from 'next-intl';
+import styles from './code-generator.module.scss';
 
-type CodeGeneratorProps = {
-  method: Method;
-  url: string;
-  body: string;
-  headers: IHeader[];
-  hiddenHeaders: IHeader[];
-};
-
-export default function CodeGenerator({
-  method,
-  url,
-  body,
-  headers,
-  hiddenHeaders,
-}: CodeGeneratorProps) {
+export default function CodeGenerator() {
+  const { url, body, method, headers, appDefaultHeaders } = useClientContext();
   const [language, setLanguage] = useState<SupportedLanguages>('curl');
   const [code, setCode] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -61,7 +46,7 @@ export default function CodeGenerator({
       const snippet = await generateCodeSnippet({
         method,
         url: updatedUrl,
-        headers: formatHeaders(updatedHeaders, hiddenHeaders),
+        headers: formatHeaders(updatedHeaders, appDefaultHeaders),
         body: updatedBody ? JSON.parse(updatedBody) : null,
         language,
       });
