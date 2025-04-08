@@ -1,0 +1,47 @@
+@use '@/styles/utils/mixins' as *;
+
+.notification {
+  &__container {
+    position: fixed;
+    inset: 1rem 1rem auto auto;
+    z-index: var(--z-index-toast);
+    width: 20rem;
+    height: 5rem;
+    background: var(--error-main);
+    color: var(--primary-contrast-text);
+    padding: 1rem 2rem;
+    animation: notification-animation 1s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include border-default(var(--error-dark));
+    @include shadow();
+  }
+
+  &__counter {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--error-light);
+    color: var(--error-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    position: absolute;
+    inset: auto 1rem 1rem auto;
+  }
+}
+
+@keyframes notification-animation {
+  from {
+    opacity: 0;
+    transform: translateY(-100%) scale(0.5) rotateX(180deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateX(0deg);
+  }
+}

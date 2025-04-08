@@ -2,7 +2,7 @@ import { ReactNode, Suspense } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 import '../styles/global.scss';
-import { Spinner } from '@/components';
+import { Notification, Spinner } from '@/components';
 import { NextAuthProvider } from '@/app/providers';
 import { AppProvider } from '@/context/app-context';
 
@@ -23,7 +23,10 @@ export default async function RootLayout({
         <NextIntlClientProvider>
           <Suspense fallback={<Spinner />}>
             <NextAuthProvider>
-              <AppProvider>{children}</AppProvider>
+              <AppProvider>
+                <Notification />
+                {children}
+              </AppProvider>
             </NextAuthProvider>
           </Suspense>
         </NextIntlClientProvider>
