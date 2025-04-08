@@ -15,7 +15,6 @@ describe('Aside Component', () => {
   it('should apply the correct class for the root type', () => {
     render(<Aside type="root">Root</Aside>);
     const asideElement = screen.getByText('Root');
-    console.log(asideElement.className);
     expect(asideElement).toBeDefined();
     expect(asideElement.className.includes(`aside__root`)).toBeTruthy();
   });
@@ -23,7 +22,6 @@ describe('Aside Component', () => {
   it('should apply the correct class for the client type', () => {
     render(<Aside type="client">Client</Aside>);
     const asideElement = screen.getByText('Client');
-    console.log(asideElement.className);
     expect(asideElement).toBeDefined();
     expect(asideElement.className.includes(`aside__client`)).toBeTruthy();
   });
