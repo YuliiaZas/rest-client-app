@@ -1,24 +1,26 @@
+import { NotificationsContext, useClientContext } from '@/context';
+import {
+  BodyLanguage,
+  bodyLanguages,
+  contentTypeHeaderJson,
+  contentTypeHeaderText,
+  defaultHeaders,
+} from '@/data';
+import { DropdownItem } from '@/entites';
+import { updateUrl } from '@/utils';
 import Editor, { Monaco } from '@monaco-editor/react';
 import { useContext, useEffect, useState } from 'react';
-import { BodyLanguage, bodyLanguages } from '@/data';
-import { DropdownItem } from '@/entites';
 import { Dropdown } from '../dropdown';
 import { ScrollLayout } from '../scroll-layout';
-import { NotificationsContext } from '@/context';
 
 type RequestOptions = {
   body: string;
-  setBody: (body: string) => void;
   readOnly?: boolean;
-  onLanguageChange?: (language: BodyLanguage) => void;
 };
 
-export default function BodyEditor({
-  body,
-  setBody,
-  readOnly,
-  onLanguageChange,
-}: RequestOptions) {
+export default function BodyEditor({ readOnly, body }: RequestOptions) {
+  const { url, method, headerParams, setBody, setAppDefaultHeaders } =
+    useClientContext();
   const [formattedJson, setFormattedJson] = useState(body);
   const [language, setLanguage] = useState<BodyLanguage>(bodyLanguages[0]);
   const languageOptions: DropdownItem[] = [
@@ -26,10 +28,6 @@ export default function BodyEditor({
     { value: bodyLanguages[1], label: 'String' },
   ];
   const { addNotification } = useContext(NotificationsContext);
-
-  useEffect(() => {
-    if (onLanguageChange) onLanguageChange(language);
-  }, [language]);
 
   useEffect(() => {
     try {
@@ -53,6 +51,21 @@ export default function BodyEditor({
     });
   };
 
+  const handleChangeBody = (newBody: string) => {
+    updateUrl(method, url, newBody, headerParams);
+    setBody(newBody);
+  };
+
+  const changeLanguage = (value: BodyLanguage) => {
+    setLanguage(value);
+    setAppDefaultHeaders([
+      ...defaultHeaders,
+      language === bodyLanguages[0]
+        ? contentTypeHeaderJson
+        : contentTypeHeaderText,
+    ]);
+  };
+
   return (
     <ScrollLayout
       headerChildren={
@@ -62,7 +75,7 @@ export default function BodyEditor({
             selectedItem={language}
             showButtonBorder={false}
             colors="content"
-            selectOption={(value) => setLanguage(value as BodyLanguage)}
+            selectOption={(value) => changeLanguage(value as BodyLanguage)}
           />
         )
       }
@@ -72,7 +85,7 @@ export default function BodyEditor({
         beforeMount={handleEditorMount}
         defaultLanguage={language}
         value={formattedJson}
-        onChange={(value) => setBody(value as string)}
+        onChange={(value) => handleChangeBody(value as string)}
         key={language}
         options={{
           readOnly,

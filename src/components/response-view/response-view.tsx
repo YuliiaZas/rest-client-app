@@ -28,11 +28,7 @@ export default function ResponseView() {
             </>
           }
         >
-          <BodyEditor
-            body={response.body}
-            setBody={() => null}
-            readOnly={true}
-          />
+          <BodyEditor body={response.body} readOnly={true} />
         </ScrollLayout>
       </div>
     );
