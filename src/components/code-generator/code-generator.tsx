@@ -8,6 +8,7 @@ import {
 } from '@/data/supported-languages';
 import { formatHeaders, isValidURL, replaceVariables } from '@/utils';
 import { generateCodeSnippet } from '@/utils/generate-code-snippet';
+import { useTranslations } from 'next-intl';
 import { useContext, useState } from 'react';
 import { atomOneLight, CodeBlock } from 'react-code-blocks';
 import { Button } from '../button';
@@ -21,6 +22,7 @@ export default function CodeGenerator() {
   const [code, setCode] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const { addNotification } = useContext(NotificationsContext);
+  const t = useTranslations('client');
 
   const { variables } = useAppContext();
 
@@ -80,9 +82,10 @@ export default function CodeGenerator() {
           />
           <Button
             onClick={generateSnippet}
-            isDisabled={loading}
-            text={loading ? 'Generating...' : 'Generate'}
+            text={t('generate')}
             buttonType="secondary"
+            isDisabled={loading}
+            showSpinner={loading}
           />
         </div>
       }

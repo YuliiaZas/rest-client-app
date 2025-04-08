@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react';
 import { Icon, PhosphorIcons } from '../icons';
 import clsx from 'clsx';
 import { useTranslations } from 'next-intl';
+import { Spinner } from '../spinner';
 
 type ButtonType = 'primary' | 'secondary' | 'transparent';
 const actionButtonTypes = ['add', 'edit', 'delete', 'save', 'cancel'] as const;
@@ -14,6 +15,7 @@ interface ButtonProps {
   fontSize?: string;
   title?: string;
   isDisabled?: boolean;
+  showSpinner?: boolean;
   onClick?: () => void;
 }
 
@@ -24,6 +26,7 @@ export const Button = ({
   fontSize,
   title = '',
   isDisabled = false,
+  showSpinner = false,
   onClick,
 }: ButtonProps) => {
   const t = useTranslations('actions');
@@ -58,6 +61,7 @@ export const Button = ({
   return (
     <button
       className={clsx(
+        'button',
         `button_${buttonType}`,
         isIconButton && 'button_icon',
         isActionButton && `button_action button_action_${icon}`
@@ -67,6 +71,7 @@ export const Button = ({
       disabled={isDisabled}
       onClick={handleButtonClick}
     >
+      {showSpinner && <Spinner small={true} />}
       {icon && <Icon iconName={icon} size={iconSize} />}
       {text}
     </button>

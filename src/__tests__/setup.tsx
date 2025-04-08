@@ -11,3 +11,7 @@ vi.mock('next/image', () => ({
     return <img src={src} alt={alt} {...rest} />;
   },
 }));
+
+vi.mock('next-intl', () => ({
+  useTranslations: vi.fn().mockReturnValue((v: string) => v),
+}));
