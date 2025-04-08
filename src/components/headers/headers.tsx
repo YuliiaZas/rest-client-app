@@ -13,6 +13,7 @@ import { Column } from '../column';
 import { Input } from '../input';
 import { ScrollLayout } from '../scroll-layout';
 import { Table } from '../table';
+import { useTranslations } from 'next-intl';
 
 export default function Headers() {
   const [newHeader, setNewHeader] = useState({
@@ -25,6 +26,8 @@ export default function Headers() {
   const { addNotification } = useContext(NotificationsContext);
   const { url, method, body, headers, setHeaders, setHeaderParams } =
     useClientContext();
+  const t = useTranslations('headers');
+  const tActions = useTranslations('actions');
 
   const changeHeaders = (headers: IHeader[]) => {
     const searchParams = getSearchParams(headers);
@@ -82,13 +85,13 @@ export default function Headers() {
     <ScrollLayout>
       <Table data={headers} hasFooter={true}>
         <Column
-          title="Header Key"
+          title={t('key')}
           type="data"
           body={(data: IHeader) =>
             editableHeader?.id === data.id ? (
               <Input
                 id={`${newHeader.id}-key-body`}
-                placeholder="Header Key"
+                placeholder={t('key')}
                 defaultValue={data.key}
                 onValueChange={(key) => {
                   editHeader('key', key);
@@ -102,7 +105,7 @@ export default function Headers() {
             <Input
               id={`${newHeader.id}-key-footer`}
               defaultValue={newHeader.key}
-              placeholder="Header Key"
+              placeholder={t('key')}
               onValueChange={(key) => {
                 setNewHeader((prevHeader) => ({ ...prevHeader, key }));
               }}
@@ -110,12 +113,12 @@ export default function Headers() {
           }
         />
         <Column
-          title="Header Value"
+          title={t('value')}
           type="data"
           body={(data: IHeader) =>
             editableHeader?.id === data.id ? (
               <InputWithVariables
-                placeholder="Header Value"
+                placeholder={t('value')}
                 value={data.value}
                 variables={variables}
                 onValueChange={(value) => {
@@ -128,7 +131,7 @@ export default function Headers() {
           }
           footer={
             <InputWithVariables
-              placeholder="Header Value"
+              placeholder={t('value')}
               value={newHeader.value}
               variables={variables}
               onValueChange={(value) =>
@@ -138,7 +141,7 @@ export default function Headers() {
           }
         />
         <Column
-          title="Actions"
+          title={tActions('actions')}
           type="actions"
           body={(data: IHeader) => (
             <Actions

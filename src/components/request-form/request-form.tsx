@@ -20,6 +20,7 @@ import { Button } from '../button';
 import { InputWithVariables } from '../input-with-variables';
 import MethodSelector from '../method-selector/method-selector';
 import styles from './request-form.module.scss';
+import { useTranslations } from 'next-intl';
 
 export function RequestForm() {
   const {
@@ -35,6 +36,7 @@ export function RequestForm() {
     setError,
   } = useClientContext();
   const { variables } = useAppContext();
+  const t = useTranslations('client');
   const { addNotification } = useContext(NotificationsContext);
   const [history, setHistory] = useLocalStorage<IHistory[]>({
     key: 'history',
@@ -118,7 +120,7 @@ export function RequestForm() {
           typeClass={'primary'}
           onValueChange={handleChangeUrl}
         />
-        <Button text="Send" />
+        <Button text={t('send')} />
       </div>
     </form>
   );

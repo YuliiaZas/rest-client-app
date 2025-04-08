@@ -1,6 +1,6 @@
 'use client';
 
-import { Column, Spinner, Table } from '@/components';
+import { Column, Spinner, Table, Translated } from '@/components';
 import { useLocalStorage } from '@/hooks';
 import { IHistory } from '@/types';
 import { getSearchParams, getUpdatedUrl } from '@/utils';
@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import styles from './history.module.scss';
+import { useTranslations } from 'next-intl';
 
 export default function History() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function History() {
     key: 'history',
     defaultValue: [],
   });
+  const t = useTranslations('history');
 
   useEffect(() => {
     setIsLoading(false);
@@ -41,17 +43,17 @@ export default function History() {
 
   return (
     <div className={styles.history}>
-      <h1 className={styles.history__title}>History</h1>
+      <h1 className={styles.history__title}>{t('title')}</h1>
 
       {sortedHistory.length ? (
         <Table data={sortedHistory}>
           <Column
-            title="Method"
+            title={t('method')}
             type="data"
             body={(data: IHistory) => <span>{data.method}</span>}
           />
           <Column
-            title="URL"
+            title={t('url')}
             type="data"
             body={(data: IHistory) => (
               <button
@@ -65,7 +67,7 @@ export default function History() {
             )}
           />
           <Column
-            title="Date"
+            title={t('date')}
             type="data"
             body={(data: IHistory) => (
               <span>{new Date(data.date).toLocaleDateString('ru-RU')}</span>
@@ -76,10 +78,8 @@ export default function History() {
         <>
           <div className={styles.history__empty}>
             <p className={styles.history__message}>
-              You haven&apos;t executed any requests.
-            </p>
-            <p className={styles.history__message}>
-              It&apos;s empty here. Try:
+              {t('empty')}.<br />
+              {t('emptyAction')}:
             </p>
           </div>
           <Link
@@ -87,7 +87,7 @@ export default function History() {
             className={styles.history__link}
             prefetch={true}
           >
-            REST Client
+            <Translated scope="client" text="title" />
           </Link>
         </>
       )}

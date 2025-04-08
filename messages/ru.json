@@ -31,6 +31,7 @@
     "cancel": "Отмена"
   },
   "client": {
+    "title": "REST клиент",
     "urlPlaceholder": "Введите URL",
     "send": "Отправить",
     "request": "Запрос",
@@ -39,7 +40,10 @@
     "code": "Код",
     "generate": "Сгенерировать",
     "response": "Ответ",
-    "noResponse": "Ответа пока нет"
+    "noResponse": "Ответа пока нет",
+    "status": "Статус",
+    "notSendRequest": "Не удалось отправить запрос",
+    "reason": "Причина"
   },
   "variables": {
     "title": "Переменные",
@@ -48,5 +52,17 @@
     "variableDuplicate": "Имя переменной уже существует",
     "variableNameRequired": "Имя переменной обязательно",
     "variableValueRequired": "Значение переменной обязательно"
+  },
+  "headers": {
+    "key": "Ключ заголовка",
+    "value": "Значение заголовка"
+  },
+  "history": {
+    "title": "История",
+    "empty": "Вы еще не отправляли запросы",
+    "emptyAction": "Тут пусто. Попробуйте отправить запрос",
+    "method": "Метод",
+    "url": "URL",
+    "date": "Дата"
   }
 }
