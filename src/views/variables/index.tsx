@@ -1,8 +1,8 @@
 'use client';
 
 import { Actions, Button, Column, Input, Spinner, Table } from '@/components';
-import type { IVariable, Variables } from '@/types';
-import { useEffect, useState } from 'react';
+import type { IVariable } from '@/types';
+import { useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslations } from 'next-intl';
 import { FieldErrors, useForm } from 'react-hook-form';
@@ -10,6 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import styles from './variables.module.scss';
 import { useAppContext } from '@/context/app-context';
 import { getFormScehma, VariableForm } from './variables.entities';
+import { NotificationsContext } from '@/context';
 
 export default function Variables() {
   const { variables, variablesStore, setVariablesStore } = useAppContext();
@@ -19,6 +20,7 @@ export default function Variables() {
   );
   const t = useTranslations('variables');
   const tActions = useTranslations('actions');
+  const { addNotification } = useContext(NotificationsContext);
 
   useEffect(() => {
     setIsLoading(false);
@@ -64,28 +66,36 @@ export default function Variables() {
   };
 
   const setVariable = (variableForm: VariableForm, id?: string) => {
-    const variableId = id || uuidv4();
+    try {
+      const variableId = id || uuidv4();
 
-    setVariablesStore({
-      ...variablesStore,
-      [variableId]: {
-        id: variableId,
-        name: variableForm.variableName,
-        value: variableForm.variableValue,
-      },
-    });
+      setVariablesStore({
+        ...variablesStore,
+        [variableId]: {
+          id: variableId,
+          name: variableForm.variableName,
+          value: variableForm.variableValue,
+        },
+      });
 
-    if (id) {
-      setEditableVariable(null);
-      resetEdit();
-    } else {
-      resetAdd();
+      if (id) {
+        setEditableVariable(null);
+        resetEdit();
+      } else {
+        resetAdd();
+      }
+    } catch {
+      addNotification({ message: 'Error while saving variable' });
     }
   };
 
   const deleteVariable = (variableId: string) => {
-    const { [variableId]: _, ...updatedVariables } = variablesStore;
-    setVariablesStore(updatedVariables);
+    try {
+      const { [variableId]: _, ...updatedVariables } = variablesStore;
+      setVariablesStore(updatedVariables);
+    } catch {
+      addNotification({ message: 'Error while deleting variable' });
+    }
   };
 
   const getErrorMessages = (
