@@ -1,6 +1,14 @@
 'use client';
 
-import { Actions, Button, Column, Input, Spinner, Table } from '@/components';
+import {
+  Actions,
+  Button,
+  Column,
+  Input,
+  Spinner,
+  Table,
+  Translated,
+} from '@/components';
 import type { IVariable } from '@/types';
 import { useContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -134,60 +142,60 @@ export default function Variables() {
 
   return (
     <div className={styles.variables}>
-      <h1 className={styles.variables__title}>{t('title')}</h1>
-      {
-        <Table data={Object.values(variablesStore)} hasFooter={true}>
-          <Column
-            title={t('variableName')}
-            type="data"
-            body={(data: IVariable) =>
-              editableVariable?.id === data.id ? (
-                getInput('variableName', 'edit')
-              ) : (
-                <span>{data.name}</span>
-              )
-            }
-            footer={getInput('variableName', 'add')}
-          />
-          <Column
-            title={t('variableValue')}
-            type="data"
-            body={(data: IVariable) =>
-              editableVariable?.id === data.id ? (
-                getInput('variableValue', 'edit')
-              ) : (
-                <span>{data.value}</span>
-              )
-            }
-            footer={getInput('variableValue', 'add')}
-          />
-          <Column
-            title={tActions('actions')}
-            type="actions"
-            body={(data: IVariable) => (
-              <Actions
-                isEdit={editableVariable?.id === data.id}
-                delete={() => deleteVariable(data.id)}
-                save={handleSubmitEdit((formValue: VariableForm) =>
-                  setVariable(formValue, data.id)
-                )}
-                edit={() => startEdit(data)}
-                cancel={cancelEdit}
-                isSaveDisabled={!isValidEdit}
-              />
-            )}
-            footer={
-              <Button
-                onClick={handleSubmitAdd((formValue: VariableForm) =>
-                  setVariable(formValue)
-                )}
-                icon="add"
-                isDisabled={!isValidAdd}
-              />
-            }
-          />
-        </Table>
-      }
+      <h1 className={styles.variables__title}>
+        <Translated scope="variables" text="title" />
+      </h1>
+      <Table data={Object.values(variablesStore)} hasFooter={true}>
+        <Column
+          title={t('variableName')}
+          type="data"
+          body={(data: IVariable) =>
+            editableVariable?.id === data.id ? (
+              getInput('variableName', 'edit')
+            ) : (
+              <span>{data.name}</span>
+            )
+          }
+          footer={getInput('variableName', 'add')}
+        />
+        <Column
+          title={t('variableValue')}
+          type="data"
+          body={(data: IVariable) =>
+            editableVariable?.id === data.id ? (
+              getInput('variableValue', 'edit')
+            ) : (
+              <span>{data.value}</span>
+            )
+          }
+          footer={getInput('variableValue', 'add')}
+        />
+        <Column
+          title={tActions('actions')}
+          type="actions"
+          body={(data: IVariable) => (
+            <Actions
+              isEdit={editableVariable?.id === data.id}
+              delete={() => deleteVariable(data.id)}
+              save={handleSubmitEdit((formValue: VariableForm) =>
+                setVariable(formValue, data.id)
+              )}
+              edit={() => startEdit(data)}
+              cancel={cancelEdit}
+              isSaveDisabled={!isValidEdit}
+            />
+          )}
+          footer={
+            <Button
+              onClick={handleSubmitAdd((formValue: VariableForm) =>
+                setVariable(formValue)
+              )}
+              icon="add"
+              isDisabled={!isValidAdd}
+            />
+          }
+        />
+      </Table>
     </div>
   );
 }
