@@ -1,6 +1,7 @@
 'use client';
 
 import { fetchData } from '@/api';
+import { NotificationsContext } from '@/context';
 import { useAppContext } from '@/context/app-context';
 import { useClientContext } from '@/context/client-context';
 import { Method } from '@/data';
@@ -13,7 +14,7 @@ import {
   replaceVariables,
   updateUrl,
 } from '@/utils';
-import { FormEvent } from 'react';
+import { FormEvent, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from '../button';
 import { InputWithVariables } from '../input-with-variables';
@@ -34,7 +35,7 @@ export function RequestForm() {
     setError,
   } = useClientContext();
   const { variables } = useAppContext();
-
+  const { addNotification } = useContext(NotificationsContext);
   const [history, setHistory] = useLocalStorage<IHistory[]>({
     key: 'history',
     defaultValue: [],
@@ -82,7 +83,7 @@ export function RequestForm() {
       ]);
     } catch (error: unknown) {
       if (error instanceof AppError || error instanceof ApiError) {
-        setError(error);
+        addNotification({ message: error.message });
         return;
       }
       throw error;
