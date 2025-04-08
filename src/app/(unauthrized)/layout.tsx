@@ -6,11 +6,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils';
 import { redirect } from 'next/navigation';
 
-export const metadata = {
-  title: 'REST client app',
-  description: 'RS School React course 2025 Q1 final task',
-};
-
 export default async function RootLayout({
   children,
 }: {

@@ -1,17 +1,21 @@
 .spinner {
-  width: 1rem;
-  height: 1rem;
+  --spinner-size: 1rem;
+  width: var(--spinner-size);
+  height: var(--spinner-size);
+  margin-right: calc(var(--spinner-size) / 2);
+  margin-bottom: calc(var(--spinner-size) / 2);
   animation: 2.8s cubic infinite;
+
+  &.spinner_small {
+    --spinner-size: 0.5rem;
+  }
 
   &__wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    position: absolute;
+    inset: 0;
     background: var(--background-dimmed);
     z-index: var(--z-index-spinner);
   }
@@ -29,13 +33,13 @@
     transform: translate(0, 0);
   }
   25% {
-    transform: translate(1rem, 0);
+    transform: translate(var(--spinner-size), 0);
   }
   50% {
-    transform: translate(1rem, 1rem);
+    transform: translate(var(--spinner-size), var(--spinner-size));
   }
   75% {
-    transform: translate(0, 1rem);
+    transform: translate(0, var(--spinner-size));
   }
   100% {
     transform: translate(0, 0);
