@@ -21,6 +21,7 @@ export function Icon({
 }: IconProps) {
   return (
     <div
+      role="img"
       style={{
         width: size,
         height: size,
