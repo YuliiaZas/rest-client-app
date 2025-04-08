@@ -16,7 +16,7 @@ export function ThemeSwitcher() {
     try {
       setTheme(theme === AppTheme.light ? AppTheme.dark : AppTheme.light);
     } catch {
-      addNotification(new AppError('Failed to change theme'));
+      addNotification(new AppError('changeTheme'));
     }
   }
 

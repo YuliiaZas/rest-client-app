@@ -45,7 +45,7 @@ export default function Headers() {
         setEditableHeader(null);
       }
     } catch {
-      addNotification({ message: 'Error adding header' });
+      addNotification({ message: 'addingHeader' });
     }
   };
 
@@ -55,7 +55,7 @@ export default function Headers() {
         setEditableHeader({ ...editableHeader, [key]: value });
       }
     } catch {
-      addNotification({ message: 'Error editing header' });
+      addNotification({ message: 'editingHeader' });
     }
   };
 
@@ -67,7 +67,7 @@ export default function Headers() {
       changeHeaders(editedHeaders);
       setEditableHeader(null);
     } catch {
-      addNotification({ message: 'Error saving header' });
+      addNotification({ message: 'savingHeader' });
     }
   };
 
@@ -77,7 +77,7 @@ export default function Headers() {
       changeHeaders(filteredHeaders);
       setEditableHeader(null);
     } catch {
-      addNotification({ message: 'Error deleting header' });
+      addNotification({ message: 'deletingHeader' });
     }
   };
 

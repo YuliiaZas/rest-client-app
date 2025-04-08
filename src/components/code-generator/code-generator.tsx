@@ -23,6 +23,7 @@ export default function CodeGenerator() {
   const [loading, setLoading] = useState<boolean>(false);
   const { addNotification } = useContext(NotificationsContext);
   const t = useTranslations('client');
+  const tErrors = useTranslations('errors');
 
   const { variables } = useAppContext();
 
@@ -39,7 +40,7 @@ export default function CodeGenerator() {
       const validUrl = await isValidURL(updatedUrl);
 
       if (!validUrl) {
-        setCode('URL is invalid');
+        setCode(tErrors('urlInvalid'));
         return;
       }
 
@@ -51,13 +52,13 @@ export default function CodeGenerator() {
         language,
       });
 
-      setCode(snippet || 'Error generating code');
+      setCode(snippet || tErrors('generatingCode'));
     } catch (err) {
       let errorMessage: string;
       if (err instanceof Error) {
         errorMessage = err.message;
       } else {
-        errorMessage = 'Unknown error';
+        errorMessage = tErrors('unknown');
       }
       setCode(errorMessage);
       addNotification({ message: errorMessage });

@@ -58,7 +58,7 @@ export function RequestForm() {
       const urlValidation = await isValidURL(updatedUrl);
 
       if (!urlValidation) {
-        throw new AppError('URL is invalid');
+        throw new AppError('urlInvalid');
       }
 
       const res = await fetchData(method, updatedUrl, updatedBody, [
@@ -67,7 +67,7 @@ export function RequestForm() {
       ]);
 
       if (!res) {
-        throw new ApiError('No response from server');
+        throw new ApiError('serverNoResponse');
       }
 
       setResponse({ status: res.status, body: res.body });

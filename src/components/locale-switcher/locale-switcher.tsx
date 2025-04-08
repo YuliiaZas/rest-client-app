@@ -19,7 +19,7 @@ export function LocaleSwitcher() {
       const locale = value as Locale;
       await setUserLocale(locale);
     } catch {
-      addNotification(new AppError('Failed to change locale'));
+      addNotification(new AppError('changeLocale'));
     }
   }
 

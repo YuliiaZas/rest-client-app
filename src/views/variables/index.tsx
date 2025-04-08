@@ -93,7 +93,7 @@ export default function Variables() {
         resetAdd();
       }
     } catch {
-      addNotification({ message: 'Error while saving variable' });
+      addNotification({ message: 'savingVariable' });
     }
   };
 
@@ -102,7 +102,7 @@ export default function Variables() {
       const { [variableId]: _, ...updatedVariables } = variablesStore;
       setVariablesStore(updatedVariables);
     } catch {
-      addNotification({ message: 'Error while deleting variable' });
+      addNotification({ message: 'deletingVariable' });
     }
   };
 
