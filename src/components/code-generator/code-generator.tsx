@@ -9,12 +9,13 @@ import { useAppContext } from '@/context/app-context';
 import { IHeader } from '@/types';
 import { formatHeaders, isValidURL, replaceVariables } from '@/utils';
 import { generateCodeSnippet } from '@/utils/generate-code-snippet';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { atomOneLight, CodeBlock } from 'react-code-blocks';
 import { Button } from '../button';
 import { Dropdown } from '../dropdown';
 import styles from './code-generator.module.scss';
 import { ScrollLayout } from '../scroll-layout';
+import { NotificationsContext } from '@/context';
 import { useTranslations } from 'next-intl';
 
 type CodeGeneratorProps = {
@@ -35,6 +36,7 @@ export default function CodeGenerator({
   const [language, setLanguage] = useState<SupportedLanguages>('curl');
   const [code, setCode] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+  const { addNotification } = useContext(NotificationsContext);
   const t = useTranslations('client');
 
   const { variables } = useAppContext();
@@ -66,7 +68,14 @@ export default function CodeGenerator({
 
       setCode(snippet || 'Error generating code');
     } catch (err) {
-      setCode((err as Error).message);
+      let errorMessage: string;
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else {
+        errorMessage = 'Unknown error';
+      }
+      setCode(errorMessage);
+      addNotification({ message: errorMessage });
     } finally {
       setLoading(false);
     }

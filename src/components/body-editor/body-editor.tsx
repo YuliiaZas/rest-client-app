@@ -1,9 +1,10 @@
 import Editor, { Monaco } from '@monaco-editor/react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BodyLanguage, bodyLanguages } from '@/data';
 import { DropdownItem } from '@/entites';
 import { Dropdown } from '../dropdown';
 import { ScrollLayout } from '../scroll-layout';
+import { NotificationsContext } from '@/context';
 
 type RequestOptions = {
   body: string;
@@ -24,6 +25,7 @@ export default function BodyEditor({
     { value: bodyLanguages[0], label: 'JSON' },
     { value: bodyLanguages[1], label: 'String' },
   ];
+  const { addNotification } = useContext(NotificationsContext);
 
   useEffect(() => {
     if (onLanguageChange) onLanguageChange(language);
@@ -35,8 +37,8 @@ export default function BodyEditor({
         const formatted = JSON.stringify(JSON.parse(body || '{}'), null, 2);
         setFormattedJson(formatted);
       }
-    } catch (err) {
-      console.error(err);
+    } catch {
+      addNotification({ message: 'JSON parsing in the body editor' });
     }
   }, [body, readOnly]);
 
