@@ -1,3 +1,4 @@
+import { ClientProvider } from '@/context';
 import { httpMethods, Method } from '@/data';
 import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
@@ -18,5 +19,5 @@ export default async function ClientWithParamsLayout({
     redirect('/client/GET');
   }
 
-  return children;
+  return <ClientProvider params={params}>{children}</ClientProvider>;
 }

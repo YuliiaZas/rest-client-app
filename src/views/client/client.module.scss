@@ -6,23 +6,6 @@
   max-width: 1600px;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  height: 2.25rem;
-}
-
-.controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.method {
-  width: 150px;
-}
-
 .input {
   border: 1px solid var(--lines-main);
   padding: 0.5rem 1rem;

@@ -1,16 +1,14 @@
-import { IResponse } from '@/types';
-import BodyEditor from '../body-editor/body-editor';
-import { UnionErrorType } from '@/entites';
+'use client';
+
+import { useClientContext } from '@/context';
 import { httpStatus } from '@/data';
+import BodyEditor from '../body-editor/body-editor';
 import { ScrollLayout } from '../scroll-layout';
 import styles from './response-view.module.scss';
 
-type ResponseViewProps = {
-  response: IResponse | null;
-  error: UnionErrorType | null;
-};
+export default function ResponseView() {
+  const { response, error } = useClientContext();
 
-export default function ResponseView({ response, error }: ResponseViewProps) {
   const ApiResponse = () => {
     if (!response) return <p>No response yet</p>;
 
