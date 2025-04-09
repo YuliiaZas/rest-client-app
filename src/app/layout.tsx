@@ -4,7 +4,6 @@ import { getLocale } from 'next-intl/server';
 import '../styles/global.scss';
 import { Notification, Spinner } from '@/components';
 import { Providers } from '@/app/providers';
-import { ErrorBoundary } from './error-boudary';
 
 export async function generateMetadata() {
   const metadataTranslations: Record<string, Record<string, string>> = {
@@ -36,16 +35,14 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className="light-theme">
-        <ErrorBoundary>
-          <NextIntlClientProvider>
-            <Suspense fallback={<Spinner />}>
-              <Providers>
-                <Notification />
-                {children}
-              </Providers>
-            </Suspense>
-          </NextIntlClientProvider>
-        </ErrorBoundary>
+        <NextIntlClientProvider>
+          <Suspense fallback={<Spinner />}>
+            <Providers>
+              <Notification />
+              {children}
+            </Providers>
+          </Suspense>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
