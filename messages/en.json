@@ -64,5 +64,39 @@
     "method": "Method",
     "url": "URL",
     "date": "Date"
+  },
+  "ufo": {
+    "title": "Page not found",
+    "redirect": "Back to the start page"
+  },
+  "error": {
+    "title": "Oops! Something went wrong",
+    "appologize": "We apologize for the inconvenience",
+    "message": "Error message",
+    "restart": "Restart",
+    "restartTitle": "Restart the app",
+    "restartMessage": "After restart the app local storage will be cleared"
+  },
+  "errors": {
+    "parseLS": "Failed to parse value from local storage",
+    "saveLS": "Failed to save value to local storage",
+    "fetch": "Failed to fetch data",
+    "parseResponseJson": "Failed to parse response as a JSON",
+    "parseResponseText": "Failed to parse response as a TEXT",
+    "unknown": "Unknown error",
+    "changeTheme": "Failed to change theme",
+    "changeLocale": "Failed to change locale",
+    "login": "Failed to login",
+    "signUp": "Failed to sign up",
+    "urlInvalid": "URL is invalid",
+    "serverNoResponse": "No response from server",
+    "generatingCode": "Error generating code",
+    "addingHeader": "Error adding header",
+    "editingHeader": "Error editing header",
+    "savingHeader": "Error saving header",
+    "deletingHeader": "Error deleting header",
+    "savingVariable": "Error saving variable",
+    "deletingVariable": "Error deleting variable",
+    "parseBody": "Error parsing body in the editor"
   }
 }

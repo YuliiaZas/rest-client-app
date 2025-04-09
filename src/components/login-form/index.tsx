@@ -76,7 +76,7 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
 
       router.push('/client/GET');
     } catch {
-      addNotification(new AppError('Failed to login'));
+      addNotification(new AppError('login'));
     }
   };
 
@@ -97,9 +97,7 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
         });
       }
     } catch {
-      addNotification({
-        message: `Failed to ${isSignUp ? 'sign up' : 'login'}`,
-      });
+      addNotification({ message: isSignUp ? 'signUp' : 'login' });
     }
   };
 

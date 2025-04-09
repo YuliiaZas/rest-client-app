@@ -1,8 +1,8 @@
 'use client';
 
-import { Main } from '@/views';
 import styles from './error.module.scss';
-import { Button } from '@/components';
+import { Button, Translated } from '@/components';
+import { useTranslations } from 'next-intl';
 
 export default function Error({
   error,
@@ -15,24 +15,29 @@ export default function Error({
     localStorage.clear();
     reset();
   }
+  const t = useTranslations('error');
 
   return (
-    <Main>
-      <div className={styles.error__container}>
-        <h1>Oops, some error happened.</h1>
-        <h3>We&apos;re apologise.</h3>
-        <p className="p2">Error message:</p>
-        <code className={styles.error__code}>{error.message}</code>
-        <Button
-          buttonType="primary"
-          onClick={resetApp}
-          text="Restart"
-          title="Restart the app"
-        />
-        <p className="p4">
-          After restart the app local storage will be cleared.
-        </p>
-      </div>
-    </Main>
+    <div className={styles.error__container}>
+      <h1>
+        <Translated scope="error" text="title" />
+      </h1>
+      <h3>
+        <Translated scope="error" text="appologize" />.
+      </h3>
+      <p className="p2">
+        <Translated scope="error" text="message" />:
+      </p>
+      <code className={styles.error__code}>{error.message}</code>
+      <Button
+        buttonType="primary"
+        onClick={resetApp}
+        text={t('restart')}
+        title={t('restartTitle')}
+      />
+      <p className="p4">
+        <Translated scope="error" text="restartMessage" />.
+      </p>
+    </div>
   );
 }

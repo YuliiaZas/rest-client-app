@@ -43,7 +43,9 @@ export default function History() {
 
   return (
     <div className={styles.history}>
-      <h1 className={styles.history__title}>{t('title')}</h1>
+      <h1 className={styles.history__title}>
+        <Translated scope="history" text="title" />
+      </h1>
 
       {sortedHistory.length ? (
         <Table data={sortedHistory}>
@@ -78,8 +80,8 @@ export default function History() {
         <>
           <div className={styles.history__empty}>
             <p className={styles.history__message}>
-              {t('empty')}.<br />
-              {t('emptyAction')}:
+              <Translated scope="history" text="empty" />.<br />
+              <Translated scope="history" text="emptyAction" />:
             </p>
           </div>
           <Link

@@ -30,7 +30,7 @@ export const fetchData = async (
         method !== 'OPTIONS' ? requestOptions : undefined
       );
     } catch {
-      throw new ApiError('Failed to fetch data');
+      throw new ApiError('fetch');
     }
 
     if (method === 'HEAD') {
@@ -47,7 +47,7 @@ export const fetchData = async (
         jsonString = JSON.stringify(json);
       }
     } catch {
-      throw new AppError('Failed to parse response as a JSON');
+      throw new AppError('parseResponseJson');
     }
 
     try {
@@ -56,7 +56,7 @@ export const fetchData = async (
         jsonString = JSON.stringify({ text });
       }
     } catch {
-      throw new AppError('Failed to parse response as a TEXT');
+      throw new AppError('parseResponseText');
     }
 
     return { status: response.status, body: jsonString };
@@ -65,7 +65,7 @@ export const fetchData = async (
       throw error;
     }
 
-    const message = error instanceof Error ? error.message : 'Unknown error';
+    const message = error instanceof Error ? error.message : 'unknown';
     throw new AppError(message);
   }
 };

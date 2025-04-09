@@ -5,14 +5,18 @@ import { httpStatus } from '@/data';
 import BodyEditor from '../body-editor/body-editor';
 import { ScrollLayout } from '../scroll-layout';
 import styles from './response-view.module.scss';
-import { useTranslations } from 'next-intl';
+import { Translated } from '../translated';
 
 export default function ResponseView() {
   const { response, error } = useClientContext();
-  const t = useTranslations('client');
 
   const ApiResponse = () => {
-    if (!response) return <p>{t('noResponse')}</p>;
+    if (!response)
+      return (
+        <p>
+          <Translated scope="client" text="noResponse" />
+        </p>
+      );
 
     const statusText = httpStatus?.[response.status];
 
@@ -22,10 +26,15 @@ export default function ResponseView() {
           headerChildren={
             <>
               <p>
-                <b>{t('status')}:</b> {response.status} / {statusText}
+                <b>
+                  <Translated scope="client" text="status" />:
+                </b>{' '}
+                {response.status} / {statusText}
               </p>
               <p>
-                <b>{t('body')}:</b>
+                <b>
+                  <Translated scope="client" text="body" />:
+                </b>
               </p>
             </>
           }
@@ -40,9 +49,13 @@ export default function ResponseView() {
     if (!error) return null;
     return (
       <>
-        <p className="p1">{t('notSendRequest')}</p>
+        <p className="p1">
+          <Translated scope="client" text="notSendRequest" />
+        </p>
         <p>
-          <b>{t('reason')}:</b>
+          <b>
+            <Translated scope="client" text="reason" />:
+          </b>
           {error.message}
         </p>
       </>

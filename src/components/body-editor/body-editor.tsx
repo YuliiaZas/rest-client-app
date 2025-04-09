@@ -36,7 +36,7 @@ export default function BodyEditor({ readOnly, body }: RequestOptions) {
         setFormattedJson(formatted);
       }
     } catch {
-      addNotification({ message: 'JSON parsing in the body editor' });
+      addNotification({ message: 'parseBody' });
     }
   }, [body, readOnly]);
 
