@@ -1,15 +1,11 @@
-import { cleanup, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { Icon, IconProps } from './icon';
 
 describe('Icon component', () => {
   const defaultProps: IconProps = {
     iconName: 'planet',
   };
-
-  beforeEach(() => {
-    cleanup();
-  });
 
   it('renders with default size and no text', () => {
     render(<Icon {...defaultProps} />);

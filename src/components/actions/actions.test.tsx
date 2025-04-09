@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Actions } from './actions';
 
 describe('Actions', () => {
@@ -10,7 +10,6 @@ describe('Actions', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    cleanup();
     saveMock = vi.fn();
     cancelMock = vi.fn();
     editMock = vi.fn();
