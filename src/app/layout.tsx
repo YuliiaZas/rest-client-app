@@ -3,8 +3,8 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 import '../styles/global.scss';
 import { Notification, Spinner } from '@/components';
-import { NextAuthProvider } from '@/app/providers';
-import { AppProvider } from '@/context/app-context';
+import { Providers } from '@/app/providers';
+import { ErrorBoundary } from './error-boudary';
 
 export async function generateMetadata() {
   const metadataTranslations: Record<string, Record<string, string>> = {
@@ -36,16 +36,16 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className="light-theme">
-        <NextIntlClientProvider>
-          <Suspense fallback={<Spinner />}>
-            <NextAuthProvider>
-              <AppProvider>
+        <ErrorBoundary>
+          <NextIntlClientProvider>
+            <Suspense fallback={<Spinner />}>
+              <Providers>
                 <Notification />
                 {children}
-              </AppProvider>
-            </NextAuthProvider>
-          </Suspense>
-        </NextIntlClientProvider>
+              </Providers>
+            </Suspense>
+          </NextIntlClientProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );
