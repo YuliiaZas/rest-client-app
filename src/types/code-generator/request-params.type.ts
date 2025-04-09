@@ -6,4 +6,5 @@ export interface IRequestParams {
   headers: Headers;
   body?: Record<string, unknown> | string;
   language: SupportedLanguages;
+  unsupportedErrorMessage?: string;
 }

@@ -61,7 +61,7 @@ export function ClientProvider({ children, params }: ClientProviderProps) {
 export const useClientContext = (): ClientContextType => {
   const context = useContext(ClientContext);
   if (!context) {
-    throw new Error('useAppContext must be used within an AppProvider');
+    throw new Error('useClientContext must be used within an ClientContext');
   }
   return context;
 };

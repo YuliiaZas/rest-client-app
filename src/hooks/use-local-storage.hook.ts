@@ -1,3 +1,4 @@
+import { AppError } from '@/entites';
 import { useEffect, useState } from 'react';
 
 export type UseLocalStorageArgs<T> = {
@@ -34,14 +35,19 @@ export function useLocalStorage<T>({
     if (value === null) return null;
     try {
       const parsedValue = JSON.parse(value);
-      if (Array.isArray(defaultValue) && !Array.isArray(parsedValue)) {
-        window.localStorage.removeItem(key);
-        return null;
+      if (
+        (Array.isArray(defaultValue) && !Array.isArray(parsedValue)) ||
+        (!Array.isArray(defaultValue) && Array.isArray(parsedValue))
+      ) {
+        throw new AppError('wrongTypeLS');
       }
       return parsedValue;
-    } catch (e) {
-      console.error('Error while parsing localStorage value', e);
-      return null;
+    } catch (error: unknown) {
+      if (error instanceof AppError) {
+        throw error;
+      }
+
+      throw new AppError('parseLS');
     }
   }
 
@@ -49,8 +55,8 @@ export function useLocalStorage<T>({
     if (typeof window === 'undefined') return;
     try {
       window.localStorage.setItem(key, JSON.stringify(newValue));
-    } catch (error) {
-      console.error('Error while setting value to localStorage', error);
+    } catch {
+      throw new AppError('saveLS');
     }
     setCurrentValue(newValue);
   }

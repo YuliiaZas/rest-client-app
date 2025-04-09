@@ -39,6 +39,10 @@ export default tseslint.config(
           varsIgnorePattern: '^_',
         },
       ],
+      '@typescript-eslint/no-extraneous-class': [
+        'error',
+        { allowStaticOnly: true },
+      ],
     },
     settings: {
       react: {

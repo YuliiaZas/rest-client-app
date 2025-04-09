@@ -3,13 +3,16 @@ import { IRequestParams } from '@/types';
 import codegen from 'postman-code-generators';
 import { HeaderDefinition, Request, RequestBody } from 'postman-collection';
 
-export async function generateCodeSnippet(
-  params: IRequestParams
-): Promise<string> {
-  const { method, url, headers, body, language } = params;
-
+export async function generateCodeSnippet({
+  method,
+  url,
+  headers,
+  body,
+  language,
+  unsupportedErrorMessage = 'Unsupported language',
+}: IRequestParams): Promise<string> {
   if (!supportedLanguages[language]) {
-    throw new Error(`Unsupported language: ${language}`);
+    throw new Error(`${unsupportedErrorMessage}: ${language}`);
   }
 
   const { name, variant } = supportedLanguages[language];

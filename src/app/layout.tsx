@@ -3,8 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 import '../styles/global.scss';
 import { Notification, Spinner } from '@/components';
-import { NextAuthProvider } from '@/app/providers';
-import { AppProvider } from '@/context/app-context';
+import { Providers } from '@/app/providers';
 
 export async function generateMetadata() {
   const metadataTranslations: Record<string, Record<string, string>> = {
@@ -38,12 +37,10 @@ export default async function RootLayout({
       <body className="light-theme">
         <NextIntlClientProvider>
           <Suspense fallback={<Spinner />}>
-            <NextAuthProvider>
-              <AppProvider>
-                <Notification />
-                {children}
-              </AppProvider>
-            </NextAuthProvider>
+            <Providers>
+              <Notification />
+              {children}
+            </Providers>
           </Suspense>
         </NextIntlClientProvider>
       </body>
