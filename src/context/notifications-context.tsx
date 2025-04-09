@@ -4,6 +4,7 @@ import {
   createContext,
   ReactNode,
   useCallback,
+  useContext,
   useEffect,
   useState,
 } from 'react';
@@ -53,4 +54,14 @@ export const NotificationsProvider = ({
       {children}
     </NotificationsContext.Provider>
   );
+};
+
+export const useNotificationsContext = (): INotificationsContext => {
+  const context = useContext(NotificationsContext);
+  if (!context) {
+    throw new Error(
+      'useNotificationsContext must be used within an NotificationsContext'
+    );
+  }
+  return context;
 };

@@ -1,11 +1,11 @@
 'use client';
 
 import { InputWithVariables } from '@/components';
-import { NotificationsContext, useClientContext } from '@/context';
+import { useNotificationsContext, useClientContext } from '@/context';
 import { useAppContext } from '@/context/app-context';
 import { IHeader } from '@/types';
 import { getSearchParams, updateUrl } from '@/utils';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Actions } from '..';
 import { Button } from '../button';
@@ -23,7 +23,7 @@ export default function Headers() {
   });
   const [editableHeader, setEditableHeader] = useState<IHeader | null>(null);
   const { variables } = useAppContext();
-  const { addNotification } = useContext(NotificationsContext);
+  const { addNotification } = useNotificationsContext();
   const { url, method, body, headers, setHeaders, setHeaderParams } =
     useClientContext();
   const t = useTranslations('headers');

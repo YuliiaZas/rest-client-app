@@ -1,12 +1,6 @@
 'use client';
 import { useTranslations } from 'next-intl';
-import {
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-  useTransition,
-} from 'react';
+import { useCallback, useMemo, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, ErrorMessage, Input, Spinner } from '@/components';
@@ -26,7 +20,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { firebaseSignup } from '@/utils';
 import { AppError } from '@/entites';
-import { NotificationsContext } from '@/context';
+import { useNotificationsContext } from '@/context';
 
 interface LoginFormProps {
   isSignUp?: boolean;
@@ -37,7 +31,7 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
   const [loginError, setLoginError] = useState<string>('');
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const { addNotification } = useContext(NotificationsContext);
+  const { addNotification } = useNotificationsContext();
 
   const fields = useMemo(
     () =>

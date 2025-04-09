@@ -1,15 +1,22 @@
 'use client';
 
-import { NotificationsContext, useClientContext } from '@/context';
-import { useAppContext } from '@/context/app-context';
+import {
+  useAppContext,
+  useClientContext,
+  useNotificationsContext,
+} from '@/context';
 import {
   SupportedLanguages,
   supportedLanguagesOptions,
 } from '@/data/supported-languages';
-import { formatHeaders, isValidURL, replaceVariables } from '@/utils';
-import { generateCodeSnippet } from '@/utils/generate-code-snippet';
+import {
+  formatHeaders,
+  isValidURL,
+  replaceVariables,
+  generateCodeSnippet,
+} from '@/utils';
 import { useTranslations } from 'next-intl';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { atomOneLight, CodeBlock } from 'react-code-blocks';
 import { Button } from '../button';
 import { Dropdown } from '../dropdown';
@@ -21,7 +28,7 @@ export default function CodeGenerator() {
   const [language, setLanguage] = useState<SupportedLanguages>('curl');
   const [code, setCode] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const { addNotification } = useContext(NotificationsContext);
+  const { addNotification } = useNotificationsContext();
   const t = useTranslations('client');
   const tErrors = useTranslations('errors');
 

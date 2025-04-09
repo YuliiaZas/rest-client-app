@@ -1,12 +1,11 @@
 'use client';
 
 import styles from './notification.module.scss';
-import { useContext } from 'react';
-import { NotificationsContext } from '@/context';
+import { useNotificationsContext } from '@/context';
 import { Translated } from '../translated';
 
 export function Notification() {
-  const { notifications } = useContext(NotificationsContext);
+  const { notifications } = useNotificationsContext();
   const latestNotification = notifications[notifications.length - 1];
 
   if (!latestNotification) return null;
