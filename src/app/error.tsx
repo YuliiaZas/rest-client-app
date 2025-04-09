@@ -28,7 +28,13 @@ export default function Error({
       <p className="p2">
         <Translated scope="error" text="message" />:
       </p>
-      <code className={styles.error__code}>{error.message}</code>
+      <code className={styles.error__code}>
+        <Translated
+          scope="errors"
+          text={error.message}
+          showRawTextByDefault={true}
+        />
+      </code>
       <Button
         buttonType="primary"
         onClick={resetApp}

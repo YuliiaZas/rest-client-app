@@ -50,6 +50,7 @@ export default function CodeGenerator() {
         headers: formatHeaders(updatedHeaders, appDefaultHeaders),
         body: updatedBody ? JSON.parse(updatedBody) : null,
         language,
+        unsupportedErrorMessage: tErrors('generatingCodeUnsupported'),
       });
 
       setCode(snippet || tErrors('generatingCode'));
