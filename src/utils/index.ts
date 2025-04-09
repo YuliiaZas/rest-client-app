@@ -9,3 +9,4 @@ export { updateUrl } from './update-url';
 export * from './variable-utils';
 export * from './firebase';
 export { defaultAlProtocol } from './default-al-protocol';
+export * from './logger';

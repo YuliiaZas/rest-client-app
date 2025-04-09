@@ -24,5 +24,21 @@
     font-family: monospace;
 
     @include border-default();
+
+  }
+
+  &__code_box {
+    width: 60%;
+    max-height: 150px;
+    overflow: auto;
+
+    .error__code {
+      width: 100%;
+      word-wrap: break-word;
+      display: inline-block;
+      text-align: left;
+      font-size: small;
+      padding: 0.5rem;
+    }
   }
 }

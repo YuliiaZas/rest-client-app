@@ -9,6 +9,6 @@ export async function isValidURL(url: string) {
     if (e instanceof ValidationError) {
       return false;
     }
-    console.error(e);
+    throw e;
   }
 }

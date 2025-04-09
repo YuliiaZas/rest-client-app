@@ -8,6 +8,7 @@ import {
 import { initializeApp } from 'firebase/app';
 import { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { Logger } from './logger';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -26,7 +27,9 @@ export async function firebaseLogin(email: string, password: string) {
     const response = await signInWithEmailAndPassword(auth, email, password);
     return response.user;
   } catch (err) {
-    console.error(err);
+    Logger.error(
+      `Firebase login error: ${err instanceof Error ? err.message : 'Unknown error'}`
+    );
   }
 }
 
@@ -39,7 +42,9 @@ export async function firebaseSignup(email: string, password: string) {
     );
     return response.user;
   } catch (err) {
-    console.error(err);
+    Logger.error(
+      `Firebase signup error: ${err instanceof Error ? err.message : 'Unknown error'}`
+    );
   }
 }
 

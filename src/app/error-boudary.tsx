@@ -10,6 +10,7 @@ interface ErrorBoundaryProps {
 interface ErrorBoundaryState {
   hasError: boolean;
   error: Error | null;
+  errorInfo: React.ErrorInfo | null;
 }
 
 export class ErrorBoundary extends Component<
@@ -18,23 +19,19 @@ export class ErrorBoundary extends Component<
 > {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false, error: null };
+    this.state = { hasError: false, error: null, errorInfo: null };
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { hasError: true, error };
+    return { hasError: true, error, errorInfo: null };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error(
-      'Global error in root layout caught by ErrorBoundary:',
-      error,
-      errorInfo
-    );
+    this.setState({ hasError: true, error, errorInfo });
   }
 
   reset = () => {
-    this.setState({ hasError: false, error: null });
+    this.setState({ hasError: false, error: null, errorInfo: null });
   };
 
   render() {
@@ -47,6 +44,16 @@ export class ErrorBoundary extends Component<
           <code className={styles.error__code}>
             {this.state.error?.message}
           </code>
+          {this.state.errorInfo && (
+            <>
+              <p className="p2">Error info:</p>
+              <div className={styles.error__code_box}>
+                <code className={styles.error__code}>
+                  {this.state.errorInfo.componentStack}
+                </code>
+              </div>
+            </>
+          )}
           <button className="button button_primary" onClick={this.reset}>
             Try to Restart
           </button>
