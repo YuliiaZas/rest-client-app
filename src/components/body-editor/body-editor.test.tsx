@@ -14,19 +14,17 @@ import {
 } from '@/data';
 
 mockContext();
+
 vi.mock('@monaco-editor/react', () => ({
-  default: vi.fn(({ value, onChange }) => {
-    return (
-      <div>
-        <input
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          data-testid="monaco-editor-mock"
-        />
-      </div>
-    );
-  }),
+  default: vi.fn(({ value, onChange }) => (
+    <input
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      data-testid="monaco-editor-mock"
+    />
+  )),
 }));
+
 vi.mock('@/utils', () => ({
   updateUrl: vi.fn(),
 }));
