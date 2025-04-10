@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Dropdown } from './index';
 
@@ -36,7 +36,7 @@ describe('Dropdown', () => {
       />
     );
     const button = screen.getByRole('button');
-    await button.click();
+    await waitFor(() => button.click());
     expect(screen.getAllByText('Item 1').length).toBe(2);
     expect(screen.getByText('Item 2')).toBeDefined();
   });
@@ -50,9 +50,9 @@ describe('Dropdown', () => {
       />
     );
     const button = screen.getByRole('button');
-    await button.click();
+    await waitFor(() => button.click());
     expect(screen.getAllByText(/Item/).length).toBe(3);
-    await button.click();
+    await waitFor(() => button.click());
     expect(screen.getAllByText(/Item/).length).toBe(1);
   });
 
@@ -65,10 +65,29 @@ describe('Dropdown', () => {
       />
     );
     const button = screen.getByRole('button');
-    await button.click();
+    await waitFor(() => button.click());
     const item = screen.getByText('Item 2');
     expect(item).toBeDefined();
-    await item.click();
+    await waitFor(() => item.click());
     expect(selectOptionMock).toHaveBeenCalledWith('item2');
+  });
+
+  it('closes dropdown with Escape key', async () => {
+    render(
+      <Dropdown
+        items={itemsMock}
+        selectedItem="item1"
+        selectOption={selectOptionMock}
+      />
+    );
+    const button = screen.getByRole('button');
+    await waitFor(() => button.click());
+
+    await waitFor(() =>
+      fireEvent.keyDown(document.activeElement || document.body, {
+        key: 'Escape',
+      })
+    );
+    expect(screen.queryByText('Item 2')).toBeNull();
   });
 });
