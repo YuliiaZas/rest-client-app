@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react';
 
-type Notification = { message: string };
+export type Notification = { message: string };
 
 interface INotificationsContext {
   notifications: Notification[];

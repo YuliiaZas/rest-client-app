@@ -1,4 +1,5 @@
 import { Mock, vi } from 'vitest';
+import { Notification } from '@/context';
 
 export const mockUseAppContext = { variables: { key: 'value' } };
 
