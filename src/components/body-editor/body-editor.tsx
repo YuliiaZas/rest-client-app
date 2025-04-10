@@ -60,7 +60,7 @@ export default function BodyEditor({ readOnly, body }: RequestOptions) {
     setLanguage(value);
     setAppDefaultHeaders([
       ...defaultHeaders,
-      language === bodyLanguages[0]
+      value === bodyLanguages[0]
         ? contentTypeHeaderJson
         : contentTypeHeaderText,
     ]);

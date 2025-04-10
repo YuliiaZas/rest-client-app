@@ -3,13 +3,14 @@ import { Mock, vi } from 'vitest';
 export const mockUseAppContext = { variables: { key: 'value' } };
 
 export const setBody: Mock = vi.fn();
+export const setAppDefaultHeaders: Mock = vi.fn();
 export const mockUseClientContext = {
   url: 'https://example.com',
   body: '{"key":"value"}',
   method: 'POST',
   headers: { Authorization: 'Bearer token' },
   appDefaultHeaders: { 'Content-Type': 'application/json' },
-  setAppDefaultHeaders: vi.fn(),
+  setAppDefaultHeaders,
   setBody,
 };
 
