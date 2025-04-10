@@ -1,12 +1,8 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import { Button } from './index';
 
 describe('Button', () => {
-  beforeEach(() => {
-    cleanup();
-  });
-
   it('renders with default props', () => {
     render(<Button />);
     const button = screen.getByRole('button');

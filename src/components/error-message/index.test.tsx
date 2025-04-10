@@ -1,11 +1,10 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ErrorMessage } from './index';
 
 describe('ErrorMessage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    cleanup();
   });
 
   it('renders the error message when errorMessage is provided', () => {

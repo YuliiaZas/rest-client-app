@@ -6,13 +6,12 @@ import { setUserLocale } from '@/services/locale';
 import { Dropdown, Icon } from '@/components';
 import styles from './locale-switcher.module.scss';
 import { AppError } from '@/entites';
-import { NotificationsContext } from '@/context';
-import { useContext } from 'react';
+import { useNotificationsContext } from '@/context';
 
 export function LocaleSwitcher() {
   const locale = useLocale();
   const t = useTranslations('root');
-  const { addNotification } = useContext(NotificationsContext);
+  const { addNotification } = useNotificationsContext();
 
   async function onLocaleChange(value: string) {
     try {

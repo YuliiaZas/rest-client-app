@@ -1,4 +1,5 @@
-import { vi } from 'vitest';
+import { beforeEach, vi } from 'vitest';
+import { cleanup } from '@testing-library/react';
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
@@ -15,3 +16,7 @@ vi.mock('next/image', () => ({
 vi.mock('next-intl', () => ({
   useTranslations: vi.fn().mockReturnValue((v: string) => v),
 }));
+
+beforeEach(() => {
+  cleanup();
+});

@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { Dropdown } from './index';
 
@@ -12,7 +12,6 @@ describe('Dropdown', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    cleanup();
     selectOptionMock = vi.fn();
   });
 

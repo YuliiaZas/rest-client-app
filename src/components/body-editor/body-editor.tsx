@@ -1,4 +1,4 @@
-import { NotificationsContext, useClientContext } from '@/context';
+import { useNotificationsContext, useClientContext } from '@/context';
 import {
   BodyLanguage,
   bodyLanguages,
@@ -9,7 +9,7 @@ import {
 import { DropdownItem } from '@/entites';
 import { updateUrl } from '@/utils';
 import Editor, { Monaco } from '@monaco-editor/react';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dropdown } from '../dropdown';
 import { ScrollLayout } from '../scroll-layout';
 
@@ -27,7 +27,7 @@ export default function BodyEditor({ readOnly, body }: RequestOptions) {
     { value: bodyLanguages[0], label: 'JSON' },
     { value: bodyLanguages[1], label: 'String' },
   ];
-  const { addNotification } = useContext(NotificationsContext);
+  const { addNotification } = useNotificationsContext();
 
   useEffect(() => {
     try {
@@ -60,7 +60,7 @@ export default function BodyEditor({ readOnly, body }: RequestOptions) {
     setLanguage(value);
     setAppDefaultHeaders([
       ...defaultHeaders,
-      language === bodyLanguages[0]
+      value === bodyLanguages[0]
         ? contentTypeHeaderJson
         : contentTypeHeaderText,
     ]);

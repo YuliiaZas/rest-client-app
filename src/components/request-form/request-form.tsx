@@ -1,7 +1,7 @@
 'use client';
 
 import { fetchData } from '@/api';
-import { NotificationsContext } from '@/context';
+import { useNotificationsContext } from '@/context';
 import { useAppContext } from '@/context/app-context';
 import { useClientContext } from '@/context/client-context';
 import { Method } from '@/data';
@@ -14,7 +14,7 @@ import {
   replaceVariables,
   updateUrl,
 } from '@/utils';
-import { FormEvent, useContext } from 'react';
+import { FormEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from '../button';
 import { InputWithVariables } from '../input-with-variables';
@@ -37,7 +37,7 @@ export function RequestForm() {
   } = useClientContext();
   const { variables } = useAppContext();
   const t = useTranslations('client');
-  const { addNotification } = useContext(NotificationsContext);
+  const { addNotification } = useNotificationsContext();
   const [history, setHistory] = useLocalStorage<IHistory[]>({
     key: 'history',
     defaultValue: [],

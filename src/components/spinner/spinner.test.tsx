@@ -1,12 +1,8 @@
-import { cleanup, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { Spinner } from './spinner';
 
 describe('Spinner', () => {
-  beforeEach(() => {
-    cleanup();
-  });
-
   it('renders the default spinner', () => {
     render(<Spinner />);
     const spinner = screen.getByRole('status');

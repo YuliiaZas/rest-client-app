@@ -10,7 +10,7 @@ import {
   Translated,
 } from '@/components';
 import type { IVariable } from '@/types';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslations } from 'next-intl';
 import { FieldErrors, useForm } from 'react-hook-form';
@@ -18,7 +18,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import styles from './variables.module.scss';
 import { useAppContext } from '@/context/app-context';
 import { getFormScehma, VariableForm } from './variables.entities';
-import { NotificationsContext } from '@/context';
+import { useNotificationsContext } from '@/context';
 
 export default function Variables() {
   const { variables, variablesStore, setVariablesStore } = useAppContext();
@@ -28,7 +28,7 @@ export default function Variables() {
   );
   const t = useTranslations('variables');
   const tActions = useTranslations('actions');
-  const { addNotification } = useContext(NotificationsContext);
+  const { addNotification } = useNotificationsContext();
 
   useEffect(() => {
     setIsLoading(false);

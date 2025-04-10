@@ -1,11 +1,8 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Footer } from './footer';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 describe('Footer', () => {
-  beforeEach(() => {
-    cleanup();
-  });
   it('should render a GitHub link with correct href and text', () => {
     render(<Footer />);
     const githubLink = screen.getByRole('link', { name: /GitHub/i });

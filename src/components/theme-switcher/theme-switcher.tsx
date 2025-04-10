@@ -4,13 +4,12 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components';
 import { useTheme } from '@/hooks';
 import { AppError, AppTheme } from '@/entites';
-import { NotificationsContext } from '@/context';
-import { useContext } from 'react';
+import { useNotificationsContext } from '@/context';
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
   const t = useTranslations('root');
-  const { addNotification } = useContext(NotificationsContext);
+  const { addNotification } = useNotificationsContext();
 
   function toggleTheme() {
     try {
