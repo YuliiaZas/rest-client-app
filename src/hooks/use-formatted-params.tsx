@@ -5,13 +5,16 @@ import { useSearchParams } from 'next/navigation';
 import { use, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+const SPACE_CHAR = '%20';
+
 export const useFormattedParams = (params: Promise<{ params: string[] }>) => {
   const [defaultMethod, encodedUrl, encodedBody] = use(params).params;
   const [method, setMethod] = useState<Method>(
     (defaultMethod.toUpperCase() as Method) ?? 'GET'
   );
+  const isEncodedUrl = encodedUrl && encodedUrl !== SPACE_CHAR;
   const decodedUrl = useMemo(
-    () => decodeBase64(encodedUrl ?? ''),
+    () => decodeBase64(isEncodedUrl ? encodedUrl : ''),
     [encodedUrl]
   );
   const [url, setUrl] = useState(decodedUrl);

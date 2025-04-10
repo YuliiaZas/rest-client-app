@@ -13,6 +13,10 @@ export const getUpdatedUrl = (
     customUrl += `/${base64Url}`;
   }
 
+  if (!url && body) {
+    customUrl += `/ `;
+  }
+
   if (body) {
     const base64Body = encodeBase64(body);
     customUrl += `/${base64Body}`;
