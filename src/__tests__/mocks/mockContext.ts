@@ -1,5 +1,5 @@
+import { INotification } from '@/types';
 import { Mock, vi } from 'vitest';
-import { Notification } from '@/context';
 
 export const mockUseAppContext = { variables: { key: 'value' } };
 
@@ -15,7 +15,7 @@ export const mockUseClientContext = {
   setBody,
 };
 
-export const notifications: Notification[] = [];
+export const notifications: INotification[] = [];
 export const addNotification: Mock = vi.fn((notification) =>
   notifications.push(notification)
 );

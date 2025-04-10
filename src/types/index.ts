@@ -5,3 +5,4 @@ export type { IHistory } from './history.type';
 export type { IRequest } from './request.type';
 export type { IResponse } from './response.type';
 export type { IVariable, Variables } from './variable.type';
+export type { INotification } from './notification.type';

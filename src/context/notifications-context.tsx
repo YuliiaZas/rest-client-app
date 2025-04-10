@@ -1,5 +1,6 @@
 'use client';
 
+import { INotification } from '@/types/notification.type';
 import {
   createContext,
   ReactNode,
@@ -9,11 +10,9 @@ import {
   useState,
 } from 'react';
 
-export type Notification = { message: string };
-
 interface INotificationsContext {
-  notifications: Notification[];
-  addNotification: (notification: Notification) => void;
+  notifications: INotification[];
+  addNotification: (notification: INotification) => void;
 }
 
 export const NotificationsContext = createContext<INotificationsContext>({
@@ -30,7 +29,7 @@ export const NotificationsProvider = ({
     INotificationsContext['notifications']
   >([]);
 
-  const addNotification = useCallback((notification: Notification) => {
+  const addNotification = useCallback((notification: INotification) => {
     setNotifications((prevNotifications) => [
       ...prevNotifications,
       notification,
