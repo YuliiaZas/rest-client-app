@@ -87,7 +87,7 @@ export const InputWithVariables = ({
         onScroll={syncScroll}
         onMouseMove={onMouseMoveHandler}
       />
-      <div ref={ref} className={styles.input__view}>
+      <div ref={ref} className={styles.input__view} role="note">
         {currentValue.split(variableRegExp).map((part, i) => {
           if (part.match(variableRegExp) === null) {
             return <span key={i}>{part}</span>;

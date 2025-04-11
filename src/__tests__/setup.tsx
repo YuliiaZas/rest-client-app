@@ -17,6 +17,13 @@ vi.mock('next-intl', () => ({
   useTranslations: vi.fn().mockReturnValue((v: string) => v),
 }));
 
+vi.mock('firebase/auth', () => ({
+  createUserWithEmailAndPassword: vi.fn(),
+  getAuth: vi.fn(),
+  signInWithEmailAndPassword: vi.fn(),
+  signOut: vi.fn(),
+}));
+
 beforeEach(() => {
   cleanup();
 });
