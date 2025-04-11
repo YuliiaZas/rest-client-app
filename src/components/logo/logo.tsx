@@ -6,7 +6,7 @@ export function Logo({
   weight?: number;
 }) {
   return (
-    <div style={{ width: size, height: size }}>
+    <div role="img" style={{ width: size, height: size }}>
       <svg
         width="100%"
         height="100%"
