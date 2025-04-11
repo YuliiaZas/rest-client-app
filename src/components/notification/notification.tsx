@@ -2,7 +2,7 @@
 
 import styles from './notification.module.scss';
 import { useNotificationsContext } from '@/context';
-import { Translated } from '../translated';
+import { Translated } from '@/components';
 
 export function Notification() {
   const { notifications } = useNotificationsContext();
@@ -10,7 +10,7 @@ export function Notification() {
 
   if (!latestNotification) return null;
   return (
-    <div className={styles.notification__container}>
+    <div className={styles.notification__container} role={'alert'}>
       <span>
         <Translated
           scope="errors"
