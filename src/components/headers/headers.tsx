@@ -1,18 +1,23 @@
 'use client';
 
-import { InputWithVariables } from '@/components';
-import { useNotificationsContext, useClientContext } from '@/context';
-import { useAppContext } from '@/context/app-context';
+import {
+  Actions,
+  Button,
+  Column,
+  Input,
+  InputWithVariables,
+  ScrollLayout,
+  Table,
+} from '@/components';
+import {
+  useNotificationsContext,
+  useClientContext,
+  useAppContext,
+} from '@/context';
 import { IHeader } from '@/types';
 import { getSearchParams, updateUrl } from '@/utils';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Actions } from '..';
-import { Button } from '../button';
-import { Column } from '../column';
-import { Input } from '../input';
-import { ScrollLayout } from '../scroll-layout';
-import { Table } from '../table';
 import { useTranslations } from 'next-intl';
 
 export default function Headers() {

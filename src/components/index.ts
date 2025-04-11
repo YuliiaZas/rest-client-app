@@ -21,3 +21,4 @@ export { Spinner } from './spinner';
 export { Table } from './table/table';
 export { ThemeSwitcher } from './theme-switcher';
 export { Translated } from './translated';
+export { ScrollLayout } from './scroll-layout';
