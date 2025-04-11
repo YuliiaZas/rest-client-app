@@ -48,7 +48,7 @@ export default function History() {
       </h1>
 
       {sortedHistory.length ? (
-        <Table data={sortedHistory}>
+        <Table data={sortedHistory} hasStickySpace={true}>
           <Column
             title={t('method')}
             type="data"

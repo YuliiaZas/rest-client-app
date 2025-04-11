@@ -1,10 +1,12 @@
 import { Children, isValidElement, ReactNode } from 'react';
 import styles from './table.module.scss';
+import clsx from 'clsx';
 
 type TableProps<T extends { id: string }> = {
   data: T[];
   children: ReactNode;
   hasFooter?: boolean;
+  hasStickySpace?: boolean;
 };
 
 type TableChild<T> = {
@@ -18,6 +20,7 @@ export function Table<T extends { id: string }>({
   data,
   children,
   hasFooter = false,
+  hasStickySpace = false,
 }: TableProps<T>) {
   const columns = Children.toArray(children)
     .filter(isValidElement)
@@ -33,7 +36,12 @@ export function Table<T extends { id: string }>({
 
   return (
     <table className={styles.table}>
-      <thead className={styles.table__header}>
+      <thead
+        className={clsx(
+          styles.table__header,
+          hasStickySpace && styles['table__header_sticky-space']
+        )}
+      >
         <tr className={styles.table__row}>
           {columns.map((column) => (
             <th
@@ -59,7 +67,12 @@ export function Table<T extends { id: string }>({
         ))}
       </tbody>
       {hasFooter && (
-        <tfoot>
+        <tfoot
+          className={clsx(
+            styles.table__footer,
+            hasStickySpace && styles['table__footer_sticky-space']
+          )}
+        >
           <tr className={styles.table__row}>
             {columns.map((column, index) => (
               <td key={index} className={styles[`table__row-${column.type}`]}>
