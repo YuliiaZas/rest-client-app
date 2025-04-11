@@ -1,5 +1,6 @@
 import { beforeEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
+import { ReactNode } from 'react';
 
 vi.mock('next/navigation', () => ({
   useRouter: vi.fn(),
@@ -27,6 +28,15 @@ vi.mock('firebase/auth', () => ({
   getAuth: vi.fn(),
   signInWithEmailAndPassword: vi.fn(),
   signOut: vi.fn(),
+}));
+
+vi.mock('next-auth/react', () => ({
+  useSession: vi.fn(),
+  signOut: vi.fn(),
+}));
+
+vi.mock('next/link', () => ({
+  default: ({ children }: { children: ReactNode }) => <>{children}</>,
 }));
 
 beforeEach(() => {
