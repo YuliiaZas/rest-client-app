@@ -1,7 +1,7 @@
 import { object, ObjectSchema, ref, string } from 'yup';
 import { FORM_FIELD, SignInForm, SignUpForm } from './login-form.entities';
 
-export const characterSet = '!@#$%^&*(),.?:{}|<>/~';
+export const characterSet = '!@#$%^&*(),.?:{}|<>/~_+=-`';
 export const passwordLength = 8;
 
 export const signInFormSchema: ObjectSchema<SignInForm> = object({
