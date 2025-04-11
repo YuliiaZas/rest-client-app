@@ -145,7 +145,11 @@ export default function Variables() {
       <h1 className={styles.variables__title}>
         <Translated scope="variables" text="title" />
       </h1>
-      <Table data={Object.values(variablesStore)} hasFooter={true}>
+      <Table
+        data={Object.values(variablesStore)}
+        hasFooter={true}
+        hasStickySpace={true}
+      >
         <Column
           title={t('variableName')}
           type="data"

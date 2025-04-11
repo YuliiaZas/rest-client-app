@@ -4,6 +4,14 @@
 
   &__header {
     font-size: 1.25rem;
+    position: sticky;
+    top: 0;
+    background-color: var(--background-content);
+    z-index: 10;
+
+    &_sticky-space {
+      top: 3rem;
+    }
   }
 
   &__header,
@@ -33,6 +41,16 @@
       &-actions {
         width: 100px;
       }
+    }
+  }
+
+  &__footer {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--background-content);
+
+    &_sticky-space {
+      bottom: 1rem;
     }
   }
 }
