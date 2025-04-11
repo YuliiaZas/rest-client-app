@@ -7,7 +7,7 @@
     position: sticky;
     top: 0;
     background-color: var(--background-content);
-    z-index: 10;
+    z-index: var(--z-index-table);
 
     &_sticky-space {
       top: 3rem;
