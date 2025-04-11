@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import RootLoading from '../app/loading';
+import RootLoading from './loading';
 
 describe('Root loading', () => {
   it('renders the default spinner', () => {

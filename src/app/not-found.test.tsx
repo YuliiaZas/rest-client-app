@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render } from '@testing-library/react';
-import NotFound from '../app/not-found';
+import NotFound from './not-found';
 
 describe('NotFound', () => {
   beforeEach(() => {

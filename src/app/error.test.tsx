@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import Error from '../app/error';
+import Error from './error';
 
 vi.mock('./Button', () => ({
   Button: ({ onClick, text }: { onClick: () => void; text: string }) => (
