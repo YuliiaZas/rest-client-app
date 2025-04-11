@@ -14,7 +14,12 @@ vi.mock('next/image', () => ({
 }));
 
 vi.mock('next-intl', () => ({
-  useTranslations: vi.fn().mockReturnValue((v: string) => v),
+  useTranslations: vi.fn().mockImplementation(() => {
+    const t = (key: string) => key;
+    t.has = vi.fn((key: string) => key);
+
+    return t;
+  }),
 }));
 
 vi.mock('firebase/auth', () => ({
