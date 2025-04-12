@@ -3,7 +3,11 @@ import { cleanup } from '@testing-library/react';
 import { ReactNode } from 'react';
 
 vi.mock('next/navigation', () => ({
-  useRouter: vi.fn(),
+  useRouter: vi.fn().mockReturnValue({
+    push: vi.fn(),
+    replace: vi.fn(),
+    back: vi.fn(),
+  }),
   useSearchParams: vi.fn(),
 }));
 
