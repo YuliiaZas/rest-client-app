@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 import styles from './history.module.scss';
 import { useTranslations } from 'next-intl';
 
-export function History() {
+export default function History() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [history] = useLocalStorage<IHistory[]>({

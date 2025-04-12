@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { RestClient } from '@/views';
+import RestClient from '@/views/client';
 
 vi.mock('@/context', () => ({
   useAppContext: vi.fn().mockReturnValue({ variables: { key: 'value' } }),

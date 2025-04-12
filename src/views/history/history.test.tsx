@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { History } from '@/views';
+import History from '@/views/history';
 import { useLocalStorage } from '@/hooks';
 
 vi.mock('@/hooks', () => {
