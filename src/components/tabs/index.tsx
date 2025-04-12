@@ -18,7 +18,7 @@ export default function Tabs({
   onTabChange,
 }: TabsProps) {
   return (
-    <div className={styles.tabs__wrapper}>
+    <div role="tab" className={styles.tabs__wrapper}>
       <div className={styles.tabs}>
         {tabs.map((tab) => (
           <button
