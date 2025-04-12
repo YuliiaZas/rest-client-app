@@ -35,13 +35,11 @@ export function useLocalStorage<T>({
     if (value === null) return null;
     try {
       const parsedValue = JSON.parse(value);
-      if (
-        (Array.isArray(defaultValue) && !Array.isArray(parsedValue)) ||
-        (!Array.isArray(defaultValue) && Array.isArray(parsedValue))
-      ) {
+      // FIXME: AppContext use object as a default value
+      if (!Array.isArray(parsedValue)) {
         throw new AppError('wrongTypeLS');
       }
-      return parsedValue;
+      return parsedValue as T;
     } catch (error: unknown) {
       if (error instanceof AppError) {
         throw error;
