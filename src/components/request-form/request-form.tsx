@@ -1,9 +1,11 @@
 'use client';
 
 import { fetchData } from '@/api';
-import { useNotificationsContext } from '@/context';
-import { useAppContext } from '@/context/app-context';
-import { useClientContext } from '@/context/client-context';
+import {
+  useAppContext,
+  useClientContext,
+  useNotificationsContext,
+} from '@/context';
 import { Method } from '@/data';
 import { ApiError, AppError } from '@/entites';
 import { useLocalStorage } from '@/hooks';
@@ -17,7 +19,7 @@ import {
 import { FormEvent } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from '../button';
-import { InputWithVariables } from '../input-with-variables';
+import { InputWithVariables } from '@/components';
 import MethodSelector from '../method-selector/method-selector';
 import styles from './request-form.module.scss';
 import { useTranslations } from 'next-intl';
@@ -109,7 +111,11 @@ export function RequestForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles['request-form']}>
+    <form
+      role="form"
+      onSubmit={handleSubmit}
+      className={styles['request-form']}
+    >
       <div className={styles['request-form__controls']}>
         <div className={styles['request-form__method']}>
           <MethodSelector value={method} onChange={handleChangeMethod} />
