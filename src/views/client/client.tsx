@@ -6,7 +6,7 @@ import ResponseView from '@/components/response-view/response-view';
 import { Main } from '@/views';
 import styles from './client.module.scss';
 
-export default function RestClient() {
+export function RestClient() {
   return (
     <Main>
       <div className={styles.container}>
