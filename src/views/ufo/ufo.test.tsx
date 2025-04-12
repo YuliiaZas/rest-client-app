@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render } from '@testing-library/react';
-import NotFound from './not-found';
+import NotFound from '@/app/not-found';
 
-describe('NotFound', () => {
+describe('UFO Component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
