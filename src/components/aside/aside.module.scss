@@ -7,6 +7,18 @@
   &__root {
     @include colors('light');
     width: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1ch;
+    padding: 4rem 2rem 1rem;
+    align-items: center;
+
+    & div:first-child {
+      color: var(--text-light);
+    }
+
+    color: var(--text-main);
   }
 
   &__client {
