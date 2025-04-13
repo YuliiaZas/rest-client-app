@@ -100,5 +100,18 @@
     "savingVariable": "Error saving variable",
     "deletingVariable": "Error deleting variable",
     "parseBody": "Error parsing body in the editor"
+  },
+  "dashboard": {
+    "welcomeBack": "Welcome Back",
+    "client-title": "Client",
+    "client-description": "A robust tool for API testing and development.",
+    "history-title": "History",
+    "history-description": "View and manage the history of your executed API requests, including methods, URLs, and dates.",
+    "variables-title": "Variables",
+    "variables-description": "Define and manage key-value pairs for dynamic request customization. Simplify your API testing by reusing variables in multiple requests with ease."
+  },
+  "welcome": {
+    "title": "Welcome!",
+    "developers": "Developers"
   }
 }
