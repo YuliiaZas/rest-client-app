@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Aside, Footer, Header } from '@/components';
+import { Aside, Footer, Header, Logo, Translated } from '@/components';
 import '@/styles/global.scss';
 import styles from './layout.module.scss';
 import { getServerSession } from 'next-auth';
@@ -14,14 +14,19 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
 
   if (session) {
-    // TODO: correct URL for redirect
-    redirect('/client/GET');
+    redirect('/dashboard');
   }
 
   return (
     <div className={styles.root}>
       <Aside type="root">
-        <h2>Aside</h2>
+        <Logo size="10rem" />
+        <p className="p1">
+          <Translated scope="root" text="title" />
+        </p>
+        <p className="p2">
+          <Translated scope="root" text="description" />
+        </p>
       </Aside>
       <div className={styles.content}>
         <Header />

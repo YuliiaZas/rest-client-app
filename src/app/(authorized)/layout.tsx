@@ -20,6 +20,9 @@ export default async function ClientLayout({ children }: ClientLayoutProps) {
   return (
     <div className={styles.client}>
       <Aside type="client">
+        <Link href="/dashboard">
+          <Icon iconName="house" size="3rem" />
+        </Link>
         <Link href="/client/GET">
           <Icon iconName="planet" size="3rem" />
         </Link>
