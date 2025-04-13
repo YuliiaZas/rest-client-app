@@ -1,8 +1,13 @@
 import { beforeEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
+import { ReactNode } from 'react';
 
 vi.mock('next/navigation', () => ({
-  useRouter: vi.fn(),
+  useRouter: vi.fn().mockReturnValue({
+    push: vi.fn(),
+    replace: vi.fn(),
+    back: vi.fn(),
+  }),
   useSearchParams: vi.fn(),
 }));
 
@@ -14,7 +19,12 @@ vi.mock('next/image', () => ({
 }));
 
 vi.mock('next-intl', () => ({
-  useTranslations: vi.fn().mockReturnValue((v: string) => v),
+  useTranslations: vi.fn().mockImplementation(() => {
+    const t = (key: string) => key;
+    t.has = vi.fn((key: string) => key);
+
+    return t;
+  }),
 }));
 
 vi.mock('firebase/auth', () => ({
@@ -22,6 +32,15 @@ vi.mock('firebase/auth', () => ({
   getAuth: vi.fn(),
   signInWithEmailAndPassword: vi.fn(),
   signOut: vi.fn(),
+}));
+
+vi.mock('next-auth/react', () => ({
+  useSession: vi.fn(),
+  signOut: vi.fn(),
+}));
+
+vi.mock('next/link', () => ({
+  default: ({ children }: { children: ReactNode }) => <>{children}</>,
 }));
 
 beforeEach(() => {

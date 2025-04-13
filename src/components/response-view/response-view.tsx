@@ -3,9 +3,8 @@
 import { useClientContext } from '@/context';
 import { httpStatus } from '@/data';
 import BodyEditor from '../body-editor/body-editor';
-import { ScrollLayout } from '../scroll-layout';
+import { ScrollLayout, Translated } from '@/components';
 import styles from './response-view.module.scss';
-import { Translated } from '../translated';
 
 export default function ResponseView() {
   const { response, error } = useClientContext();
