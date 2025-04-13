@@ -68,7 +68,7 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
         return;
       }
 
-      router.push('/client/GET');
+      router.push('/dashboard');
     } catch {
       addNotification(new AppError('login'));
     }
