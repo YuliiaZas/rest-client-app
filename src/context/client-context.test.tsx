@@ -1,9 +1,15 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { ClientProvider, useClientContext } from './client-context';
 import { contentTypeHeaderJson, defaultHeaders } from '@/data';
 import { ApiError } from '@/entites';
 import { IHeader } from '@/types';
+import {
+  appDefaultHeadersMock,
+  bodyMock,
+  headersMock,
+  urlMock,
+} from '@/__tests__/mocks/mockContext';
+import { ClientProvider, useClientContext } from './client-context';
 
 let url = 'https://default.com';
 let body = '';
@@ -25,14 +31,6 @@ vi.mock('@/hooks', () => ({
     setHeaderParams: vi.fn((value: string) => (headerParams = value)),
   })),
 }));
-
-const defaultHeaderMock = {
-  id: '1',
-  key: 'Authorization',
-  value: 'Bearer token',
-};
-const headerMock = { id: '2', key: 'Custom-Header', value: 'CustomValue' };
-const bodyMock = '{"key":"value"}';
 
 describe('ClientContext', () => {
   const TestComponent = () => {
@@ -67,10 +65,7 @@ describe('ClientContext', () => {
           {JSON.stringify(appDefaultHeaders)}
         </p>
         <p data-testid="error">{error?.message}</p>
-        <button
-          data-testid="update-url"
-          onClick={() => setUrl('https://example.com')}
-        >
+        <button data-testid="update-url" onClick={() => setUrl(urlMock)}>
           Update URL
         </button>
         <button data-testid="update-body" onClick={() => setBody(bodyMock)}>
@@ -81,7 +76,7 @@ describe('ClientContext', () => {
         </button>
         <button
           data-testid="update-headers"
-          onClick={() => setHeaders([headerMock])}
+          onClick={() => setHeaders(headersMock)}
         >
           Update Headers
         </button>
@@ -99,7 +94,7 @@ describe('ClientContext', () => {
         </button>
         <button
           data-testid="update-appDefaultHeaders"
-          onClick={() => setAppDefaultHeaders([defaultHeaderMock])}
+          onClick={() => setAppDefaultHeaders(appDefaultHeadersMock)}
         >
           Update App Default Headers
         </button>
@@ -151,11 +146,11 @@ describe('ClientContext', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByTestId('url').textContent).toBe('https://example.com');
+      expect(screen.getByTestId('url').textContent).toBe(urlMock);
       expect(screen.getByTestId('body').textContent).toBe(bodyMock);
       expect(screen.getByTestId('method').textContent).toBe('POST');
       expect(screen.getByTestId('headers').textContent).toBe(
-        JSON.stringify([headerMock])
+        JSON.stringify(headersMock)
       );
       expect(screen.getByTestId('headerParams').textContent).toBe(
         'Authorization: Bearer token'
@@ -164,7 +159,7 @@ describe('ClientContext', () => {
         JSON.stringify({ status: 200, body: bodyMock })
       );
       expect(screen.getByTestId('appDefaultHeaders').textContent).toBe(
-        JSON.stringify([defaultHeaderMock])
+        JSON.stringify(appDefaultHeadersMock)
       );
       expect(screen.getByTestId('error').textContent).toBe('Network error');
     });

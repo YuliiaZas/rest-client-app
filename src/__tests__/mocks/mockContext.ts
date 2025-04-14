@@ -16,9 +16,11 @@ export const headersMock = [
 export const appDefaultHeadersMock = [
   { id: 'context', key: 'Content-Type', value: 'application/json' },
 ];
+export const bodyMock = '{"key":"value"}';
+export const urlMock = 'https://example.com';
 export const mockUseClientContext = {
-  url: 'https://example.com',
-  body: '{"key":"value"}',
+  url: urlMock,
+  body: bodyMock,
   method: 'POST',
   headers: headersMock,
   appDefaultHeaders: appDefaultHeadersMock,
