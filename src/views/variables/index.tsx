@@ -16,9 +16,8 @@ import { useTranslations } from 'next-intl';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styles from './variables.module.scss';
-import { useAppContext } from '@/context/app-context';
+import { useAppContext, useNotificationsContext } from '@/context';
 import { getFormScehma, VariableForm } from './variables.entities';
-import { useNotificationsContext } from '@/context';
 
 export default function Variables() {
   const { variables, variablesStore, setVariablesStore } = useAppContext();
