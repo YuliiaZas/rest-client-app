@@ -15,7 +15,8 @@
     "format:fix": "prettier --write .",
     "prepare": "husky && chmod ug+x .husky/*",
     "test": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:run": "vitest --run"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
