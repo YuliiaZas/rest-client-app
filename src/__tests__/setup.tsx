@@ -40,7 +40,9 @@ vi.mock('next-auth/react', () => ({
 }));
 
 vi.mock('next/link', () => ({
-  default: ({ children }: { children: ReactNode }) => <>{children}</>,
+  default: ({ children, href }: { children: ReactNode; href: string }) => (
+    <a href={href}>{children}</a>
+  ),
 }));
 
 beforeEach(() => {
