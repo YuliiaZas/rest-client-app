@@ -1,0 +1,25 @@
+.greeting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-direction: column;
+  padding: 1rem 0 3rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  place-items: stretch center;
+  gap: 1rem;
+
+  & > div > div {
+    cursor: pointer;
+    height: 100%;
+  }
+
+  & > div > div > [role='img'] {
+    color: var(--secondary-light);
+    margin: 1rem auto;
+  }
+}

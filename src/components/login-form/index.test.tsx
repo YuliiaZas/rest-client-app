@@ -51,7 +51,7 @@ vi.mock('@/components', async (importOriginal) => {
 
 const email = 'test@example.com';
 const password = 'Pas1-Pas2';
-const redirectUrl = '/client/GET';
+const redirectUrl = '/dashboard';
 const credentials = {
   redirect: false,
   email,
