@@ -3,6 +3,9 @@ import { Mock, vi } from 'vitest';
 
 export const mockUseAppContext = { variables: { key: 'value' } };
 
+export const setError: Mock = vi.fn();
+export const setUrl: Mock = vi.fn();
+export const setResponse: Mock = vi.fn();
 export const setBody: Mock = vi.fn();
 export const setHeaders: Mock = vi.fn();
 export const setHeaderParams: Mock = vi.fn();
@@ -13,9 +16,11 @@ export const headersMock = [
 export const appDefaultHeadersMock = [
   { id: 'context', key: 'Content-Type', value: 'application/json' },
 ];
+export const bodyMock = '{"key":"value"}';
+export const urlMock = 'https://example.com';
 export const mockUseClientContext = {
-  url: 'https://example.com',
-  body: '{"key":"value"}',
+  url: urlMock,
+  body: bodyMock,
   method: 'POST',
   headers: headersMock,
   appDefaultHeaders: appDefaultHeadersMock,
@@ -23,6 +28,9 @@ export const mockUseClientContext = {
   setHeaderParams,
   setAppDefaultHeaders,
   setBody,
+  setResponse,
+  setUrl,
+  setError,
 };
 
 export const notifications: INotification[] = [];
