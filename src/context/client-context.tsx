@@ -27,7 +27,7 @@ type ClientContextType = {
 
 type ClientProviderProps = {
   children: ReactNode;
-  params: Promise<{ params: string[] }>;
+  params: { params: string[] };
 };
 
 const ClientContext = createContext<ClientContextType | undefined>(undefined);

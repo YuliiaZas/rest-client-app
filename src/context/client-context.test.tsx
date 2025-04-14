@@ -110,7 +110,7 @@ describe('ClientContext', () => {
 
   it('provides default context values', () => {
     render(
-      <ClientProvider params={Promise.resolve({ params: [] })}>
+      <ClientProvider params={{ params: [] }}>
         <TestComponent />
       </ClientProvider>
     );
@@ -129,7 +129,7 @@ describe('ClientContext', () => {
 
   it('updates context values', async () => {
     render(
-      <ClientProvider params={Promise.resolve({ params: [] })}>
+      <ClientProvider params={{ params: [] }}>
         <TestComponent />
       </ClientProvider>
     );

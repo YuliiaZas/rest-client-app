@@ -2,15 +2,15 @@ import { Method } from '@/data';
 import { IHeader } from '@/types';
 import { decodeBase64 } from '@/utils';
 import { useSearchParams } from 'next/navigation';
-import { use, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 const SPACE_CHAR = '%20';
 
-export const useFormattedParams = (params: Promise<{ params: string[] }>) => {
-  const [defaultMethod, encodedUrl, encodedBody] = use(params).params;
+export const useFormattedParams = (params: { params: string[] }) => {
+  const [defaultMethod, encodedUrl, encodedBody] = params.params;
   const [method, setMethod] = useState<Method>(
-    (defaultMethod.toUpperCase() as Method) ?? 'GET'
+    (defaultMethod?.toUpperCase() as Method) ?? 'GET'
   );
   const isEncodedUrl = encodedUrl && encodedUrl !== SPACE_CHAR;
   const decodedUrl = useMemo(

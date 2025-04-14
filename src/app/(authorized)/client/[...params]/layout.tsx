@@ -19,5 +19,5 @@ export default async function ClientWithParamsLayout({
     redirect('/client/GET');
   }
 
-  return <ClientProvider params={params}>{children}</ClientProvider>;
+  return <ClientProvider params={await params}>{children}</ClientProvider>;
 }
