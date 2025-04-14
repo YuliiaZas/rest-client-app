@@ -3,6 +3,9 @@ import { Mock, vi } from 'vitest';
 
 export const mockUseAppContext = { variables: { key: 'value' } };
 
+export const setError: Mock = vi.fn();
+export const setUrl: Mock = vi.fn();
+export const setResponse: Mock = vi.fn();
 export const setBody: Mock = vi.fn();
 export const setHeaders: Mock = vi.fn();
 export const setHeaderParams: Mock = vi.fn();
@@ -23,6 +26,9 @@ export const mockUseClientContext = {
   setHeaderParams,
   setAppDefaultHeaders,
   setBody,
+  setResponse,
+  setUrl,
+  setError,
 };
 
 export const notifications: INotification[] = [];
