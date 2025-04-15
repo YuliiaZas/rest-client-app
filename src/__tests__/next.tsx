@@ -8,6 +8,7 @@ vi.mock('next/navigation', () => ({
     back: vi.fn(),
   }),
   useSearchParams: vi.fn().mockReturnValue(new URLSearchParams()),
+  usePathname: vi.fn(),
 }));
 
 vi.mock('next/image', () => ({

@@ -7,8 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 const SPACE_CHAR = '%20';
 
-export const useFormattedParams = (params: { params: string[] }) => {
-  const [defaultMethod, encodedUrl, encodedBody] = params.params;
+export const useFormattedParams = (params: string[]) => {
+  const [defaultMethod, encodedUrl, encodedBody] = params || [];
   const [method, setMethod] = useState<Method>(
     (defaultMethod?.toUpperCase() as Method) ?? 'GET'
   );
