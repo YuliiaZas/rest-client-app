@@ -12,10 +12,12 @@ export default async function ClientWithParamsLayout({
   children,
   params,
 }: ClientWithParamsLayoutProps) {
-  const method = (await params).params[0];
-  const isMethodCorrect = httpMethods.includes(method.toUpperCase() as Method);
+  console.log('ClientWithParamsLayout', await params);
+  const method = (await params).params?.[0];
+  const isMethodCorrect =
+    method && httpMethods.includes(method.toUpperCase() as Method);
 
-  if (!isMethodCorrect) {
+  if (!isMethodCorrect || !method) {
     redirect('/client/GET');
   }
 
