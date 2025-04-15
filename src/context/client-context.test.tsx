@@ -1,8 +1,7 @@
-import { render, screen, act, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { act, render, screen, waitFor } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { contentTypeHeaderJson, defaultHeaders } from '@/data';
 import { ApiError } from '@/entites';
-import { IHeader } from '@/types';
 import {
   appDefaultHeadersMock,
   bodyMock,
@@ -10,27 +9,6 @@ import {
   urlMock,
 } from '@/__tests__/mocks/mockContext';
 import { ClientProvider, useClientContext } from './client-context';
-
-let url = 'https://default.com';
-let body = '';
-let method = 'GET';
-let headers: IHeader[] = [];
-let headerParams = '';
-
-vi.mock('@/hooks', () => ({
-  useFormattedParams: vi.fn(() => ({
-    url,
-    body,
-    method,
-    headers,
-    headerParams,
-    setUrl: vi.fn((value: string) => (url = value)),
-    setBody: vi.fn((value: string) => (body = value)),
-    setMethod: vi.fn((value: string) => (method = value)),
-    setHeaders: vi.fn((value: IHeader[]) => (headers = value)),
-    setHeaderParams: vi.fn((value: string) => (headerParams = value)),
-  })),
-}));
 
 describe('ClientContext', () => {
   const TestComponent = () => {
