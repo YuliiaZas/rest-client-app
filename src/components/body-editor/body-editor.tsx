@@ -86,7 +86,6 @@ export default function BodyEditor({ readOnly, body }: RequestOptions) {
         defaultLanguage={language}
         value={formattedJson}
         onChange={(value) => handleChangeBody(value as string)}
-        key={language}
         options={{
           readOnly,
           selectOnLineNumbers: true,
