@@ -14,32 +14,35 @@
     }
   }
 
-  &__header,
-  &__row {
-    &-data,
-    &-actions {
-      text-align: center;
-      padding: 0.5rem;
-    }
+  &__cell {
+    text-align: center;
+    padding: 0.5rem;
+    vertical-align: middle;
+    word-break: break-word;
 
     &-data {
       width: 40%;
-      word-break: break-word;
-      vertical-align: middle;
+
+      &_secondary {
+        width: 20%;
+      }
     }
 
     &-actions {
       width: 10%;
-      vertical-align: baseline;
     }
 
     @media screen and (max-width: 1078px) {
       &-data {
-        width: calc(100% - 100px) / 2;
+        width: calc((100% - 120px) / 2);
+  
+        &_secondary {
+          width: 120px;
+        }
       }
 
       &-actions {
-        width: 100px;
+        width: 120px;
       }
     }
   }
@@ -51,6 +54,10 @@
 
     &_sticky-space {
       bottom: 1rem;
+    }
+
+    .table__cell {
+      vertical-align: top;
     }
   }
 }

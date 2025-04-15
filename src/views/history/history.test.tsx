@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import History from '@/views/history';
 import { useLocalStorage } from '@/hooks';
+import { IHistory } from '@/types';
 
 describe('History', () => {
   it('renders the empty state when there is no history', () => {
@@ -12,21 +13,21 @@ describe('History', () => {
   });
 
   it('renders the table with history data', () => {
-    const mockHistory = [
+    const mockHistory: IHistory[] = [
       {
-        key: '1',
+        id: '1',
         method: 'GET',
         url: '/test',
         date: 1694102400000,
-        headers: {},
-        body: null,
+        headers: [],
+        body: '',
       },
       {
-        key: '2',
+        id: '2',
         method: 'POST',
         url: '/submit',
         date: 1694188800000,
-        headers: {},
+        headers: [],
         body: '{"key":"value"}',
       },
     ];
