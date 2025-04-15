@@ -4,7 +4,8 @@
     "description": "RS School React course 2025 Q1 final task",
     "theme": "Switch theme",
     "language": "Switch language",
-    "signout": "Logout"
+    "signout": "Logout",
+    "close": "Close"
   },
   "login": {
     "email": "Email",
@@ -102,6 +103,7 @@
     "parseBody": "Error parsing body in the editor"
   },
   "dashboard": {
+    "dashboard-title": "Home",
     "welcomeBack": "Welcome Back",
     "client-title": "Client",
     "client-description": "A robust tool for API testing and development.",

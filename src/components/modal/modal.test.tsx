@@ -2,6 +2,12 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Modal } from './modal';
 
+vi.mock('@/components', () => ({
+  Button: ({ onClick, icon }: { onClick: () => void; icon: string }) => (
+    <button onClick={onClick}>{icon}</button>
+  ),
+}));
+
 describe('Modal Component', () => {
   it('renders the modal with title and children', () => {
     render(
@@ -22,7 +28,7 @@ describe('Modal Component', () => {
       </Modal>
     );
 
-    const closeButton = screen.getByText('×');
+    const closeButton = screen.getByText('close');
     closeButton.click();
 
     expect(mockAction).toHaveBeenCalledTimes(1);

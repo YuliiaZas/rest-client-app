@@ -4,7 +4,8 @@
     "description": "RS School React course 2025 Q1 финальное задание",
     "theme": "Сменить тему",
     "language": "Сменить язык",
-    "signout": "Выйти"
+    "signout": "Выйти",
+    "close": "Закрыть"
   },
   "login": {
     "email": "Электронная почта",
@@ -102,6 +103,7 @@
     "parseBody": "Ошибка парсинга тела в редакторе"
   },
   "dashboard": {
+    "dashboard-title": "Главная",
     "welcomeBack": "С возвращением",
     "client-title": "Клиент",
     "client-description": "Надежный инструмент для тестирования и разработки API.",
