@@ -2,19 +2,15 @@ import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import DashboardPage from './index';
 import { Session } from 'next-auth';
-
-vi.mock('next-auth/react', () => ({
-  useSession: vi.fn().mockReturnValue({
-    status: 'authenticated',
-    update: vi.fn(),
-    data: { user: { email: 'user@example.com' } } as Session,
-  }),
-  signOut: vi.fn(),
-}));
+import { useSession } from 'next-auth/react';
 
 describe('DashboardPage', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.mocked(useSession).mockReturnValue({
+      status: 'authenticated',
+      update: vi.fn(),
+      data: { user: { email: 'user@example.com' } } as Session,
+    });
   });
 
   it('renders the greeting section correctly', () => {
