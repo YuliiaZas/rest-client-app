@@ -1,20 +1,10 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
 import { Nav } from './nav';
 import { signOut, useSession } from 'next-auth/react';
 import { Session } from 'next-auth';
 
-vi.mock('next-auth/react', () => ({
-  useSession: vi.fn(),
-  signOut: vi.fn(),
-}));
-
 describe('Nav', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-    cleanup();
-  });
-
   it('renders sign out button when user is authenticated', () => {
     vi.mocked(useSession).mockReturnValue({
       status: 'authenticated',

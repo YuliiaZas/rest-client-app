@@ -1,25 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import History from '@/views/history';
 import { useLocalStorage } from '@/hooks';
 
-vi.mock('@/hooks', () => {
-  return {
-    useLocalStorage: vi.fn(),
-  };
-});
-
 describe('History', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it.skip('renders spinner while loading', () => {
-    render(<History />);
-    const spinner = screen.getByRole('status');
-    expect(spinner).toBeDefined();
-  });
-
   it('renders the empty state when there is no history', () => {
     vi.mocked(useLocalStorage).mockReturnValue([[], vi.fn()]);
     render(<History />);

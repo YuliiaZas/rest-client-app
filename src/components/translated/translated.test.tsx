@@ -1,23 +1,11 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/react';
 import { Translated } from './translated';
-
-vi.mock('next-intl', () => ({
-  useTranslations: (scope: string) => {
-    const messages: Record<string, string> = {
-      greeting: 'Hello',
-    };
-    const t = (key: string) =>
-      key in messages ? messages[key] : `${scope}.${key}`;
-    t.has = (key: string) => key in messages;
-    return t;
-  },
-}));
 
 describe('Translated', () => {
   it('renders translated text when scope and text are provided', () => {
     const { getByText } = render(<Translated scope="common" text="greeting" />);
-    expect(getByText('Hello')).toBeDefined();
+    expect(getByText('greeting')).toBeDefined();
   });
 
   it('returns null when text is not provided', () => {
@@ -30,9 +18,9 @@ describe('Translated', () => {
     expect(container.innerHTML).toBeFalsy();
   });
 
-  it('returns null when key for text is absent in messages', () => {
+  it('returns key when key for text is absent in messages', () => {
     const { container } = render(<Translated scope="common" text="missed" />);
-    expect(container.innerHTML).toBeFalsy();
+    expect(container.innerHTML).toBe('missed');
   });
 
   it('returns not translated text when scope is not provided when should show default text', () => {

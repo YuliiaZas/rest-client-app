@@ -3,10 +3,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Notification } from '@/components';
 import { useNotificationsContext } from '@/context';
 
-vi.mock('@/context', () => ({
-  useNotificationsContext: vi.fn(),
-}));
-
 describe('Notification', () => {
   beforeEach(() => {
     vi.useFakeTimers();

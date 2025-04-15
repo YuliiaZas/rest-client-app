@@ -1,8 +1,7 @@
-import { describe, it, beforeEach, vi, expect } from 'vitest';
-import { render, fireEvent } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { fireEvent, render } from '@testing-library/react';
 import {
   addNotification,
-  mockContext,
   setAppDefaultHeaders,
   setBody,
 } from '@/__tests__/mocks/mockContext';
@@ -12,8 +11,6 @@ import {
   contentTypeHeaderText,
   defaultHeaders,
 } from '@/data';
-
-mockContext();
 
 vi.mock('@monaco-editor/react', () => ({
   default: vi.fn(({ value, onChange }) => (

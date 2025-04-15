@@ -1,17 +1,17 @@
 import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
-import { render, fireEvent, waitFor } from '@testing-library/react';
-import { addNotification, mockContext } from '@/__tests__/mocks/mockContext';
-import { isValidURL, generateCodeSnippet } from '@/utils';
+import { fireEvent, render, waitFor } from '@testing-library/react';
+import { addNotification } from '@/__tests__/mocks/mockContext';
+import { generateCodeSnippet, isValidURL } from '@/utils';
 import CodeGenerator from './code-generator';
 
-mockContext();
-
 const mockGeneratedCode = 'Generated Code';
+
 const mockReplacedVariables = {
   updatedUrl: 'https://example.com',
   updatedBody: '{"key":"value"}',
   updatedHeaders: { Authorization: 'Bearer token' },
 };
+
 vi.mock('@/utils', () => ({
   formatHeaders: vi.fn(),
   isValidURL: vi.fn(() => true),

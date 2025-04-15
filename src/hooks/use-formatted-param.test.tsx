@@ -1,11 +1,7 @@
-import { renderHook, act } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { act, renderHook } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 import { bodyMock, headersMock, urlMock } from '@/__tests__/mocks/mockContext';
 import { useFormattedParams } from './use-formatted-params';
-
-vi.mock('next/navigation', () => ({
-  useSearchParams: vi.fn().mockReturnValue(new URLSearchParams()),
-}));
 
 describe('useFormattedParams', () => {
   it('provides default values', () => {

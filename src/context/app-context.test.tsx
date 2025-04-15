@@ -1,17 +1,9 @@
-import { render, screen, act } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { act, render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { useSession } from 'next-auth/react';
-import { useLocalStorage } from '@/hooks';
 import { Session } from 'next-auth';
-import { useAppContext, AppProvider } from './app-context';
-
-vi.mock('next-auth/react', () => ({
-  useSession: vi.fn(() => ({
-    status: 'loading',
-    update: vi.fn(),
-    data: {} as Session,
-  })),
-}));
+import { AppProvider, useAppContext } from './app-context';
+import { useLocalStorage } from '@/hooks';
 
 vi.mock('@/components', () => ({
   Spinner: () => <div data-testid="spinner">Loading...</div>,
@@ -22,22 +14,12 @@ const variable = {
   value: '123',
   id: 'id',
 };
+
 const variableInStore = {
   [variable.id]: variable,
 };
 
-vi.mock('@/hooks', () => ({
-  useLocalStorage: vi.fn().mockReturnValue([{}, vi.fn()]),
-}));
-
 describe('AppProvider', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
-  const mockUseSession = vi.mocked(useSession);
-  const mockUseLocalStorage = vi.mocked(useLocalStorage);
-
   const TestComponent = () => {
     const { variables, variablesStore, setVariablesStore } = useAppContext();
 
@@ -56,6 +38,12 @@ describe('AppProvider', () => {
   };
 
   it('renders the spinner when session is loading', () => {
+    vi.mocked(useSession).mockReturnValue({
+      status: 'loading',
+      update: vi.fn(),
+      data: null,
+    });
+
     render(
       <AppProvider>
         <TestComponent />
@@ -66,11 +54,11 @@ describe('AppProvider', () => {
   });
 
   it('provides default context values', () => {
-    mockUseSession.mockImplementation(() => ({
+    vi.mocked(useSession).mockReturnValue({
       status: 'authenticated',
       update: vi.fn(),
       data: {} as Session,
-    }));
+    });
 
     render(
       <AppProvider>
@@ -83,7 +71,7 @@ describe('AppProvider', () => {
   });
 
   it('updates variables when variablesStore changes', () => {
-    mockUseLocalStorage.mockReturnValue([variableInStore, vi.fn()]);
+    vi.mocked(useLocalStorage).mockReturnValue([variableInStore, vi.fn()]);
 
     render(
       <AppProvider>
@@ -98,7 +86,7 @@ describe('AppProvider', () => {
 
   it('calls setVariablesStore when updating variablesStore', () => {
     const setVariablesStoreMock = vi.fn();
-    mockUseLocalStorage.mockReturnValue([{}, setVariablesStoreMock]);
+    vi.mocked(useLocalStorage).mockReturnValue([{}, setVariablesStoreMock]);
 
     render(
       <AppProvider>

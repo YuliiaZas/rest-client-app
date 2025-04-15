@@ -11,7 +11,6 @@ describe('Dropdown', () => {
   let selectOptionMock: () => void;
 
   beforeEach(() => {
-    vi.clearAllMocks();
     selectOptionMock = vi.fn();
   });
 
