@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
-import { Aside, Footer, Header, Icon } from '@/components';
+import { Aside, Footer, Header, NavLink } from '@/components';
+import { navigation } from '@/data';
 import styles from './layout.module.scss';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils';
 import { redirect } from 'next/navigation';
-import Link from 'next/link';
 
 type ClientLayoutProps = {
   children: ReactNode;
@@ -20,18 +20,9 @@ export default async function ClientLayout({ children }: ClientLayoutProps) {
   return (
     <div className={styles.client}>
       <Aside type="client">
-        <Link href="/dashboard">
-          <Icon iconName="house" size="3rem" />
-        </Link>
-        <Link href="/client/GET">
-          <Icon iconName="planet" size="3rem" />
-        </Link>
-        <Link href="/history">
-          <Icon iconName="history" size="3rem" />
-        </Link>
-        <Link href="/variables">
-          <Icon iconName="stack" size="3rem" />
-        </Link>
+        {navigation.map(({ path, icon, title }) => (
+          <NavLink key={path} path={path} icon={icon} title={title} />
+        ))}
       </Aside>
       <div className={styles.content}>
         <Header />

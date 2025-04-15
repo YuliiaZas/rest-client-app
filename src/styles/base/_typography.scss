@@ -65,13 +65,17 @@ body {
     }
   }
 
-  a {
+  a:not(.unstyled) {
     color: var(--link-default);
     text-decoration: underline;
     text-underline-offset: 0.2rem;
 
-    &:hover {
-      color: var(--link-hover);
+    &:hover,
+    &:focus-visible {
+      &,
+      &:visited {
+        color: var(--link-hover);
+      }
     }
 
     &:visited {
@@ -81,6 +85,10 @@ body {
     &:disabled {
       color: var(--link-disabled);
     }
+  }
+
+  a.unstyled {
+    text-decoration: none;
   }
 
   strong,
