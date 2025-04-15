@@ -21,10 +21,10 @@ export default async function RootLayout({
     <div className={styles.root}>
       <Aside type="root">
         <Logo size="10rem" />
-        <p className="p1">
+        <p className="p1 align-center">
           <Translated scope="root" text="title" />
         </p>
-        <p className="p2">
+        <p className="p2 align-center">
           <Translated scope="root" text="description" />
         </p>
       </Aside>

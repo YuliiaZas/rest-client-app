@@ -26,10 +26,11 @@
 }
 
 .developers {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
   gap: 1rem;
-  place-items: stretch center;
 
   & > div > h5 > [role='img'] {
     color: var(--tertiary-main);

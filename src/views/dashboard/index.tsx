@@ -48,8 +48,12 @@ export default function DashboardPage() {
       </div>
       <div className={styles.cards}>
         {cards.map(({ title, description, icon, path }) => (
-          <div key={title} onClick={() => router.push(path)}>
-            <Card>
+          <div
+            className={styles.card}
+            key={title}
+            onClick={() => router.push(path)}
+          >
+            <Card stratchedCard={true}>
               <Icon iconName={icon} size="5rem" />
               <h5>
                 <Translated scope="dashboard" text={title} />
