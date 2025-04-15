@@ -1,21 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { ThemeSwitcher } from '@/components';
 import { useTheme } from '@/hooks';
 import { AppTheme } from '@/entites';
 
-vi.mock('@/hooks', () => ({
-  useTheme: vi.fn().mockReturnValue({
-    theme: 'light',
-    setTheme: vi.fn(),
-  }),
-}));
-
 describe('ThemeSwitcher', () => {
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('renders button with correct title', () => {
     render(<ThemeSwitcher />);
     expect(screen.getByRole('button', { name: 'theme' })).toBeDefined();

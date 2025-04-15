@@ -1,37 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import ResponseView from './response-view';
 import { useClientContext } from '@/context';
 import { UnionErrorType } from '@/entites';
 
-vi.mock('@/context', () => ({
-  useAppContext: vi.fn().mockReturnValue({ variables: { key: 'value' } }),
-  useClientContext: vi.fn(() => ({
-    url: 'https://example.com',
-    body: '{"key":"value"}',
-    method: 'POST',
-    headers: [{ id: 'auth', key: 'Authorization', value: 'Bearer token' }],
-    appDefaultHeaders: [
-      { id: 'context', key: 'Content-Type', value: 'application/json' },
-    ],
-    setHeaders: vi.fn(),
-    setHeaderParams: vi.fn(),
-    setAppDefaultHeaders: vi.fn(),
-    setBody: vi.fn(),
-    setError: vi.fn(),
-    setResponse: vi.fn(),
-  })),
-  useNotificationsContext: vi.fn(() => ({
-    notifications: [],
-    addNotification: vi.fn,
-  })),
-}));
-
 describe('ResponseView', () => {
-  afterEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('renders no response message when there is no response', () => {
     vi.mocked(useClientContext).mockReturnValue({
       response: null,

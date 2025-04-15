@@ -1,13 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import MethodSelector from './method-selector';
 
 describe('MethodSelector', () => {
   const mockOnChange = vi.fn();
-
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
 
   it('renders the dropdown with all HTTP methods', async () => {
     render(<MethodSelector value="GET" onChange={mockOnChange} />);

@@ -1,5 +1,5 @@
-import { render, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { fireEvent, render } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { Header } from './header';
 
 vi.mock('@/components', () => ({
@@ -18,10 +18,6 @@ vi.mock('@/components', () => ({
 }));
 
 describe('Header', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('renders the header with all components', () => {
     const { getByTestId } = render(<Header />);
     expect(getByTestId('logo')).toBeDefined();

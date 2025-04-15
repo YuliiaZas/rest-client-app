@@ -1,18 +1,11 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, Mock, vi } from 'vitest';
 import { setUserLocale } from '@/services/locale';
-import { addNotification, mockContext } from '@/__tests__/mocks/mockContext';
+import { addNotification } from '@/__tests__/mocks/mockContext';
 import { LocaleSwitcher } from './locale-switcher';
-
-mockContext();
 
 vi.mock('@/services/locale', () => ({
   setUserLocale: vi.fn(),
-}));
-
-vi.mock('next-intl', () => ({
-  useLocale: () => 'en',
-  useTranslations: () => (key: string) => key,
 }));
 
 vi.mock('@/components', () => ({

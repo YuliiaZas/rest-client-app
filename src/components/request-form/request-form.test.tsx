@@ -1,19 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import {
-  mockContext,
-  setResponse,
-  setUrl,
-} from '@/__tests__/mocks/mockContext';
+import { describe, expect, it } from 'vitest';
+import { setResponse, setUrl } from '@/__tests__/mocks/mockContext';
 import { RequestForm } from '@/components';
 
-mockContext();
-
 describe('RequestForm', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('renders the form with initial values', () => {
     render(<RequestForm />);
 
