@@ -1,12 +1,8 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/react';
 import NotFound from './not-found';
 
 describe('NotFound', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   it('renders the UFO component', () => {
     const screen = render(<NotFound />);
     const ufo = screen.getByRole('main');

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import Error from './error';
 
 vi.mock('./Button', () => ({
@@ -10,10 +10,6 @@ vi.mock('./Button', () => ({
 
 describe('Error', () => {
   const mockError = { message: 'Test error message' } as Error;
-
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
 
   it('renders error information correctly', () => {
     const mockReset = vi.fn();
