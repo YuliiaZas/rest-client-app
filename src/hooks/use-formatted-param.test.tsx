@@ -5,7 +5,7 @@ import { useFormattedParams } from './use-formatted-params';
 
 describe('useFormattedParams', () => {
   it('provides default values', () => {
-    const { result } = renderHook(() => useFormattedParams({ params: [] }));
+    const { result } = renderHook(() => useFormattedParams([]));
 
     expect(result.current.url).toBe('');
     expect(result.current.body).toBe('');
@@ -15,7 +15,7 @@ describe('useFormattedParams', () => {
   });
 
   it('updates the URL', () => {
-    const { result } = renderHook(() => useFormattedParams({ params: [] }));
+    const { result } = renderHook(() => useFormattedParams([]));
 
     act(() => {
       result.current.setUrl(urlMock);
@@ -25,7 +25,7 @@ describe('useFormattedParams', () => {
   });
 
   it('updates the body', () => {
-    const { result } = renderHook(() => useFormattedParams({ params: [] }));
+    const { result } = renderHook(() => useFormattedParams([]));
 
     act(() => {
       result.current.setBody(bodyMock);
@@ -35,7 +35,7 @@ describe('useFormattedParams', () => {
   });
 
   it('updates the method', () => {
-    const { result } = renderHook(() => useFormattedParams({ params: [] }));
+    const { result } = renderHook(() => useFormattedParams([]));
 
     act(() => {
       result.current.setMethod('POST');
@@ -45,7 +45,7 @@ describe('useFormattedParams', () => {
   });
 
   it('updates the headers', () => {
-    const { result } = renderHook(() => useFormattedParams({ params: [] }));
+    const { result } = renderHook(() => useFormattedParams([]));
 
     act(() => {
       result.current.setHeaders(headersMock);
@@ -55,7 +55,7 @@ describe('useFormattedParams', () => {
   });
 
   it('updates the headerParams', () => {
-    const { result } = renderHook(() => useFormattedParams({ params: [] }));
+    const { result } = renderHook(() => useFormattedParams([]));
 
     act(() => {
       result.current.setHeaderParams('Authorization: Bearer token');
