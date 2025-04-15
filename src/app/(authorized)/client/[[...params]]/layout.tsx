@@ -16,7 +16,7 @@ export default async function ClientWithParamsLayout({
   const isMethodCorrect =
     method && httpMethods.includes(method.toUpperCase() as Method);
 
-  if (!isMethodCorrect || !method) {
+  if (!isMethodCorrect) {
     redirect('/client/GET');
   }
 
