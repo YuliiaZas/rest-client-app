@@ -5,13 +5,17 @@
   gap: 2rem;
   flex-direction: column;
   padding: 1rem 0 3rem;
+  word-break: break-word;
 }
 
 .cards {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  place-items: stretch center;
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
+
+  .card {
+    flex: 1;
+  }
 
   & > div > div {
     cursor: pointer;

@@ -46,7 +46,10 @@ export function Table<T extends { id: string }>({
           {columns.map((column) => (
             <th
               key={column.title}
-              className={styles[`table__row-${column.type}`]}
+              className={clsx(
+                styles.table__cell,
+                styles[`table__cell-${column.type}`]
+              )}
             >
               {column.title}
             </th>
@@ -56,8 +59,14 @@ export function Table<T extends { id: string }>({
       <tbody>
         {data.map((row) => (
           <tr key={row.id} className={styles.table__row}>
-            {columns.map((column, index) => (
-              <td key={index} className={styles[`table__row-${column.type}`]}>
+            {columns.map((column) => (
+              <td
+                key={`${row.id}-${column.title}`}
+                className={clsx(
+                  styles.table__cell,
+                  styles[`table__cell-${column.type}`]
+                )}
+              >
                 {typeof column.body === 'function'
                   ? column.body(row)
                   : column.body}
@@ -74,8 +83,14 @@ export function Table<T extends { id: string }>({
           )}
         >
           <tr className={styles.table__row}>
-            {columns.map((column, index) => (
-              <td key={index} className={styles[`table__row-${column.type}`]}>
+            {columns.map((column) => (
+              <td
+                key={`footer-${column.title}`}
+                className={clsx(
+                  styles.table__cell,
+                  styles[`table__cell-${column.type}`]
+                )}
+              >
                 {column.footer}
               </td>
             ))}

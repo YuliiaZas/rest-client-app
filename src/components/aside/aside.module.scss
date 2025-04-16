@@ -13,12 +13,15 @@
     gap: 1ch;
     padding: 4rem 2rem 1rem;
     align-items: center;
-
-    & div:first-child {
-      color: var(--text-light);
+    
+    @media screen and (max-width: 1078px) {
+      padding-inline: 1rem;
+      width: 10rem;
     }
 
-    color: var(--text-main);
+    p {
+      color: var(--text-main);
+    }
   }
 
   &__client {

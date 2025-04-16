@@ -51,7 +51,7 @@ export default function History() {
         <Table data={sortedHistory} hasStickySpace={true}>
           <Column
             title={t('method')}
-            type="data"
+            type="data_secondary"
             body={(data: IHistory) => <span>{data.method}</span>}
           />
           <Column
@@ -70,7 +70,7 @@ export default function History() {
           />
           <Column
             title={t('date')}
-            type="data"
+            type="data_secondary"
             body={(data: IHistory) => (
               <span>{new Date(data.date).toLocaleDateString('ru-RU')}</span>
             )}

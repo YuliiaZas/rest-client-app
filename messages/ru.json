@@ -17,7 +17,7 @@
     "passwordMismatch": "Пароли не совпадают",
     "signIn": "Войти",
     "signOut": "Выйти",
-    "signUp": "Зарегистрироваться",
+    "signUp": "Регистрация",
     "invalidCredentials": "Неверный адрес эл. почты и/или пароль",
     "loginError": "Ошибка при входе",
     "signUpError": "Ошибка при регистрации"
