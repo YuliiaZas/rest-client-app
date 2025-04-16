@@ -2,41 +2,15 @@
 
 import { Main } from '@/views';
 import { useSession } from 'next-auth/react';
+import clsx from 'clsx';
+import Link from 'next/link';
 import { Card, Icon, Translated } from '@/components';
-
+import { navigation } from '@/data';
 import styles from './dasboard.module.scss';
-import { PhosphorIcons } from '@/components/icons';
-import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
   const { data } = useSession();
-  const router = useRouter();
-
-  const cards: {
-    title: string;
-    description: string;
-    icon: PhosphorIcons;
-    path: string;
-  }[] = [
-    {
-      title: 'client-title',
-      description: 'client-description',
-      icon: 'planet',
-      path: '/client/GET',
-    },
-    {
-      title: 'history-title',
-      description: 'history-description',
-      icon: 'history',
-      path: '/history',
-    },
-    {
-      title: 'variables-title',
-      description: 'variables-description',
-      icon: 'stack',
-      path: '/variables',
-    },
-  ];
+  const cards = navigation.slice(1);
 
   return (
     <Main>
@@ -48,10 +22,10 @@ export default function DashboardPage() {
       </div>
       <div className={styles.cards}>
         {cards.map(({ title, description, icon, path }) => (
-          <div
-            className={styles.card}
+          <Link
+            href={path}
             key={title}
-            onClick={() => router.push(path)}
+            className={clsx(styles.card, 'unstyled')}
           >
             <Card stratchedCard={true}>
               <Icon iconName={icon} size="5rem" />
@@ -62,7 +36,7 @@ export default function DashboardPage() {
                 <Translated scope="dashboard" text={description} />
               </p>
             </Card>
-          </div>
+          </Link>
         ))}
       </div>
     </Main>

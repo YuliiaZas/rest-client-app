@@ -84,12 +84,8 @@ export default function History() {
               <Translated scope="history" text="emptyAction" />:
             </p>
           </div>
-          <Link
-            href="/client/GET"
-            className={styles.history__link}
-            prefetch={true}
-          >
-            <Translated scope="client" text="title" />
+          <Link href="/client" className={styles.history__link} prefetch={true}>
+            <Translated scope="dashboard" text="client-title" />
           </Link>
         </>
       )}

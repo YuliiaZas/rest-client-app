@@ -2,12 +2,6 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import Error from './error';
 
-vi.mock('./Button', () => ({
-  Button: ({ onClick, text }: { onClick: () => void; text: string }) => (
-    <button onClick={onClick}>{text}</button>
-  ),
-}));
-
 describe('Error', () => {
   const mockError = { message: 'Test error message' } as Error;
 

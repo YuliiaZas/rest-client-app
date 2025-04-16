@@ -1,0 +1,32 @@
+.link {
+  &,
+  &:visited {
+    color: var(--link-default);
+  }
+  
+  &:hover,
+  &:focus-visible {
+    color: var(--link-hover);
+  }
+  
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 1px solid var(--link-hover);
+    border-radius: var(--border-radius);
+  }
+
+  &.link_active {
+    &,
+    &:hover,
+    &:focus-visible {
+      color: var(--primary-main);
+    }
+
+    &:focus-visible {
+      outline-color: var(--primary-main);
+    }
+  }
+}
