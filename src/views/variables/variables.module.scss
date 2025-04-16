@@ -1,4 +1,8 @@
 .variables {
+  & > table tfoot {
+    bottom: 2.75rem;
+  }
+
   &__title {
     text-align: center;
     font-size: 3rem;
