@@ -6,7 +6,7 @@ export { Column } from './column';
 export { Dropdown } from './dropdown';
 export { ErrorMessage } from './error-message';
 export { Footer } from './footer';
-export { Header } from './header';
+export { Header, HeaderInteraction } from './header';
 export { Icon } from './icons';
 export { Input } from './input';
 export { InputWithVariables } from './input-with-variables';
