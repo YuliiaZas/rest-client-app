@@ -26,6 +26,10 @@
       &_secondary {
         width: 20%;
       }
+
+      &:has(input) ~ .table__cell-actions {
+        vertical-align: top;
+      }
     }
 
     &-actions {

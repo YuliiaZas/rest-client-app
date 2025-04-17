@@ -1,5 +1,11 @@
 import { ReactNode } from 'react';
-import { Aside, Footer, Header, NavLink } from '@/components';
+import {
+  Aside,
+  Footer,
+  Header,
+  HeaderInteraction,
+  NavLink,
+} from '@/components';
 import { navigation } from '@/data';
 import styles from './layout.module.scss';
 import { getServerSession } from 'next-auth';
@@ -25,6 +31,7 @@ export default async function ClientLayout({ children }: ClientLayoutProps) {
         ))}
       </Aside>
       <div className={styles.content}>
+        <HeaderInteraction />
         <Header />
         {children}
         <Footer />

@@ -1,5 +1,12 @@
 import { ReactNode } from 'react';
-import { Aside, Footer, Header, Logo, Translated } from '@/components';
+import {
+  Aside,
+  Footer,
+  Header,
+  HeaderInteraction,
+  Logo,
+  Translated,
+} from '@/components';
 import '@/styles/global.scss';
 import styles from './layout.module.scss';
 import { getServerSession } from 'next-auth';
@@ -29,6 +36,7 @@ export default async function RootLayout({
         </p>
       </Aside>
       <div className={styles.content}>
+        <HeaderInteraction />
         <Header />
         {children}
         <Footer />

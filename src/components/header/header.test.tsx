@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { Header } from './header';
 
@@ -24,26 +24,5 @@ describe('Header', () => {
     expect(getByTestId('theme-switcher')).toBeDefined();
     expect(getByTestId('locale-switcher')).toBeDefined();
     expect(getByTestId('nav')).toBeDefined();
-  });
-
-  it('applies scrolled class when the page is scrolled', () => {
-    const { container } = render(<Header />);
-    const header = container.querySelector('header');
-    expect(header).toBeDefined();
-    expect((header as HTMLElement).className).not.toContain('header_scrolled');
-
-    fireEvent.scroll(window, { target: { scrollY: 100 } });
-    expect((header as HTMLElement).className).toContain('header_scrolled');
-  });
-
-  it('removes scrolled class when the page is scrolled back to the top', () => {
-    const { container } = render(<Header />);
-    const header = container.querySelector('header');
-
-    fireEvent.scroll(window, { target: { scrollY: 100 } });
-    expect((header as HTMLElement).className).toContain('header_scrolled');
-
-    fireEvent.scroll(window, { target: { scrollY: 0 } });
-    expect((header as HTMLElement).className).not.toContain('header_scrolled');
   });
 });
