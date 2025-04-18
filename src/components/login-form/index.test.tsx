@@ -51,9 +51,9 @@ vi.mock('@/components', async (importOriginal) => {
 
 const email = 'test@example.com';
 const password = 'Pas1-Pas2';
-const redirectUrl = '/dashboard';
 const credentials = {
-  redirect: false,
+  redirect: true,
+  callbackUrl: '/dashboard',
   email,
   password,
 };
@@ -108,7 +108,6 @@ describe('LoginForm', () => {
 
     await waitFor(() => {
       expect(signIn).toHaveBeenCalledWith('credentials', credentials);
-      expect(mockPush).toHaveBeenCalledWith(redirectUrl);
     });
   });
 
@@ -159,7 +158,6 @@ describe('LoginForm', () => {
     await waitFor(() => {
       expect(firebaseSignup).toHaveBeenCalledWith(email, password);
       expect(signIn).toHaveBeenCalledWith('credentials', credentials);
-      expect(mockPush).toHaveBeenCalledWith(redirectUrl);
     });
   });
 

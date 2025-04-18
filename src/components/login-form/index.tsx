@@ -16,7 +16,6 @@ import {
   signInFormSchema,
   signUpFormSchema,
 } from './login-form.consts';
-import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { firebaseSignup } from '@/utils';
 import { AppError } from '@/entites';
@@ -29,7 +28,6 @@ interface LoginFormProps {
 export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
   const t = useTranslations('login');
   const [loginError, setLoginError] = useState<string>('');
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const { addNotification } = useNotificationsContext();
 
@@ -58,7 +56,8 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
   const login = async (email: string, password: string) => {
     try {
       const response = await signIn('credentials', {
-        redirect: false,
+        redirect: true,
+        callbackUrl: '/dashboard',
         email,
         password,
       });
@@ -67,8 +66,6 @@ export const LoginForm = ({ isSignUp = false }: LoginFormProps) => {
         setLoginError(response.error);
         return;
       }
-
-      router.push('/dashboard');
     } catch {
       addNotification(new AppError('login'));
     }
