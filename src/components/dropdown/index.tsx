@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useState, useRef, useCallback } from 'react';
+import ReactDOM from 'react-dom';
 import clsx from 'clsx';
 import { ColorsSchema } from '@/entites';
 import { Icon } from '../icons';
@@ -35,7 +36,9 @@ export const Dropdown = ({
 }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
+  const [boxPosition, setBoxPosition] = useState({ top: 0, left: 0 });
   const ref = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -44,10 +47,26 @@ export const Dropdown = ({
       }
     };
 
+    const handleUpdate = () => {
+      if (isOpen && buttonRef.current) {
+        const rect = buttonRef.current.getBoundingClientRect();
+        setBoxPosition({
+          top: rect.bottom + window.scrollY,
+          left: rect.left + window.scrollX,
+        });
+      }
+    };
+
+    handleUpdate();
+
     document.addEventListener('click', handleClickOutside);
+    window.addEventListener('scroll', handleUpdate, true);
+    window.addEventListener('resize', handleUpdate);
 
     return () => {
       document.removeEventListener('click', handleClickOutside);
+      window.removeEventListener('scroll', handleUpdate, true);
+      window.removeEventListener('resize', handleUpdate);
     };
   }, [isOpen]);
 
@@ -115,6 +134,7 @@ export const Dropdown = ({
       className={clsx(styles.dropdown, `colors-${colors}`, dropdownClass)}
     >
       <button
+        ref={buttonRef}
         onClick={toggleDropdown}
         className={clsx(
           styles.dropdown__button,
@@ -127,25 +147,34 @@ export const Dropdown = ({
           selectedItem}
         <Icon iconName={isOpen ? 'caret-up' : 'caret-down'} size="1rem" />
       </button>
-      {isOpen && (
-        <ul className={clsx(styles.box, positionedRigth && styles.right)}>
-          {items.map((item, i) => (
-            <li
-              key={item.value}
-              className={clsx(
-                item.itemClass,
-                styles.dropdow__item,
-                `colors-${colors}-state`,
-                item.value === selectedItem && 'active',
-                highlightedIndex === i && 'highlighted'
-              )}
-              onClick={() => handleSelectItem(item.value)}
-            >
-              {item.label || item.value}
-            </li>
-          ))}
-        </ul>
-      )}
+      {isOpen &&
+        typeof window !== 'undefined' &&
+        ReactDOM.createPortal(
+          <ul
+            className={clsx(styles.box, positionedRigth && styles.right)}
+            style={{
+              top: boxPosition.top,
+              left: boxPosition.left,
+            }}
+          >
+            {items.map((item, i) => (
+              <li
+                key={item.value}
+                className={clsx(
+                  item.itemClass,
+                  styles.dropdow__item,
+                  `colors-${colors}-state`,
+                  item.value === selectedItem && 'active',
+                  highlightedIndex === i && 'highlighted'
+                )}
+                onClick={() => handleSelectItem(item.value)}
+              >
+                {item.label || item.value}
+              </li>
+            ))}
+          </ul>,
+          document.body
+        )}
     </div>
   );
 };
