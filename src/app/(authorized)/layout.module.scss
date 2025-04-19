@@ -1,0 +1,12 @@
+.client {
+  display: flex;
+  height: 100vh;
+  min-width: 576px;
+}
+
+.content {
+  overflow: auto;
+  flex-grow: 1;
+  display: grid;
+  grid-template: auto auto 1fr auto / 1fr;
+}

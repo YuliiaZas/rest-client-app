@@ -1,0 +1,36 @@
+@use '@/styles/utils/mixins' as *;
+
+.aside {
+  border-right: 1px solid var(--lines-dark);
+  padding: 1.5rem 1rem;
+
+  &__root {
+    @include colors('light');
+    width: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1ch;
+    padding: 4rem 2rem 1rem;
+    align-items: center;
+    
+    @media screen and (max-width: 1078px) {
+      padding-inline: 1rem;
+      width: 10rem;
+    }
+
+    p {
+      color: var(--text-main);
+    }
+  }
+
+  &__client {
+    @include colors('dark');
+    width: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem;
+  }
+}

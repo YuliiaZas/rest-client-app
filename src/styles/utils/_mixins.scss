@@ -1,0 +1,50 @@
+@mixin border-default($border-color: var(--lines-main), $border-width: 2px) {
+  border: $border-width solid $border-color;
+  border-radius: var(--border-radius);
+}
+
+@mixin border-secondary($border-color: var(--lines-main)) {
+  @include border-default($border-color, 1px);
+}
+
+@mixin shadow {
+  box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-dark);
+}
+
+@mixin colors($color) {
+  @if $color == 'transparent' {
+    background-color: transparent;
+    color: initial;
+  } @else if $color == 'inherit' {
+    background-color: inherit;
+    color: inherit;
+  } @else {
+    background-color: var(--background-#{$color});
+    color: var(--text-#{$color});
+  }
+
+  @include colors-state($color);
+}
+
+@mixin colors-state($color) {
+  @if $color ==
+    'dark' or
+    $color ==
+    'light' or
+    $color ==
+    'content' or
+    $color ==
+    'main'
+  {
+    --active-color: var(--highlight-#{$color}-active);
+    --hover-color: var(--highlight-#{$color}-hover);
+  } @else {
+    --active-color: var(--background-dimmed);
+    --hover-color: var(--background-brightened);
+  }
+}
+
+@mixin outline-visibility {
+  margin-top: -0.25rem;
+  padding-top: 0.25rem;
+}

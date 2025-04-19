@@ -1,0 +1,13 @@
+.code {
+  &__controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__wrapper {
+    &,
+    & span {
+      height: 100%;
+    }
+  }
+}

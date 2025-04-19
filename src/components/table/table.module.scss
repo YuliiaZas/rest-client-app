@@ -1,0 +1,67 @@
+.table {
+  width: 100%;
+  table-layout: fixed;
+
+  &__header {
+    font-size: 1.25rem;
+    position: sticky;
+    top: 0;
+    background-color: var(--background-content);
+    z-index: var(--z-index-table);
+
+    &_sticky-space {
+      top: 3rem;
+    }
+  }
+
+  &__cell {
+    text-align: center;
+    padding: 0.5rem;
+    vertical-align: middle;
+    word-break: break-word;
+
+    &-data {
+      width: 40%;
+
+      &_secondary {
+        width: 20%;
+      }
+
+      &:has(input) ~ .table__cell-actions {
+        vertical-align: top;
+      }
+    }
+
+    &-actions {
+      width: 10%;
+    }
+
+    @media screen and (max-width: 1078px) {
+      &-data {
+        width: calc((100% - 120px) / 2);
+  
+        &_secondary {
+          width: 120px;
+        }
+      }
+
+      &-actions {
+        width: 120px;
+      }
+    }
+  }
+
+  &__footer {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--background-content);
+
+    &_sticky-space {
+      bottom: 1rem;
+    }
+
+    .table__cell {
+      vertical-align: top;
+    }
+  }
+}

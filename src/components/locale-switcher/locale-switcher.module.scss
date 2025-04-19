@@ -1,0 +1,26 @@
+@use '@/styles/utils/mixins' as *;
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+
+  .select {
+    width: 78px;
+
+    button {
+      @include border-secondary();
+      padding-block: 0.25rem;
+
+      &:hover,
+      &:focus {
+        border-color: var(--text-main);
+      }
+    }
+  }
+}

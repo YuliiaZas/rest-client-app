@@ -1,0 +1,32 @@
+.greeting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-direction: column;
+  padding: 1rem 0 3rem;
+  word-break: break-word;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  .card {
+    flex: 1;
+
+    &:focus > div {
+      scale: 1.05;
+    }
+    
+    & > div {
+      height: 100%;
+    }
+
+    & [role='img'] {
+      color: var(--secondary-light);
+      margin: 1rem auto;
+    }
+  }
+}

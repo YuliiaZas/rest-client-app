@@ -1,0 +1,49 @@
+@use '@/styles/utils/mixins' as *;
+
+.input__container {
+  width: 100%;
+}
+
+.input {
+  min-height: var(--input-height-default);
+  width: 100%;
+  padding-inline: var(--input-padding-inline-default);
+  font-size: 1rem;
+}
+
+.input_with-icons {
+  --input-icon-padding: 0.5rem;
+  --input-placeholder-padding: 1.75rem;
+  position: relative;
+
+  .input {
+    max-width: 100%;
+
+    &:placeholder-shown {
+      text-overflow: ellipsis;
+    }
+  }
+
+  .input__icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+  }
+
+  .input__icon_left {
+    left: var(--input-icon-padding);
+  }
+
+  .input__icon_right {
+    right: var(--input-icon-padding);
+  }
+
+  &:has(.input__icon_left) input {
+    padding-left: var(--input-placeholder-padding);
+  }
+
+  &:has(.input__icon_right) input {
+    padding-right: var(--input-placeholder-padding);
+  }
+}

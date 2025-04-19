@@ -1,0 +1,32 @@
+@use '@/styles/utils/mixins' as *;
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  @include colors('dark');
+  font-size: 0.8rem;
+  position: sticky;
+  margin: 0 1rem 0.5rem;
+  border-radius: 0.5rem;
+  z-index: var(--z-index-header);
+  box-shadow: 0 0.3rem 0.7rem var(--shadow-dark);
+  transition: all 0.3s ease;
+}
+
+.header_scrolled {
+  top: 0;
+  border-radius: 0 0 0.5rem 0.5rem;
+  margin-inline: 0.3rem;
+  box-shadow: 0 0.125rem 0.125rem var(--shadow-dark);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}

@@ -1,0 +1,16 @@
+.request-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 2.25rem;
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__method {
+    width: 150px;
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "root": {
+    "title": "REST client app",
+    "description": "RS School React course 2025 Q1 final task",
+    "theme": "Switch theme",
+    "language": "Switch language",
+    "signout": "Logout",
+    "close": "Close"
+  },
+  "login": {
+    "email": "Email",
+    "password": "Password",
+    "passwordRepeat": "Repeat password",
+    "required": "{field} is required",
+    "emailInvalid": "Invalid email",
+    "passwordLength": "Password must be at least {length} characters long",
+    "passwordWeak": "Password must contain at least one number, one uppercase letter, one lowercase letter, and one special character from set {set}",
+    "passwordMismatch": "Passwords do not match",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "signUp": "Sign Up",
+    "invalidCredentials": "Invalid email or password",
+    "loginError": "Error during login",
+    "signUpError": "Error during signup"
+  },
+  "actions": {
+    "actions": "Actions",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "client": {
+    "title": "REST Client",
+    "urlPlaceholder": "Enter URL",
+    "send": "Send",
+    "request": "Request",
+    "body": "Body",
+    "headers": "Headers",
+    "code": "Code",
+    "generate": "Generate",
+    "response": "Response",
+    "noResponse": "No response yet",
+    "status": "Status",
+    "notSendRequest": "Could not send request",
+    "reason": "Reason"
+  },
+  "variables": {
+    "title": "Variables",
+    "variableName": "Variable Name",
+    "variableValue": "Variable Value",
+    "variableDuplicate": "Variable name already exists",
+    "variableNameRequired": "Variable name is required",
+    "variableValueRequired": "Variable value is required"
+  },
+  "headers": {
+    "key": "Header Key",
+    "value": "Header Value"
+  },
+  "history": {
+    "title": "History",
+    "empty": "You haven't executed any requests",
+    "emptyAction": "It's empty here. Try",
+    "method": "Method",
+    "url": "URL",
+    "date": "Date"
+  },
+  "ufo": {
+    "title": "Page not found",
+    "redirect": "Back to the start page"
+  },
+  "error": {
+    "title": "Oops! Something went wrong",
+    "appologize": "We apologize for the inconvenience",
+    "message": "Error message",
+    "restart": "Restart",
+    "restartTitle": "Restart the app",
+    "restartMessage": "After restart the app local storage will be cleared"
+  },
+  "errors": {
+    "wrongTypeLS": "Invalid typeof value saved in local storage",
+    "parseLS": "Failed to parse value from local storage",
+    "saveLS": "Failed to save value to local storage",
+    "fetch": "Failed to fetch data",
+    "parseResponseJson": "Failed to parse response as a JSON",
+    "parseResponseText": "Failed to parse response as a TEXT",
+    "unknown": "Unknown error",
+    "changeTheme": "Failed to change theme",
+    "changeLocale": "Failed to change locale",
+    "login": "Failed to login",
+    "signUp": "Failed to sign up",
+    "urlInvalid": "URL is invalid",
+    "serverNoResponse": "No response from server",
+    "generatingCode": "Error generating code",
+    "generatingCodeUnsupported": "Code generator does not support language",
+    "addingHeader": "Error adding header",
+    "editingHeader": "Error editing header",
+    "savingHeader": "Error saving header",
+    "deletingHeader": "Error deleting header",
+    "savingVariable": "Error saving variable",
+    "deletingVariable": "Error deleting variable",
+    "parseBody": "Error parsing body in the editor"
+  },
+  "dashboard": {
+    "dashboard-title": "Home",
+    "welcomeBack": "Welcome Back",
+    "client-title": "Client",
+    "client-description": "A robust tool for API testing and development.",
+    "history-title": "History",
+    "history-description": "View and manage the history of your executed API requests, including methods, URLs, and dates.",
+    "variables-title": "Variables",
+    "variables-description": "Define and manage key-value pairs for dynamic request customization. Simplify your API testing by reusing variables in multiple requests with ease."
+  },
+  "welcome": {
+    "title": "Welcome!",
+    "developers": "Developers"
+  }
+}

@@ -1,0 +1,28 @@
+@use '@/styles/utils/mixins' as *;
+
+.error {
+  &__container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    padding: 1rem 1.5rem;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  &__code {
+    background-color: var(--background-dimmed);
+    color: var(--primary-contrast-text);
+    padding: 1rem 2rem;
+    width: 60%;
+    font-family: monospace;
+
+    @include border-default();
+  }
+}

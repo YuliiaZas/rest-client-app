@@ -1,0 +1,53 @@
+@use '@/styles/utils/mixins' as *;
+
+.dropdown {
+  display: inline-block;
+  border-radius: var(--border-radius);
+}
+
+.dropdown__button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  @include colors('inherit');
+  @include border-default();
+
+  &_borderless {
+    &,
+    & + .box {
+      border-color: transparent;
+    }
+  }
+
+  &:focus,
+  &:focus-visible {
+    border-color: var(--lines-dark);
+  }
+}
+
+.box {
+  position: absolute;
+  text-align: start;
+  @include colors('inherit');
+  margin-top: 0.5rem;
+  padding: 1rem 0.5rem;
+  min-width: 140px;
+  width: max-content;
+  @include shadow();
+  @include border-default();
+  z-index: var(--z-index-dropdown);
+}
+
+.dropdow__item {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+}
+
+.right {
+  right: 0;
+}

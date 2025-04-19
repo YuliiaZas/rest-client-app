@@ -1,0 +1,38 @@
+@use '@/styles/utils/mixins' as *;
+
+.page {
+  display: grid;
+  grid-template-rows: repeat(3, auto) 1fr;
+
+  & h2,
+  h4 {
+    margin: 2rem 0;
+    text-align: center;
+  }
+}
+
+.auth {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 4rem;
+  margin: 2rem auto;
+  width: fit-content;
+  background: var(--background-light);
+
+  @include border-default();
+}
+
+.developers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+
+  & > div > h5 > [role='img'] {
+    color: var(--tertiary-main);
+  }
+}

@@ -1,0 +1,98 @@
+@use 'sass:list';
+@use 'sass:map';
+
+:root {
+  font-family: sans-serif;
+  font-optical-sizing: auto;
+  font-size: 16px;
+}
+
+$title-font-sizes: 3.5rem, 3rem, 2.5rem, 2rem, 1.5rem;
+$p-font-sizes: 1.25rem, 1.125rem, 1rem, 0.8rem, 0.7rem;
+$font-weights: (
+  normal: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extrabold: 800,
+);
+
+@mixin title-styles($index) {
+  $font-size: list.nth($title-font-sizes, $index);
+
+  font-size: list.nth($title-font-sizes, $index);
+  font-weight: map.get($font-weights, bold);
+}
+
+@mixin paragraph-styles($index) {
+  $font-size: list.nth($p-font-sizes, $index);
+
+  font-size: $font-size;
+  font-weight: 400;
+}
+
+@mixin text-weight($weight) {
+  font-weight: map.get($font-weights, $weight);
+}
+
+@mixin text-align($alignment) {
+  text-align: $alignment;
+}
+
+body {
+  @for $i from 1 through list.length($title-font-sizes) {
+    h#{$i},
+    .h#{$i} {
+      @include title-styles($i);
+    }
+  }
+
+  @for $i from 1 through list.length($p-font-sizes) {
+    .p#{$i} {
+      @include paragraph-styles($i);
+    }
+  }
+
+  @each $weight, $value in $font-weights {
+    .txt--#{$weight} {
+      @include text-weight($weight);
+    }
+  }
+
+  @each $alignment in (center, right) {
+    .txt--#{$alignment} {
+      @include text-align($alignment);
+    }
+  }
+
+  a:not(.unstyled) {
+    color: var(--link-default);
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
+
+    &:hover,
+    &:focus-visible {
+      &,
+      &:visited {
+        color: var(--link-hover);
+      }
+    }
+
+    &:visited {
+      color: var(--link-visited);
+    }
+
+    &:disabled {
+      color: var(--link-disabled);
+    }
+  }
+
+  a.unstyled {
+    text-decoration: none;
+  }
+
+  strong,
+  b {
+    font-weight: 700;
+  }
+}

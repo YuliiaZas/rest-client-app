@@ -1,0 +1,17 @@
+@forward 'light-theme';
+@forward 'dark-theme';
+
+:root {
+  --input-height-default: 2rem;
+  --input-width-default: 20rem;
+  --input-padding-inline-default: 0.75rem;
+  --border-radius: 0.25rem;
+  --min-tap-size: 2.75rem;
+
+  --z-index-table: 4;
+  --z-index-dropdown: 5;
+  --z-index-header: 6;
+  --z-index-modal: 7;
+  --z-index-spinner: 8;
+  --z-index-toast: 10;
+}
