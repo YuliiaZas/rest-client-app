@@ -104,6 +104,7 @@ export default function CodeGenerator() {
           text={code}
           language={language}
           theme={atomOneLight}
+          wrapLongLines={true}
           showLineNumbers={false}
         />
       </div>
